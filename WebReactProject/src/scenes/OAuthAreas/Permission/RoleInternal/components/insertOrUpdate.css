@@ -1,0 +1,27 @@
+.ZwXQAkpaPr {
+    width: 50vw !important;
+}
+
+
+.ZwXQAkpaPr>.ant-modal-content>.ant-modal-body {
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+
+@media only screen and (max-width: 768px) {
+    .ZwXQAkpaPr {
+        width: 40vw !important;
+    }
+}
+
+@media only screen and (min-width: 769px) and (max-width : 1200px) {
+    .ZwXQAkpaPr {
+        width: 40vw !important;
+    }
+}
+
+@media only screen and (min-width : 1201px) {
+    .ZwXQAkpaPr {
+        width: 40vw !important;
+    }
+}

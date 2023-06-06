@@ -1,0 +1,42 @@
+{
+    "localization": {
+        "currentCulture": {
+            "name": "vi",
+            "displayName": "Vietnamese"
+        },
+        "languages": [
+            { "name": "en", "displayName": "English", "icon": "famfamfam-flags gb", "isDefault": false, "isDisabled": false, "isRightToLeft": false },
+            { "name": "vi", "displayName": "Vietnamese", "icon": "famfamfam-flags vn", "isDefault": false, "isDisabled": false, "isRightToLeft": false }
+        ],
+        "currentLanguage": {
+            "name": "vi",
+            "displayName": "Vietnamese",
+            "icon": "famfamfam-flags vn",
+            "isDefault": false,
+            "isDisabled": false,
+            "isRightToLeft": false
+        },
+        "values": {
+
+        }
+    },
+    "timing": {
+        "timeZoneInfo": {
+            "windows": {
+                "timeZoneId": "UTC",
+                "baseUtcOffsetInMilliseconds": 0.0,
+                "currentUtcOffsetInMilliseconds": 0.0,
+                "isDaylightSavingTimeNow": false
+            },
+            "iana": {
+                "timeZoneId": "Etc/UTC"
+            }
+        }
+    },
+    "security": {
+        "antiForgery": {
+            "tokenCookieName": "XSRF-TOKEN",
+            "tokenHeaderName": "X-XSRF-TOKEN"
+        }
+    }
+}

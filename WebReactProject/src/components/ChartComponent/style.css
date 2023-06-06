@@ -1,0 +1,33 @@
+.recharts-responsive-container {
+    width: 100% !important;
+    height: 300px !important;
+}
+
+.recharts-legend-wrapper {
+    width: 100% !important;
+    display: block;
+}
+
+.recharts-legend-wrapper>ul {
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: space-around;
+}
+
+.recharts-legend-wrapper>ul>li {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+}

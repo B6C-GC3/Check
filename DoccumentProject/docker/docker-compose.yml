@@ -1,0 +1,53 @@
+version: '3'
+services:
+  envoygateway:
+    # folder chứa file docker
+    build: _envoy/
+    ports:
+      # chỉ định các cổng
+      - "2900:2900" # cổng gốc
+      - "3100:3100" # cổng truy cấp http thường và chuyển trang
+      - "3200:3200" # cổng https
+    volumes:
+      - ./_envoy/envoy.yaml:/etc/envoy/envoy.yaml # chuyên gia đọc lệnh 
+      - ./_envoy/https.crt:/etc/ssl/certs/https.crt # chứng chỉ https
+      - ./_envoy/key.pem:/etc/ssl/certs/key.pem # chứng chỉ https
+
+  rabbitmq3:
+    image: rabbitmq:3.8-management-alpine
+    container_name: "rabbitmq"
+    environment:
+      - RABBITMQ_DEFAULT_USER= WT436
+      - RABBITMQ_DEFAULT_PASS= WT436
+    ports:
+      # AMQP protocol port
+      - '5672:5672'
+      # HTTP management UI
+      - '15672:15672'
+    volumes:
+      - D:/rabbitmq/data/:/var/lib/rabbitmq/
+      - D:/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - go_net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --requirepass hainam@99
+    ports:
+      - "6379:6379"
+    volumes:
+      - D:/redis:/var/lib/redis
+      - ./_redis/redis.config:/usr/local/etc/redis/redis.config
+    networks:
+      - go_net
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+networks:
+  go_net:
+    driver: bridge

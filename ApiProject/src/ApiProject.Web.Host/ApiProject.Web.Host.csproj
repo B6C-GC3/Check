@@ -1,0 +1,93 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>ApiProject.Web.Host</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>ApiProject.Web.Host</PackageId>
+    <UserSecretsId>AbpCompanyName-ApiProject-56C2EF2F-ABD6-4EFC-AAF2-2E81C34E8FB1</UserSecretsId>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <LangVersion>7.2</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="wwwroot\excel\**" />
+    <Compile Remove="wwwroot\image\**" />
+    <Compile Remove="wwwroot\pdf\**" />
+    <Compile Remove="wwwroot\word\**" />
+    <Content Remove="wwwroot\excel\**" />
+    <Content Remove="wwwroot\image\**" />
+    <Content Remove="wwwroot\pdf\**" />
+    <Content Remove="wwwroot\word\**" />
+    <EmbeddedResource Remove="wwwroot\excel\**" />
+    <EmbeddedResource Remove="wwwroot\image\**" />
+    <EmbeddedResource Remove="wwwroot\pdf\**" />
+    <EmbeddedResource Remove="wwwroot\word\**" />
+    <None Remove="wwwroot\excel\**" />
+    <None Remove="wwwroot\image\**" />
+    <None Remove="wwwroot\pdf\**" />
+    <None Remove="wwwroot\word\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\swagger\ui\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="wwwroot\XKLkzNRUjq\035bc2c7bfd3efde5d421843ef581dc0.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\1190374003600181001e0d9b3c806d2c.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\2522a471e9eb18996998bd4482a603f9.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\29d33ff5b363f390645db018d8720a43.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\36cbe825572162ac8472fdacc1b4865a.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\42d3f978559c2c152d0263e405b06efe.jpg.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\57e7a6de5f58800cace8f97c0039ad11.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\6524e1285c9a6f7efb477dbd4bb8ff8a.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\83b9f856560d2705e1dfe34a2111a68c.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\93603f0af66c8589be66de7b203efe43.jpg.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\a89ad267ee535bb0a35e0547b57ee3ed.png.webp" />
+    <None Include="wwwroot\XKLkzNRUjq\c3107f9bb8379f4e4b6a5d5732f60de6.png.webp" />
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <None Update="wwwroot\**\*">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiProject.Web.Core\ApiProject.Web.Core.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.Castle.Log4Net" Version="7.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wwwroot\swagger\ui\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\BbvTHviiQD\" />
+    <Folder Include="wwwroot\Btntimtbnk\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\Zzartjvost\" />
+  </ItemGroup>
+</Project>

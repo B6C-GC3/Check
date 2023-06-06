@@ -1,0 +1,7 @@
+enum ActionTypes {
+    WATCH_PAGE_START = 'WATCH_PAGE_START',
+    WATCH_PAGE_COMPLETED = 'WATCH_PAGE_COMPLETED',
+    WATCH_PAGE_ERROR = 'WATCH_PAGE_ERROR',
+}
+  
+export default ActionTypes;

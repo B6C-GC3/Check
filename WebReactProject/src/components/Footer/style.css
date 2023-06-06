@@ -1,0 +1,12 @@
+.footer {
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    background: #150799;
+    color: white;
+    font-size: 22px;
+    height: 500px;
+}

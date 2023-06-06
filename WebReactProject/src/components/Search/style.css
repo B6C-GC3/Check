@@ -1,0 +1,34 @@
+.veMvsdVKEj {
+    width: 700px !important;
+}
+
+.veMvsdVKEj>.ant-modal-content>.ant-modal-header {
+    padding: 10px;
+}
+
+.veMvsdVKEj>.ant-modal-content>.ant-modal-body {
+    padding: 10px !important;
+}
+
+.veMvsdVKEj>.ant-modal-content>.ant-modal-body .NbhATbJYHI {
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    padding: 10px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.NbhATbJYHI>span {
+    position: absolute;
+    font-size: 14px;
+    height: 22px;
+    line-height: 22px;
+    top: -11px;
+    background: #fff;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+.NbhATbJYHI>.ant-row.ant-form-item {
+    margin-bottom: 5px !important;
+}

@@ -1,0 +1,193 @@
+.editorClassName {
+    width: 80%;
+    max-width: 1200px;
+    min-width: 600px;
+    min-height: 200px;
+    background-color: #ffffff;
+    border-radius: 0px;
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    margin: 10px 10%;
+    max-height: 80vh;
+}
+
+.VpUINsxPMf {
+    display: flex;
+    padding: 0px 5px;
+    margin: 5px 0;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+
+.VpUINsxPMf>div>button.ant-btn {
+    margin: 0 4px;
+}
+
+.rdw-option-wrapper {
+    padding: 1px !important;
+    min-width: 32px !important;
+    height: 32px !important;
+    border-radius: 6px !important;
+    border: 1px solid #d9d9d9;
+}
+
+.rdw-option-wrapper:hover {
+    border-color: #0959d9;
+}
+
+.rdw-option-wrapper:active,
+.rdw-option-active {
+    background: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px !important;
+
+}
+
+.editable-cell-value-wrap {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 11px !important;
+    color: rgba(0, 0, 0, .88);
+    font-size: 14px;
+    line-height: 1.5714285714285714;
+    list-style: none;
+    font-family: -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    min-width: 0;
+    background-color: #fff;
+    background-image: none;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-radius: 6px;
+    transition: all .2s;
+}
+
+.XyDchqhXkn {
+    margin: 5px 0 !important;
+}
+
+.public-DraftStyleDefault-block {
+    margin: 1px 0 !important;
+}
+
+.rdw-colorpicker-cube {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #F1F1F1;
+    border-radius: 4px;
+}
+
+.rdw-colorpicker-modal,
+.rdw-link-modal,
+.rdw-embedded-modal,
+.rdw-emoji-modal,
+.rdw-image-modal {
+    position: absolute;
+    top: 35px;
+    left: inherit;
+    right: 0px;
+    width: 260px;
+    height: 200px;
+    border: 1px solid #F1F1F1;
+    padding: 10px;
+    border-radius: 6px;
+    z-index: 100;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.BhSdkVGoRX>div.ant-modal-content {
+    background-color: #d9d9d9;
+}
+
+.midGdqUcHE {
+    width: calc(100% - 5px);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    margin-top: 16px;
+}
+
+.wqcDfMDSYX {
+    border: 1px solid #d9d9d9;
+    padding: 10px 5px;
+    border-radius: 6px;
+    background: #ffffff;
+    position: relative;
+    min-height: 300px;
+    height: auto;
+}
+
+.wqcDfMDSYX:first-child {
+    margin-right: 2.5px;
+}
+
+.wqcDfMDSYX:last-child {
+    margin-left: 2.5px;
+}
+
+.PakuJgNnRB {
+    position: absolute;
+    top: -16px;
+    left: 25px;
+    font-size: 18px;
+    font-family: revert;
+    font-weight: 600;
+    background: linear-gradient(to top, #ffffff calc(36% + 1px), #ffffff00 calc(36% - 1px));
+}
+
+.xJdqzcyDEd {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+.oEjngQbPEW {
+    background: linear-gradient(to top, rgb(0 0 0 / 20%), #d2d2d2);
+    margin-top: 20px;
+    box-shadow: rgb(0 0 0 / 20%) 0px -30px 51px 18px;
+}
+
+.xJdqzcyDEd>button {
+    cursor: pointer;
+    display: block;
+    width: 150px;
+    height: 39px;
+    margin: 10px auto 0px;
+    color: rgb(24, 158, 255);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 39px;
+    text-align: center;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+.xJdqzcyDEd>button:hover {
+    background: rgb(24, 158, 255);
+    border: 1px solid rgb(24, 158, 255);
+    color: white;
+}
+
+.gdMHcseGom {
+    height: auto;
+    min-height: 225px;
+    margin: 0 15px;
+    margin-bottom: 54px;
+}
+
+.bvQEBBoIYA {
+    max-height: 225px;
+    overflow: hidden;
+}
+
+.gdMHcseGom>p {
+    margin: 0;
+}

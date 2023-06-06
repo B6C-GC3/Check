@@ -1,0 +1,31 @@
+.ZrJziiKjUH{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    padding: 0 10px;
+}
+
+.JUVFCIUZTy{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-start;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+.ant-btn-block {
+    width: auto;
+}
+.kkLwRiTajL{
+    margin-left: 16px;
+    border-radius: 30px;
+    width: 50%;
+    max-width: 300px;
+}
+.JUVFCIUZTy>button{
+    color: blue;
+}

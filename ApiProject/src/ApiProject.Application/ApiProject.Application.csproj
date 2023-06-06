@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>ApiProject.Application</AssemblyName>
+    <PackageId>ApiProject.Application</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace>ApiProject</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;1591</NoWarn>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="SystemManage\Users\4cblyop3.w1e~" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiProject.Core\ApiProject.Core.csproj" />
+    <ProjectReference Include="..\ApiProject.EntityFrameworkCore\ApiProject.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\UnitOfWork\UnitOfWork.csproj" />
+    <ProjectReference Include="..\Utils\Utils.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Administrators\ATest\" />
+    <Folder Include="Customer\SupplierFollowUserService\" />
+    <Folder Include="Supplier\SupplierAttributeValueService\" />
+    <Folder Include="Supplier\SupplierFollowSevice\" />
+    <Folder Include="Supplier\SupplierMappingService\" />
+    <Folder Include="SystemManage\LocalizationSystem\" />
+  </ItemGroup>
+</Project>

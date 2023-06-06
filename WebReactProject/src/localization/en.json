@@ -1,0 +1,37 @@
+{
+    "admin": {
+        "DashboardScreen": {
+            "Filter": "Quote #, Company, Project or City. Example: 30231",
+            "Table": {
+                "By": "By",
+                "Infomation": "Infomation",
+                "Notes": "Notes",
+                "QuoteNumber": "Quote #"
+            }
+        },
+        "Common": {
+            "AppName": "WT436.developer@gmailcom.vn",
+            "CommonErr": "Something wrong!",
+            "DataUpdated": "Data updated!",
+            "Error": "Error",
+            "FooterInfo": "WT436.developer@gmailcom.VN © 2021",
+            "LoginFailed": "Login failed!",
+            "NoData": "No Data",
+            "RequiredFieldsMustNotBeBlank": "Required fields must not be blank!",
+            "Success": "Success!",
+            "ThisFieldIsRequired": "This field is required",
+            "UnknownError": "Unknown error!",
+            "Warning": "Warning"
+        },
+        "LoginScreen": {
+            "LogIn": "Log in",
+            "Password": "Password",
+            "UserName": "User name",
+            "WellcomeMessage": "Welcome!"
+        },
+        "Menu": {
+            "Dashboard": "Home",
+            "Logout": "Logout"
+        }
+    }
+}

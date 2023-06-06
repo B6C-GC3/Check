@@ -1,0 +1,31 @@
+<mxfile host="Electron" modified="2023-05-22T18:11:53.083Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="72m_rZVoF5LCzJoNxO8Z" version="21.2.8" type="device">
+  <diagram name="Page-1" id="bmPa3Lwm5vl6PtGbcMpy">
+    <mxGraphModel dx="874" dy="572" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="RkPw1847iJHn0VCWSSKf-1" value="Product" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-2" value="ProductAttributeCombination&lt;br&gt;Kết hợp thuộc tính sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-3" value="ProductAttributeValue&lt;br&gt;Thuộc tính sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-4" value="ProductCategoryMapping&lt;br&gt;Danh mục sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-5" value="ProductImageMapping&lt;br&gt;Hình ảnh sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-6" value="ProductMappingAttributeValue&lt;br&gt;Kết hợp thuộc tinh sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="RkPw1847iJHn0VCWSSKf-7" value="ProductSpecificationsValue&lt;br&gt;Thông số kỹ thuật sản phẩm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="240" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

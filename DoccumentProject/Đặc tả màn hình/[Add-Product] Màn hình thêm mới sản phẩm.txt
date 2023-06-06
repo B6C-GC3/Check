@@ -1,0 +1,29 @@
+Yêu cầu : 
+	+ Từ các actegory đã chọn lấy ra tất cả các thuộc tính cần thiết cho sản phẩm đó
+	+ Tạo ra các area hoặc là không có area nào
+	+ Phân chia các thuộc tính vào các area và tất cả thuộc tính chỉ hiển thị 1 lần
+	+ Nhập thông số
+
+BE :
+	+ load category chỉ có category cấp 1, tìm kiếm, không có page,
+	+ load attribute of product by id category main (just one category)
+		- load nhiều category và cho lựa chọn thuộc tính đi kèm sản phẩm
+
+FE :
+	+ render and process
+		- phân chia theo area
+		- 
+
+______________________________________________________________________________________________
+
+Mục thêm category sản phẩm
+
+Yêu cầu : 
+		+ Load tất cả category chính lên
+		+ Lựa chọn category 
+		+ Có phần hiển thị các category đã chọn
+		+ 
+BACK-END:
+		+
+FONT-END:
+		+

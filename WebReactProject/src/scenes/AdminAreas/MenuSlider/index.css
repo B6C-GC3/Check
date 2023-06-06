@@ -1,0 +1,29 @@
+.ant-menu-inline-collapsed:not(.ant-layout-sider-children > ul) {
+    width: 55px;
+}
+
+.ant-layout-sider.ant-layout-sider-dark.ant-layout-sider-collapsed {
+    flex: 0 0 55px !important;
+    max-width: 55px !important;
+    min-width: 55px !important;
+    width: 55px !important;
+}
+
+.shrtdylg {
+    overflow-x: hidden;
+    max-width: 300px;
+    height: 100vh;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.ant-menu-sub.ant-menu-inline>.ant-menu-item,
+.ant-menu-sub.ant-menu-inline>.ant-menu-submenu>.ant-menu-submenu-title {
+    height: 25px;
+    line-height: 25px;
+    list-style-position: inside;
+    list-style-type: disc;
+}

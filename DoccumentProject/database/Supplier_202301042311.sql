@@ -1,0 +1,2 @@
+INSERT INTO ProcessDb.dbo.Supplier (NumberPhone,Email,PassWordShop,HaskPass,NameShop,LinkShop,Adress,Url,Hosts,CompanyVat,SslEnabled,DefaultLanguageId,DisplayOrder,IsActive,IsDeleted,CreationTime,CreatorUserId,LastModificationTime,LastModifierUserId,Status) VALUES
+	 (N'0392516307',N'WT436.developer@gmail.com',N'1fe2679d2163762fe4128fd889c91ae6d52bc19d625a4ddf440ec369ae48b371',N'wVzX1nkcL1',N'WT436',N'/wt436',N'Địa chỉ Địa chỉ Địa chỉ Địa chỉ Địa chỉ Địa chỉ',N'https://wt436.com',NULL,N'Pass',0,1,0,1,0,NULL,NULL,NULL,2,1);

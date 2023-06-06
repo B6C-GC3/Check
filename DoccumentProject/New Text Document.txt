@@ -1,0 +1,1 @@
+docker run -it -d -p 8088:80/tcp --name web -v F:\Web:/usr/share/nginx/html nginx

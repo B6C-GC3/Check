@@ -1,0 +1,83 @@
+.ZrJziiKjUH {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    padding: 0 10px;
+}
+
+.JUVFCIUZTy {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-start;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+.ant-btn-block {
+    width: auto;
+}
+
+.kkLwRiTajL {
+    margin-left: 16px;
+    border-radius: 30px;
+    width: 50%;
+    max-width: 300px;
+}
+
+.JUVFCIUZTy>button {
+    color: blue;
+}
+
+.whIyGhlXlY {
+    border: 1px solid #d9d9d9;
+    border-radius: 50px;
+    padding: 0 20px;
+    margin: 0 5px;
+
+}
+
+.ViiPPNaHVY {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+    margin-bottom: 5px;
+}
+
+.ViiPPNaHVY>span {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding: 0 5px;
+    margin-right: 5px;
+    height: 19px;
+    line-height: 19px;
+}
+
+.ViiPPNaHVY>span:first-child {
+    max-width: 80px;
+    width: 80px;
+    background-color: #d9d9d9;
+}
+
+.ViiPPNaHVY>span:not(:first-child) {
+    background-color: #bae7ff;
+    width: 19px;
+    border: 1px solid black;
+}
+
+.TkLOtWxjbQ {
+    margin-left: 58px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    min-height: 20px;
+}

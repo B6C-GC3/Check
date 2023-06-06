@@ -1,0 +1,558 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.no-margin {
+    margin: 0px !important;
+}
+
+::-webkit-scrollbar {
+    width: 7px !important;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0px !important;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 1px 0px 0px #e8e8e8 !important;
+    -webkit-border-radius: 0px !important;
+    border-radius: 0px !important;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.none-arrow::-webkit-outer-spin-button,
+input.none-arrow::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input.none-arrow[type=number] {
+    -moz-appearance: textfield;
+}
+
+/*
+  .printable { 
+    display: none !important; 
+  }
+  */
+@media print {
+    .non-printable {
+        display: none !important;
+    }
+    /*
+    .printable { 
+      display: block !important; 
+    }
+    */
+    .print-background {
+        background-color: #ffffff !important;
+    }
+
+        .print-background main {
+            margin: 0 !important;
+        }
+
+        .print-background .ant-card-bordered {
+            border: none !important;
+        }
+
+            .print-background .ant-card-bordered .ant-card-body {
+                padding: 0 !important;
+            }
+}
+
+.eff-rpt-header {
+    font-weight: bold;
+}
+
+    .eff-rpt-header .title {
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .eff-rpt-header .time {
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .eff-rpt-header .table-head table td {
+        border: 1px solid;
+        font-size: 10px;
+    }
+
+        .eff-rpt-header .table-head table td.no-border {
+            border: none;
+        }
+
+        .eff-rpt-header .table-head table td.rotate-90 {
+            vertical-align: bottom !important;
+        }
+
+            .eff-rpt-header .table-head table td.rotate-90 span {
+                -ms-writing-mode: tb-rl;
+                -webkit-writing-mode: vertical-rl;
+                writing-mode: vertical-rl;
+                transform: rotate(360deg);
+                white-space: nowrap;
+            }
+
+.form-label-not-afer label::after {
+    content: '' !important;
+}
+
+.progress-app {
+    position: fixed;
+    z-index: 2;
+    background-color: #ffffff;
+    opacity: 0.5;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-container .ant-form-item {
+    display: flex;
+    height: 64px;
+    align-items: center;
+    margin: 0;
+    float: left;
+}
+
+    .header-container .ant-form-item .ant-form-item-label {
+        text-align: right;
+        padding-right: 5px;
+    }
+
+.card-custom .ant-card-body {
+    padding: 0 !important;
+}
+
+.antlist-custom .ant-list-item {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.ant-form-item {
+    margin-bottom: unset !important;
+}
+
+.form-order-search {
+    border: 1px solid #e8e8e8;
+    padding: 20px !important;
+}
+
+    .form-order-search input {
+        text-align: center;
+    }
+
+.tbl-employee .ant-table-body {
+    overflow-y: auto;
+    max-height: 440px;
+}
+
+.tbl-activity .ant-table-body {
+    overflow-y: auto;
+    max-height: 360px;
+}
+
+.tbl-activity .ant-table-footer {
+    padding: 10px 8px 10px 0px;
+    width: 99.91%;
+}
+
+.tbl-activity .tbl-activity-bottom {
+    width: 100%;
+    text-align: right;
+}
+
+    .tbl-activity .tbl-activity-bottom span {
+        margin-right: 10px;
+        padding-top: 5px;
+        font-weight: bold;
+    }
+
+.tb-order-summary .ant-table-footer {
+    float: left;
+    width: 100%;
+    padding: 8px 0px;
+}
+
+    .tb-order-summary .ant-table-footer .ant-table-row {
+        width: 100%;
+        float: left;
+    }
+
+        .tb-order-summary .ant-table-footer .ant-table-row td {
+            float: left;
+            padding: 0px 9px;
+        }
+
+.rdGroup {
+    border: 1px solid #e8e8e8;
+    padding: 10px;
+}
+
+    .rdGroup > div {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+    .rdGroup > label {
+        position: absolute;
+        top: -12px;
+        background-color: #ffffff;
+        padding: 0px 5px 0px 5px;
+    }
+
+.form-item-suctom {
+    margin-bottom: 0px !important;
+}
+
+    .form-item-suctom .block-picker {
+        width: 100% !important;
+        box-shadow: none !important;
+    }
+
+        .form-item-suctom .block-picker > div:nth-child(1) {
+            left: 10% !important;
+        }
+
+        .form-item-suctom .block-picker > div:nth-child(2) {
+            height: 60px !important;
+        }
+
+            .form-item-suctom .block-picker > div:nth-child(2) div {
+                position: initial !important;
+            }
+
+        .form-item-suctom .block-picker > div:nth-child(3) {
+            border: 1px solid #d9d9d9;
+        }
+
+.ant-divider-horizontal.ant-divider-with-text-left .ant-divider-inner-text,
+.ant-divider-horizontal.ant-divider-with-text-right .ant-divider-inner-text {
+    /*color: rgba(255, 255, 255, 0.65);*/
+    color: rgba(0, 0, 0, 0.65);
+    padding: 0 15px !important;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.formeo.formeo-editor .formeo-controls {
+    width: 30% !important;
+}
+
+.formeo .f-btn-group button + button,
+.formeo.formeo-editor .panel-action-buttons,
+.formeo.formeo-editor .panel-nav {
+    display: none;
+}
+
+.formeo.formeo-editor .formeo-controls .form-actions {
+    float: left !important;
+}
+
+.formeo .f-btn-group > button:first-child {
+    border-radius: 4px !important;
+    cursor: pointer;
+}
+
+.formeo.formeo-editor .formeo-controls .form-actions .clear-form:hover {
+    border-color: #d9534f;
+}
+
+.formeo.formeo-editor .formeo-stage {
+    height: 420px !important;
+    overflow-y: auto !important;
+}
+
+.field-control button,
+.formeo.formeo-editor .formeo-controls .field-control button {
+    padding: 4px 8px !important;
+}
+
+.formeo-custom .ant-modal-footer {
+    margin-top: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    border-top: 0px;
+}
+
+.formeo.formeo-editor .column-editing-field {
+    width: 90%;
+}
+
+.formeo.formeo-editor .formeo-stage {
+    overflow-x: hidden !important;
+    margin-left: 5px !important;
+    border: 3px dashed #ccc !important;
+    padding-left: 25px !important;
+}
+
+.formeo input[type=date] {
+    max-width: unset !important;
+}
+
+.preview-theme .theme-content,
+.modal-theme .note-head,
+.modal-theme .note-desc,
+.modal-theme .note-bottom {
+    display: none;
+}
+
+.preview-theme .ant-modal-close .ant-modal-close-x {
+    line-height: 35px;
+}
+
+.preview-theme .ant-modal-header, .preview-theme .ant-modal-close {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: none;
+}
+
+.preview-theme .ant-modal-body {
+    padding: 0 !important;
+    height: 580px !important;
+    overflow-y: scroll;
+}
+
+    .preview-theme .ant-modal-body::-webkit-scrollbar {
+        width: 0px !important;
+    }
+
+.preview-theme .ant-modal-body,
+.preview-theme .formeo.formeo-editor .formeo-row,
+.preview-theme .formeo.formeo-editor .formeo-field,
+.preview-theme .formeo.formeo-editor .children {
+    background-color: #0D0D0D;
+    color: #ffffff;
+}
+
+    .preview-theme .formeo-custom .ant-modal-footer,
+    .preview-theme .formeo-controls,
+    .preview-theme .formeo.formeo-editor .row-actions,
+    .preview-theme .formeo.formeo-editor .formeo-field [contenteditable]:after,
+    .preview-theme .formeo.formeo-editor .formeo-field .field-actions,
+    .preview-theme .formeo.formeo-editor .column-actions {
+        display: none;
+    }
+
+.preview-theme .formeo.formeo-editor .formeo-stage {
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: unset !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-row,
+.preview-theme .formeo.formeo-editor .hovering-field {
+    border: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-row {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-field .prev-label {
+    margin: 0 !important;
+    max-width: unset !important;
+    min-height: unset !important;
+    font-size: 10px;
+    margin-bottom: 3px !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-column {
+    padding: 0 !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-field {
+    min-height: unset !important;
+}
+
+.preview-theme .formeo .f-addon,
+.preview-theme .formeo.formeo-editor .field-edit [contenteditable],
+.preview-theme .formeo input,
+.preview-theme .formeo select {
+    background-color: #171717 !important;
+    border: 0px !important;
+    border-radius: 15px !important;
+    height: 35px !important;
+}
+
+.preview-theme .formeo textarea {
+    background-color: #171717 !important;
+    border: 0px !important;
+    border-radius: 15px !important;
+    height: 70px !important;
+}
+
+.preview-theme .formeo.formeo-editor .formeo-row > .children {
+    min-height: unset !important;
+}
+
+.preview-theme .note-head {
+    background-color: #171717;
+    height: 40px;
+    padding-left: 15px;
+    line-height: 40px;
+}
+
+    .preview-theme .note-head i.anticon-left {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .preview-theme .note-head span {
+        cursor: pointer;
+    }
+
+    .preview-theme .note-head i.anticon-check {
+        float: right;
+        margin-right: 15px;
+        margin-top: 12px;
+        cursor: pointer;
+    }
+
+.preview-theme .note-desc {
+    padding: 10px;
+    border-bottom: 1px solid #171717;
+    margin-bottom: 5px;
+}
+
+    .preview-theme .note-desc div {
+        border-left: 2px solid #CF1D7E;
+        padding-left: 7px;
+    }
+
+    .preview-theme .note-desc span {
+        display: block;
+        font-size: 10px;
+        color: #CF1D7E;
+    }
+
+.preview-theme .note-bottom {
+    padding: 10px;
+    padding-top: 0px;
+    margin-bottom: 15px;
+}
+
+    .preview-theme .note-bottom > div > span {
+        background-color: #CF1D7E;
+        color: #ffffff;
+        border-radius: 10px;
+        margin-right: 10px;
+        font-size: 10px;
+        padding: 0px 5px 2px 5px;
+    }
+
+        .preview-theme .note-bottom > div > span > i {
+            font-size: 7px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+    .preview-theme .note-bottom .note-upload {
+        margin-top: 10px;
+        text-align: center;
+        height: 150px;
+        background-color: #171717;
+        border-radius: 10px;
+        border: 3px solid #4B4B4B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .preview-theme .note-bottom .note-upload i {
+            font-size: 50px;
+            opacity: 0.2;
+        }
+
+.row-selected {
+    background-color: #1c3c79;
+    color: #ffffff;
+}
+
+    .row-selected > td:hover {
+        background-color: #1c3c79 !important;
+        color: #ffffff !important;
+    }
+
+    .row-selected > td {
+        border-color: #1c3c79 !important;
+    }
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background-color: #1c3c79 !important;
+}
+
+.ant-btn-primary {
+    background-color: #1c3c79 !important;
+    border-color: #1c3c79 !important;
+}
+
+    .ant-btn-primary[disabled] {
+        color: rgba(193, 188, 188, 0.95) !important;
+    }
+
+.editable-row input {
+    border-color: #078c8c3b !important;
+}
+
+.editable-row:hover input {
+    background: #d8e6df;
+}
+
+.editable-row input:focus {
+    border-radius: 0;
+}
+
+.App {
+    text-align: center;
+    background: #142c52;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
