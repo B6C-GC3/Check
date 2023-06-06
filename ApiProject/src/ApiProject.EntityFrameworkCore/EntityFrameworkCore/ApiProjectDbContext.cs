@@ -193,7 +193,6 @@ namespace ApiProject.EntityFrameworkCore
             {
                 entity.ToTable("Product");
                 entity.Property(s => s.Published).HasDefaultValueSql("0");
-                entity.Property(s => s.ProductAlbum).HasDefaultValueSql("default");
 
                 entity.Property(s => s.SupplierId).HasDefaultValueSql("3");
 

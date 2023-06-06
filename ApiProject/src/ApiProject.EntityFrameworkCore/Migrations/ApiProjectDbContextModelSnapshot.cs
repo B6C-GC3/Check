@@ -1663,6 +1663,9 @@ namespace ApiProject.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("SupplierId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Types")
                         .HasColumnType("int");
 
@@ -2183,6 +2186,24 @@ namespace ApiProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<long>("AttributeIdOne")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AttributeIdThree")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AttributeIdTwo")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AttributeValueOne")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AttributeValueThree")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("AttributeValueTwo")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("CreationTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -2221,14 +2242,18 @@ namespace ApiProject.Migrations
                     b.Property<bool>("MainProduct")
                         .HasColumnType("bit");
 
-                    b.Property<int>("PictureId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("PictureId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -2242,6 +2267,75 @@ namespace ApiProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FeatureProduct", (string)null);
+                });
+
+            modelBuilder.Entity("ApiProject.Shared.Entitys.FileSourceEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("AltAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Folder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ImageRoot")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MimeType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SeoFilename")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TitleAttribute")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Types")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VirtualPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FileSource");
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.ForumsForumEntity", b =>
@@ -2614,75 +2708,6 @@ namespace ApiProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GooglePixelConfiguration");
-                });
-
-            modelBuilder.Entity("ApiProject.Shared.Entitys.ImageSourceEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("AltAttribute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Folder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageRoot")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsNew")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MimeType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SeoFilename")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Size")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Table")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TitleAttribute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Types")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VirtualPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ImageSource");
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.InfoUser", b =>
@@ -3326,46 +3351,6 @@ namespace ApiProject.Migrations
                     b.ToTable("ProductAttributeCombination");
                 });
 
-            modelBuilder.Entity("ApiProject.Shared.Entitys.ProductAttributeMappingEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("FeatureProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Group")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ProductAttributeValuesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductAttributeMapping");
-                });
-
             modelBuilder.Entity("ApiProject.Shared.Entitys.ProductAttributeValueEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -3379,19 +3364,27 @@ namespace ApiProject.Migrations
                         .HasComment("Mã thuộc tính");
 
                     b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
@@ -3407,7 +3400,7 @@ namespace ApiProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductAttributeValue");
+                    b.ToTable("ProductAttributeValue", (string)null);
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.ProductAvailabilityRangeEntity", b =>
@@ -3449,8 +3442,8 @@ namespace ApiProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("CreationTime")
                         .HasColumnType("datetime2");
@@ -3458,16 +3451,10 @@ namespace ApiProject.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsFeaturedProduct")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
@@ -3476,8 +3463,8 @@ namespace ApiProject.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -3525,10 +3512,14 @@ namespace ApiProject.Migrations
                         .HasComment("Đơn hàng chờ");
 
                     b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("2");
 
                     b.Property<long>("DeliveryDateId")
                         .HasColumnType("bigint")
@@ -3579,10 +3570,14 @@ namespace ApiProject.Migrations
                         .HasComment("Có thỏa thuận từ nhà cung cấp và người dùng");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<bool>("IsFreeShipping")
                         .HasColumnType("bit")
@@ -3601,10 +3596,14 @@ namespace ApiProject.Migrations
                         .HasComment("Đăng ký vận chuyển");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasDefaultValueSql("2");
 
                     b.Property<bool>("LimitedToStores")
                         .HasColumnType("bit")
@@ -3675,7 +3674,9 @@ namespace ApiProject.Migrations
                         .HasComment("Phạm vi khả dụng sản phẩm");
 
                     b.Property<bool>("Published")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
+                        .HasDefaultValueSql("0")
                         .HasComment("Đã được phát hành");
 
                     b.Property<int>("RecurringCycleLength")
@@ -3719,7 +3720,9 @@ namespace ApiProject.Migrations
                         .HasComment("Cho phép mở rộng quy mô sản phẩm");
 
                     b.Property<long>("SupplierId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
+                        .HasDefaultValueSql("3")
                         .HasComment("Mã nhà cung cấp");
 
                     b.Property<long>("Trademark")
@@ -3748,7 +3751,7 @@ namespace ApiProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.ProductImageMappingEntity", b =>
@@ -3765,11 +3768,8 @@ namespace ApiProject.Migrations
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageSourceId")
-                        .HasColumnType("int");
+                    b.Property<long>("ImageSourceId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -3783,8 +3783,8 @@ namespace ApiProject.Migrations
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -3820,6 +3820,46 @@ namespace ApiProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductManufacturerMapping");
+                });
+
+            modelBuilder.Entity("ApiProject.Shared.Entitys.ProductMappingAttributeValueEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("AttributeValueId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductName")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductMappingAttributeValue");
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.ProductProductTagMappingEntity", b =>
@@ -3952,7 +3992,7 @@ namespace ApiProject.Migrations
                     b.ToTable("ProductReviewTypeMapping");
                 });
 
-            modelBuilder.Entity("ApiProject.Shared.Entitys.ProductSpecificationAttributeMappingEntity", b =>
+            modelBuilder.Entity("ApiProject.Shared.Entitys.ProductSpecificationsValueEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -3960,27 +4000,49 @@ namespace ApiProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<long>("AttributeId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("CreatorUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Group")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("1");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("0");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<long?>("LastModifierUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ProductSpecificationAttributeMapping");
+                    b.ToTable("ProductSpecificationsValue", (string)null);
                 });
 
             modelBuilder.Entity("ApiProject.Shared.Entitys.ProductTagEntity", b =>

@@ -75,8 +75,6 @@ function beforeUpload(file: { type: string; size: number }) {
 }
 
 export default function AssessmentComponent(props: IAssessmentComponent) {
-
-
   useEffect(() => { }, []);
 
   const [sumStar, setsumStar] = useState(0);

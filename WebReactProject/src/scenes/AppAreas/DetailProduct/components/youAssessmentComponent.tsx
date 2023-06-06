@@ -4,13 +4,14 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { CloseCircleOutlined, FileImageOutlined, SmileOutlined } from '@ant-design/icons';
 import Slider from 'react-slick';
+import { L } from "../../../../lib/abpUtility";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import { Picker } from "emoji-mart";
-// import "emoji-mart/css/emoji-mart.css";
 const { Dragger } = Upload;
 
 declare var abp: any;
+const SCENES_KEY = "PRODUCT_DETAIL";
+
 interface IYouAssessmentComponent {
     id: number
 }
@@ -68,8 +69,9 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
         textRef.current.style.height = "30px";
         textRef.current.style.height = `${target.scrollHeight}px`;
     };
+
     // Image
-    const [imageevaluates, setimageevaluates] = useState<string[]>([]);
+    const [imageevaluates, setimageevaluates] = useState<string[]>([""]);
     const propsImage = {
         name: 'files',
         multiple: true,
@@ -97,28 +99,18 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
         autoplaySpeed: 5000,
         pauseOnHover: true
     };
+
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectImage, setselectImage] = useState('');
 
-    // input
-    const [assessmentInput, setassessmentInput] = useState("");
-    const [showEmojis, setShowEmojis] = useState(false);
-    const addEmoji = (e: any) => {
-        const refin = textRef.current;
-        refin.focus();
-        const start = assessmentInput.substring(0, refin.selectionStart);
-        const end = assessmentInput.substring(refin.selectionStart);
-        const text = start + e.native + end
-        setassessmentInput(text);
-    };
     // pinFeeling
     return (
         <>
             <div className='OJkXBiXyst'>
-                <p className='SwswGUqGyh'>Đánh giá của bạn</p>
+                <p className='SwswGUqGyh'>{L("DanhGiaCuaBan", SCENES_KEY)}</p>
                 {!!abp.auth.getToken()
-                    ? <div className='SCeJkHPGQW' style={{ width: 'initial' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    ? <div className='SCeJkHPGQW'>
+                        <div className='RlzwbVbmsV'>
                             <div className='eHCQBsdJND'>
                                 {
                                     imageevaluates.map((item: string, index) => {
@@ -160,7 +152,7 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                 onCancel={() => setIsModalVisible(false)}
                                 bodyStyle={{ textAlign: 'center' }}
                             >
-                                <div className='cKqErgPkfl' style={{ width: '100%', height: '100%' }}>
+                                <div className='cKqErgPkfl'>
                                     <span onClick={() => { setimageevaluates(imageevaluates.filter(item2 => item2 !== selectImage)); setselectImage('') }}>Xóa</span>
                                     <LazyLoadImage
                                         alt={"Lựa chọn image"}
@@ -182,38 +174,23 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                 </div>
                             </Modal>
                         </div>
-                        <div style={{ width: '100%', display: 'flex' }}>
+                        <div className='XTyAHJoPyZ'>
                             <Select
                                 mode="multiple"
                                 showArrow
                                 tagRender={tagRender}
-                                style={{ width: '80%', background: 'white', borderRadius: 15 }}
                                 options={options}
                                 bordered={false}
                                 placeholder="Ghim cảm nhận"
                             />
-                            <div style={{ width: 'calc(20% - 5px)', display: 'flex', alignItems: 'center', position: 'relative', marginLeft: '5px', background: 'white', borderRadius: 15 }}>
-                                <SmileOutlined className="JlgHldYWir" onClick={() => setShowEmojis(!showEmojis)} />
-                                {showEmojis && (
-                                    <div className="KIBtbcoNUB">
-                                        {/* <Picker onSelect={(e: any) => addEmoji(e)} /> */}
-                                    </div>
-                                )}
-                                <Dragger
-                                    className="JlgHldYWir"
-                                    method='POST'
-                                    beforeUpload={beforeUpload}
-                                    {...propsImage}
-                                    style={{ width: 80, height: 80 }}
-                                >
-                                    <FileImageOutlined />
-                                </Dragger>
+                            <div>
+                                <span>
+                                    <input type="file" className='JlgHldYWir' />
+                                </span>
                             </div>
                         </div>
                         <textarea
                             ref={textRef}
-                            value={assessmentInput}
-                            onChange={(e: any) => { onChangeHandler(e); setassessmentInput(e.target.value) }}
                             onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
                             className='eNzvzXxgia' name="" id="" />
                         <Divider className="VTsdGRPspc" orientation="center">

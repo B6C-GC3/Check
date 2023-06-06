@@ -453,6 +453,7 @@ namespace ApiProject.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Types = table.Column<int>(type: "int", nullable: false),
                     CategoryProductId = table.Column<long>(type: "bigint", nullable: false),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -750,7 +751,14 @@ namespace ApiProject.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AttributeValueOne = table.Column<long>(type: "bigint", nullable: false),
+                    AttributeValueTwo = table.Column<long>(type: "bigint", nullable: true),
+                    AttributeValueThree = table.Column<long>(type: "bigint", nullable: true),
+                    AttributeIdOne = table.Column<long>(type: "bigint", nullable: false),
+                    AttributeIdTwo = table.Column<long>(type: "bigint", nullable: true),
+                    AttributeIdThree = table.Column<long>(type: "bigint", nullable: true),
                     WeightAdjustment = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     LengthAdjustment = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     WidthAdjustment = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
@@ -758,7 +766,7 @@ namespace ApiProject.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
-                    PictureId = table.Column<int>(type: "int", nullable: false),
+                    PictureId = table.Column<long>(type: "bigint", nullable: false),
                     MainProduct = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "1"),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0"),
@@ -770,6 +778,35 @@ namespace ApiProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FeatureProduct", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileSource",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MimeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SeoFilename = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AltAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TitleAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsNew = table.Column<bool>(type: "bit", nullable: false),
+                    VirtualPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Folder = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageRoot = table.Column<long>(type: "bigint", nullable: true),
+                    Types = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileSource", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -989,35 +1026,6 @@ namespace ApiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ImageSource",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Table = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MimeType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SeoFilename = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AltAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TitleAttribute = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsNew = table.Column<bool>(type: "bit", nullable: false),
-                    VirtualPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Folder = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageRoot = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Types = table.Column<int>(type: "int", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ImageSource", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "InfoUser",
                 columns: table => new
                 {
@@ -1054,6 +1062,28 @@ namespace ApiProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LikeEvaluatesProduct", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LocalizationSystem",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LanguageNameId = table.Column<long>(type: "bigint", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Source = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LocalizationSystem", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1405,16 +1435,16 @@ namespace ApiProject.Migrations
                     MarkAsNewEndDateTimeUtc = table.Column<DateTime>(type: "datetime2", nullable: true, comment: "Thời gian kết thúc bán phiên bản mới"),
                     HasTierPrices = table.Column<bool>(type: "bit", nullable: false, comment: "Sản phẩm có nhiều mức giá"),
                     HasDiscountsApplied = table.Column<bool>(type: "bit", nullable: false, comment: "Đã áp dụng giảm giá"),
-                    Published = table.Column<bool>(type: "bit", nullable: false, comment: "Đã được phát hành"),
-                    SupplierId = table.Column<long>(type: "bigint", nullable: false, comment: "Mã nhà cung cấp"),
+                    Published = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0", comment: "Đã được phát hành"),
+                    SupplierId = table.Column<long>(type: "bigint", nullable: false, defaultValueSql: "3", comment: "Mã nhà cung cấp"),
                     ProductAlbum = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Album nhà cung cấp"),
                     SeoId = table.Column<long>(type: "bigint", nullable: false, comment: "Tối ưu tìm kiếm"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true, defaultValueSql: "2"),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true, defaultValueSql: "2")
                 },
                 constraints: table =>
                 {
@@ -1440,27 +1470,6 @@ namespace ApiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductAttributeMapping",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FeatureProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductAttributeValuesId = table.Column<int>(type: "int", nullable: false),
-                    Group = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductAttributeMapping", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductAttributeValue",
                 columns: table => new
                 {
@@ -1469,11 +1478,11 @@ namespace ApiProject.Migrations
                     AttributeId = table.Column<long>(type: "bigint", nullable: false, comment: "Mã thuộc tính"),
                     Values = table.Column<string>(type: "nvarchar(max)", nullable: false, comment: "Giá trị thuộc tính"),
                     SupplierId = table.Column<long>(type: "bigint", nullable: true, comment: "Thuộc tính do nhà cung cấp thêm mới"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
                     LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
@@ -1505,10 +1514,8 @@ namespace ApiProject.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    IsFeaturedProduct = table.Column<bool>(type: "bit", nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -1527,9 +1534,8 @@ namespace ApiProject.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageSourceId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    ImageSourceId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -1558,6 +1564,27 @@ namespace ApiProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductManufacturerMapping", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductMappingAttributeValue",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AttributeValueId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductName = table.Column<long>(type: "bigint", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductMappingAttributeValue", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1635,21 +1662,25 @@ namespace ApiProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductSpecificationAttributeMapping",
+                name: "ProductSpecificationsValue",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AttributeId = table.Column<long>(type: "bigint", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Group = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "1"),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValueSql: "0"),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
                     CreatorUserId = table.Column<long>(type: "bigint", nullable: true),
-                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true, defaultValueSql: "GETDATE()"),
                     LastModifierUserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductSpecificationAttributeMapping", x => x.Id);
+                    table.PrimaryKey("PK_ProductSpecificationsValue", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -3387,6 +3418,9 @@ namespace ApiProject.Migrations
                 name: "FeatureProduct");
 
             migrationBuilder.DropTable(
+                name: "FileSource");
+
+            migrationBuilder.DropTable(
                 name: "ForumsForum");
 
             migrationBuilder.DropTable(
@@ -3423,13 +3457,13 @@ namespace ApiProject.Migrations
                 name: "GooglePixelConfiguration");
 
             migrationBuilder.DropTable(
-                name: "ImageSource");
-
-            migrationBuilder.DropTable(
                 name: "InfoUser");
 
             migrationBuilder.DropTable(
                 name: "LikeEvaluatesProduct");
+
+            migrationBuilder.DropTable(
+                name: "LocalizationSystem");
 
             migrationBuilder.DropTable(
                 name: "Manufacturer");
@@ -3486,9 +3520,6 @@ namespace ApiProject.Migrations
                 name: "ProductAttributeCombination");
 
             migrationBuilder.DropTable(
-                name: "ProductAttributeMapping");
-
-            migrationBuilder.DropTable(
                 name: "ProductAttributeValue");
 
             migrationBuilder.DropTable(
@@ -3504,6 +3535,9 @@ namespace ApiProject.Migrations
                 name: "ProductManufacturerMapping");
 
             migrationBuilder.DropTable(
+                name: "ProductMappingAttributeValue");
+
+            migrationBuilder.DropTable(
                 name: "ProductProductTagMapping");
 
             migrationBuilder.DropTable(
@@ -3516,7 +3550,7 @@ namespace ApiProject.Migrations
                 name: "ProductReviewTypeMapping");
 
             migrationBuilder.DropTable(
-                name: "ProductSpecificationAttributeMapping");
+                name: "ProductSpecificationsValue");
 
             migrationBuilder.DropTable(
                 name: "ProductTag");

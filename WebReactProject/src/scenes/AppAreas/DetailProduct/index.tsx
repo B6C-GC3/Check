@@ -178,6 +178,7 @@ export default function DetailProduct(props: IDetailProductProps) {
                 <Col span={19}>
                     <ProductDescriptionComponents description={descriptionPost} />
                     <SimilarProductsCompponents />
+                    <YouAssessmentComponent id={52}/>
                     <AssessmentComponent id={ID_PRODUCT} />
                 </Col>
                 <Col span={5}>
