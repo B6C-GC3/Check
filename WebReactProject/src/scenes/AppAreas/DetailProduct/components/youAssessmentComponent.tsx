@@ -41,17 +41,6 @@ function tagRender(values: { label: any; value: any; closable: any; onClose: any
     );
 }
 
-function beforeUpload(file: { type: string; size: number; }) {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-        message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-}
 
 export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
     const desc = ['Rất không hài lòng', 'Không hài lòng', 'Ổn', 'Tuyệt vời', 'Rất tuyệt vời'];
@@ -103,11 +92,6 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectImage, setselectImage] = useState('');
-    const [percentUploadImage, setPercentUploadImage] = useState<number>(0);
-
-    useEffect(() => {
-
-    }, []);
 
     // pinFeeling
     return (
@@ -193,9 +177,8 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                 <UploadFileButtonCompnent
                                     maxCount={30}
                                     maxSizeFile={200}
-                                    fileListInit={[]}
                                     multiFile={true}
-                                    onSuss={(e: string[]) => { }} />
+                                    onSuss={(e: string[]) => setimageevaluates(e)} />
                                 {/* <span className='JlgHldYWir'
                                     style={{ background: "linear-gradient(#e8e8e8 " + percentUploadImage + "%, #00FFFF " + (100 - percentUploadImage) + "%)" }}>
                                     <label htmlFor="file-upload">

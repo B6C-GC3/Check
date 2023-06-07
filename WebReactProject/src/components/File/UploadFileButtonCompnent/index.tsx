@@ -10,7 +10,7 @@ import { FileDto } from './dataTypes/fileDto';
 declare var abp: any;
 
 //1048576
-const chunkSize = 100 * 10;//its 3MB, increase the number measure in mb
+const chunkSize = 1048 * 10;//its 3MB, increase the number measure in mb
 
 interface IImageUploadComponent {
   maxCount: number;
@@ -20,7 +20,6 @@ interface IImageUploadComponent {
   /** [vi] maximum upload size in MB */
   maxSizeFile: number;
   multiFile?: true | false;
-  fileListInit: string[];
   processedSameTime?: number;
   onSuss: (e: string[]) => void;
 }
@@ -28,10 +27,11 @@ interface IImageUploadComponent {
 export default function ImageUploadComponent(props: IImageUploadComponent) {
 
   const [totalSizeFile, setTotalSizeFile] = useState<number>(0);
+  const [nowSizeFile, setNowSizeFile] = useState<number>(0);
 
   //#region Sử llys upload file
   const [counter, setCounter] = useState(1);
-  const [fileToBeUpload, setFileToBeUpload] = useState([]);
+  const [fileToBeUpload, setFileToBeUpload] = useState<any>([]);
   const [beginingOfTheChunk, setBeginingOfTheChunk] = useState(0);
   const [endOfTheChunk, setEndOfTheChunk] = useState(chunkSize);
   const [progress, setProgress] = useState(0);
@@ -66,14 +66,16 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
     if (!response.error) {
       setProgress(100);
       setUploadfileSuccsce(true);
+      setFileSuccessful([...fileSuccessful, response.result.url]);
+      props.onSuss([...fileSuccessful, response.result.url]);
     }
   }
 
   const fileUpload = () => {
     setCounter(counter + 1);
     if (counter <= chunkCount) {
-      var chunk = fileToBeUpload.slice(beginingOfTheChunk, endOfTheChunk);
-      console.log('chunk', chunk);
+      let chunk = fileToBeUpload.slice(beginingOfTheChunk, endOfTheChunk);
+      setNowSizeFile(nowSizeFile + chunk.size)
       uploadChunk(chunk)
     }
   }
@@ -85,7 +87,7 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
   }, [fileToBeUpload, progress]);
 
   // nhận file bắt đầu sử lý tách file
-  const _onProcessFile = (file: any) => {
+  const _onProcessFile = (file: File) => {
     if (file) {
       setProgress(0);
       setCounter(1);
@@ -99,7 +101,6 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
       const _fileID = uuidv4();
       setFileGuid(_fileID);
       let name = _file.name;
-      console.log('first', _file, _file.name);
       const lastDot = name.lastIndexOf('.');
       const ext = name.substring(lastDot + 1);
       setextenFile("." + ext);
@@ -111,20 +112,20 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
   const [showProgress, setShowProgress] = useState<boolean>(false);
   const textInput = useRef<HTMLInputElement>(null);
   const [fileAwait, setfileAwait] = useState<FileDto[]>([]);
-  const [fileSuccessful, setFileSuccessful] = useState<string[]>(props.fileListInit);
-  const [fileSuccessfulHistory, setFileSuccessfulHistory] = useState<string[]>(props.fileListInit);
+  const [fileSuccessful, setFileSuccessful] = useState<string[]>([]);
 
   // lấy dữ liệu, map dữ liệu, chạy Same đầu
   const getFileContext = (e: any) => {
     let files = e.target.files;
     if (files.length > 0 && files.length < props.maxCount) {
       let fileLocal: FileDto[] = [];
+      let totalSize = 0;
       for (var i = 0; i < files.length; i++) {
-        setTotalSizeFile(totalSizeFile + files[i].size)
+        totalSize = totalSize + files[i].size
         var isMaxSize = files[i].size / 1024 / 1024 < props.maxSizeFile; // convert byte to MB
         fileLocal.push({ file: files[i], process: false, status: isMaxSize } as FileDto);
       }
-
+      setTotalSizeFile(totalSize)
       if (fileLocal.length !== 0) {
         let isError = fileLocal.some(f => f.status === false);
         if (isError) {
@@ -142,6 +143,8 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
   }
 
   useEffect(() => {
+    console.log('totalSizeFile ==>>>', totalSizeFile)
+    console.log('nowSizeFile', nowSizeFile)
     if (uploadfileSuccsce) {
       var fi = fileAwait[0];
       fileAwait.shift();
@@ -153,25 +156,14 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
     }
   }, [uploadfileSuccsce]);
 
-  // nhận file đã upload thành công, kết thúc 1 vong lặp
-  const _onSussBasicComponets = (e: string, numberRomove: React.Key | null) => {
-    setTimeout(() => {
-      if (e) {
-        setFileSuccessful(filesuss => [...filesuss, e]);
-        setFileSuccessfulHistory(filesuss => [...filesuss, e]);
-      }
-    }, 100);
-  };
-
-  useEffect(() => {
-    props.onSuss(fileSuccessfulHistory);
-  }, [fileSuccessfulHistory])
-
   return (
     <>
       <div className='DweGwhCScF'>
-        <label htmlFor="file-upload" className={showProgress ? "UoPngNvDqx  custom-file-upload" : " custom-file-upload"}>
-          <CloudUploadOutlined /> Upload File
+        <label htmlFor="file-upload"
+          className={showProgress ? "UoPngNvDqx  custom-file-upload" : " custom-file-upload"}>
+          <div style={{ width: ((nowSizeFile / totalSizeFile) * 100).toFixed(2).toString() + "%" }}></div>
+          <CloudUploadOutlined /> &nbsp;
+          {showProgress ? ((nowSizeFile / totalSizeFile) * 100).toFixed(2) + " %" : "Upload File"}
         </label>
         <CloseOutlined className={showProgress ? 'sUWlEgTxMv iHzkkZufHE' : 'sUWlEgTxMv'} onClick={() => setShowProgress(false)} />
         <input accept={props.mimeType} multiple={props.multiFile} ref={textInput} disabled={showProgress} id="file-upload" type="file" onChange={getFileContext} />

@@ -747,8 +747,10 @@ button.slick-arrow.slick-next {
     line-height: 2;
     display: flex;
     align-items: center;
-    display: block !important;
     position: relative !important;
+    padding: 0;
+    top: 0;
+    left: 5px;
 }
 
 .cKqErgPkfl>span:last-child>img {
@@ -760,7 +762,7 @@ button.slick-arrow.slick-next {
 .cKqErgPkfl>span:first-child {
     position: absolute;
     top: -5px;
-    right: -5px;
+    right: -10px;
     z-index: 3;
 }
 

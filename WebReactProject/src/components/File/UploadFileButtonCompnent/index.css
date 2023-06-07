@@ -31,6 +31,22 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  width: 120px;
+  text-align: center;
+  margin: 0 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-file-upload>div {
+  content: '';
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: #52c41a8c;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .DavqlhXPMg {
@@ -143,7 +159,7 @@
   height: 0;
 }
 
-.DynurKCHCm>span.anticon-send{
+.DynurKCHCm>span.anticon-send {
   color: black;
   font-size: 40px;
   position: absolute;
