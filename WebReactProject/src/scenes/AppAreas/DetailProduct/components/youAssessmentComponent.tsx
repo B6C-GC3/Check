@@ -1,12 +1,13 @@
-import React, { SyntheticEvent, useRef, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { Button, Divider, message, Modal, Rate, Select, Tag, Upload } from 'antd';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { CloseCircleOutlined, FileImageOutlined, SmileOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, FileImageOutlined, SmileOutlined, UploadOutlined } from '@ant-design/icons';
 import Slider from 'react-slick';
 import { L } from "../../../../lib/abpUtility";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import UploadFileButtonCompnent from '../../../../components/File/UploadFileButtonCompnent';
 const { Dragger } = Upload;
 
 declare var abp: any;
@@ -102,6 +103,11 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectImage, setselectImage] = useState('');
+    const [percentUploadImage, setPercentUploadImage] = useState<number>(0);
+
+    useEffect(() => {
+
+    }, []);
 
     // pinFeeling
     return (
@@ -184,9 +190,19 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                 placeholder="Ghim cảm nhận"
                             />
                             <div>
-                                <span>
-                                    <input type="file" className='JlgHldYWir' />
-                                </span>
+                                <UploadFileButtonCompnent
+                                    maxCount={30}
+                                    maxSizeFile={200}
+                                    fileListInit={[]}
+                                    multiFile={true}
+                                    onSuss={(e: string[]) => { }} />
+                                {/* <span className='JlgHldYWir'
+                                    style={{ background: "linear-gradient(#e8e8e8 " + percentUploadImage + "%, #00FFFF " + (100 - percentUploadImage) + "%)" }}>
+                                    <label htmlFor="file-upload">
+                                        <UploadOutlined />
+                                    </label>
+                                    <input id="file-upload" type="file" />
+                                </span> */}
                             </div>
                         </div>
                         <textarea

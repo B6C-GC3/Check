@@ -23,6 +23,10 @@
   font-size: large;
 }
 
+body > iframe {
+  pointer-events: none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
