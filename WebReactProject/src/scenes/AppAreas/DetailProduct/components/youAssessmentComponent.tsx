@@ -92,6 +92,7 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectImage, setselectImage] = useState('');
+    const [removeFile, setRemoveFile] = useState<string>('');
 
     // pinFeeling
     return (
@@ -107,7 +108,8 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                         if (index < 7) {
                                             return (
                                                 <div className='cKqErgPkfl'>
-                                                    <CloseCircleOutlined onClick={() => { setimageevaluates(imageevaluates.filter(item2 => item2 !== item)); }} />
+                                                    <CloseCircleOutlined
+                                                        onClick={() => { setRemoveFile(item) }} />
                                                     <LazyLoadImage
                                                         alt={"ádsda"}
                                                         effect="blur"
@@ -178,14 +180,11 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                                     maxCount={30}
                                     maxSizeFile={200}
                                     multiFile={true}
-                                    onSuss={(e: string[]) => setimageevaluates(e)} />
-                                {/* <span className='JlgHldYWir'
-                                    style={{ background: "linear-gradient(#e8e8e8 " + percentUploadImage + "%, #00FFFF " + (100 - percentUploadImage) + "%)" }}>
-                                    <label htmlFor="file-upload">
-                                        <UploadOutlined />
-                                    </label>
-                                    <input id="file-upload" type="file" />
-                                </span> */}
+                                    onSuss={(e: string[]) => setimageevaluates(e)}
+                                    removeFile={removeFile}
+                                    onremoveFile={function (e: string): void {
+                                        setimageevaluates(imageevaluates.filter(item2 => item2 !== e));
+                                    }} />
                             </div>
                         </div>
                         <textarea

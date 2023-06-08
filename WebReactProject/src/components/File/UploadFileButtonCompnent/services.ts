@@ -83,7 +83,7 @@ class UploadFileComponentService {
         }
     }
 
-    public async removeFileBasic(file: string): Promise<ResponsesResource<boolean>> {
+    public async removeFileBasic(file: string): Promise<ResponsesResource<string[]>> {
         try {
             var rs = await http.delete("/api/services/app/FileUpload/RemoveFileBasic",
                 { params: { uriFile: file } });
@@ -94,7 +94,7 @@ class UploadFileComponentService {
                 error: true,
                 errorCode: "500",
                 messageError: undefined,
-                result: false
+                result: []
             };
         }
     }

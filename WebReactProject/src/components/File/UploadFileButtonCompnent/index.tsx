@@ -10,7 +10,7 @@ import { FileDto } from './dataTypes/fileDto';
 declare var abp: any;
 
 //1048576
-const chunkSize = 1048 * 10;//its 3MB, increase the number measure in mb
+const chunkSize = 1048576 * 10;//its 3MB, increase the number measure in mb
 
 interface IImageUploadComponent {
   maxCount: number;
@@ -21,7 +21,9 @@ interface IImageUploadComponent {
   maxSizeFile: number;
   multiFile?: true | false;
   processedSameTime?: number;
+  removeFile: string;
   onSuss: (e: string[]) => void;
+  onremoveFile: (e: string) => void;
 }
 
 export default function ImageUploadComponent(props: IImageUploadComponent) {
@@ -143,8 +145,6 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
   }
 
   useEffect(() => {
-    console.log('totalSizeFile ==>>>', totalSizeFile)
-    console.log('nowSizeFile', nowSizeFile)
     if (uploadfileSuccsce) {
       var fi = fileAwait[0];
       fileAwait.shift();
@@ -155,6 +155,23 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
 
     }
   }, [uploadfileSuccsce]);
+
+  const _onRemoveFile = async (e: string) => {
+    let rsl = await services.removeFileBasic(e);
+    if (rsl.error === false && rsl.result !== undefined) {
+      let data = rsl.result;
+      props.onremoveFile(data ? props.removeFile : '');
+    }
+    else {
+      notifyError("Dữ liệu Lỗi", rsl.messageError);
+    };
+  }
+
+  useEffect(() => {
+    if (props.removeFile) {
+      _onRemoveFile(props.removeFile);
+    }
+  }, [props.removeFile])
 
   return (
     <>
