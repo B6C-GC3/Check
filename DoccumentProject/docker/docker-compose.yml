@@ -1,5 +1,18 @@
-version: '3'
+version: "3"
 services:
+
+  sql_server:
+    build: _mssql/
+    ports:
+      - 1434:1433
+    volumes:
+      - D:/mssql/data:/var/opt/mssql/data
+      - D:/mssql/log:/var/opt/mssql/log
+      - D:/mssql/secrets:/var/opt/mssql/secrets
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Sa123456 # mật khẩu tài khoản sa
+
   envoygateway:
     # folder chứa file docker
     build: _envoy/
@@ -9,9 +22,10 @@ services:
       - "3100:3100" # cổng truy cấp http thường và chuyển trang
       - "3200:3200" # cổng https
     volumes:
-      - ./_envoy/envoy.yaml:/etc/envoy/envoy.yaml # chuyên gia đọc lệnh 
+      - ./_envoy/envoy.yaml:/etc/envoy/envoy.yaml # chuyên gia đọc lệnh
       - ./_envoy/https.crt:/etc/ssl/certs/https.crt # chứng chỉ https
       - ./_envoy/key.pem:/etc/ssl/certs/key.pem # chứng chỉ https
+      - D:/envoy/log/envoy:/var/log/envoy #log
 
   rabbitmq3:
     image: rabbitmq:3.8-management-alpine
@@ -21,9 +35,9 @@ services:
       - RABBITMQ_DEFAULT_PASS= WT436
     ports:
       # AMQP protocol port
-      - '5672:5672'
+      - "5672:5672"
       # HTTP management UI
-      - '15672:15672'
+      - "15672:15672"
     volumes:
       - D:/rabbitmq/data/:/var/lib/rabbitmq/
       - D:/rabbitmq/log/:/var/log/rabbitmq

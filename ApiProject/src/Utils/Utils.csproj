@@ -61,6 +61,7 @@
 
   <ItemGroup>
     <Folder Include="Excel\" />
+    <Folder Include="Middleware\" />
     <Folder Include="OracleHelper\" />
   </ItemGroup>
 

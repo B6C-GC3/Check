@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Utils.ImageProcess.Enum
+{
+    public static class MimeType
+    {
+        public const string AACAudio = "audio/aac";
+        public const string AbiWordDocument = "application/x-abiword";
+        public const string ArchiveDocument = "application/x-freearc";
+        public const string AVIFImage = "image/avif";
+        public const string AudioVideoInterleave = "video/x-msvideo";
+        public const string AmazonKindleEBookFormat = "application/vnd.amazon.ebook";
+        public const string AnyKindOfBinaryData = "application/octet-stream";
+        public const string BitmapGraphics = "image/bmp";
+        public const string BZipArchive = "application/x-bzip";
+        public const string BZip2Archive = "application/x-bzip2";
+        public const string CDAudio = "application/x-cdf";
+        public const string CShellScript = "application/x-csh";
+        public const string CascadingStyleSheets = "text/css";
+        public const string CommaSeparatedValues = "text/csv";
+        public const string MicrosoftWord = "application/msword";
+        public const string MicrosoftWord_OpenXML = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        public const string MSEmbeddedOpenTypeFonts = "application/vnd.ms-fontobject";
+        public const string ElectronicPublication_EPUB = "application/epub+zip";
+        public const string GZipCompressedArchive = "application/gzip";
+        public const string GraphicsInterchangeFormat = "image/gif";
+        public const string HyperTextMarkupLanguage = "text/html";
+        public const string IconFormat = "image/vnd.microsoft.icon";
+        public const string ICalendarFormat = "text/calendar";
+        public const string JavaArchive = "application/java-archive";
+        public const string JPEGImages = "image/jpeg";
+        public const string JavaScript = "text/javascript";
+        public const string JSONFormat = "application/json";
+        public const string JSONLDFormat = "application/ld+json";
+        public const string MusicalInstrument = "audio/midi audio/x-midi";
+        public const string JavaScriptModule = "text/javascript";
+        public const string MP3Audio = "audio/mpeg";
+        public const string MP4Video = "video/mp4";
+        public const string MPEGVideo = "video/mpeg";
+        public const string AppleInstallerPackage = "application/vnd.apple.installer+xml";
+        public const string OpenDocumentPresentationDocument = "application/vnd.oasis.opendocument.presentation";
+        public const string OpenDocumentSpreadsheetDocument = "application/vnd.oasis.opendocument.spreadsheet";
+        public const string OpenDocumentTextDocument = "application/vnd.oasis.opendocument.text";
+        public const string OGGAudio = "audio/ogg";
+        public const string OGGVideo = "video/ogg";
+        public const string OGG = "application/ogg";
+        public const string OpusAudio = "audio/opus";
+        public const string OpenTypeFont = "font/otf";
+        public const string PortableNetworkGraphics = "image/png";
+        public const string AdobePortableDocumentFormat = "application/pdf";
+        public const string HypertextPreprocessor = "application/x-httpd-php";
+        public const string MicrosoftPowerPoint = "application/vnd.ms-powerpoint";
+        public const string MicrosoftPowerPoint_OpenXML = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+        public const string RARArchive = "application/vnd.rar";
+        public const string RichTextFormat_RTF = "application/rtf";
+        public const string BourneShellScript = "application/x-sh";
+        public const string ScalableVectorGraphics = "image/svg+xml";
+        public const string SmallWebFormat = "application/x-shockwave-flash";
+        public const string TapeArchive = "application/x-tar";
+        public const string TaggedImageFileFormat = "image/tiff";
+        public const string MPEGTransportStream = "video/mp2t";
+        public const string TrueTypeFont = "font/ttf";
+        public const string Text_Plain = "text/plain";
+        public const string MicrosoftVisio = "application/vnd.visio";
+        public const string WaveformAudioFormat = "audio/wav";
+        public const string WEBMAudio = "audio/webm";
+        public const string WEBMVideo = "video/webm";
+        public const string WEBPImage = "image/webp";
+        public const string WebOpenFontFormat = "font/woff";
+        public const string WebOpenFontFormat2 = "font/woff2";
+        public const string XHTML = "application/xhtml+xml";
+        public const string MicrosoftExcel = "application/vnd.ms-excel";
+        public const string MicrosoftExcel_OpenXML = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        public const string XML = "application/xml";
+        public const string XUL = "application/vnd.mozilla.xul+xml";
+        public const string ZIPArchive = "application/zip";
+        public const string Audio3GPP = "audio/3gpp";
+        public const string Video3GPP = "video/3gpp";
+        public const string Audio3GPP2 = "video/3gpp2";
+        public const string Video3GPP2 = "video/3gpp2";
+        public const string archive = "application/x-7z-compressed";
+    }
+}

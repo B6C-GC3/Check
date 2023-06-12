@@ -715,7 +715,7 @@ button.slick-arrow.slick-next {
     padding: 5px;
     margin-left: 10px;
     border-radius: 5px;
-    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
 }
 
 .SCeJkHPGQW:last-child {
@@ -1071,7 +1071,6 @@ button.slick-arrow.slick-next {
 }
 
 .GSUNSRmwNO {
-    width: 100%;
     border-top: 1px solid #a9a9a991;
     border-bottom: 1px solid #a9a9a991;
     display: flex;
@@ -1484,4 +1483,13 @@ button.slick-arrow.slick-next {
     width: 100%;
     background-color: #ffffff;
     border-radius: 50px;
+}
+
+.wFAgOaHIBZ{
+    height: 16px;
+    min-height: 16px;
+    max-height: 200px;
+    border: 1px solid #d9d9d9;
+    border-radius: 15px;
+    background: #f0f2f585;
 }

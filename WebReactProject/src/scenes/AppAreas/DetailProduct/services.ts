@@ -1,10 +1,44 @@
+import { PagedResultDto } from "../../../services/dto/pagedResultDto";
 import { ResponsesResource } from "../../../services/dto/responsesResource";
+import { SearchRequest } from "../../../services/dto/searchRequest ";
 import http from "../../../services/httpService";
+import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat } from "./dtos/assessmentProduct";
 import { DetailInfoBasicProductDto } from "./dtos/cartBasicProductDto";
 import { FeatureProductContainerDto, FeatureProductReadDto } from "./dtos/featureProductContainerDto";
 import { ImageForProductDto, ImageProductContainerDto } from "./dtos/imageForProductDto";
 
 class HDetailService {
+
+  public async getAssessmentProductCommnet(input: SearchRequest)
+    : Promise<ResponsesResource<PagedResultDto<AssessmentProductComment>>> {
+    let rs = await http.get("/api/services/app/AssessmentProduct/GetAssessmentProductCommnet",
+      {
+        params: {
+          propertySearch: input.propertySearch,
+          valuesSearch: input.valuesSearch,
+          propertyOrder: input.propertyOrder,
+          valueOrderBy: input.valueOrderBy,
+          pageIndex: input.pageIndex,
+          pageSize: input.pageSize
+        }
+      });
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
+
+  public async getStarProduct(idsp: number): Promise<ResponsesResource<AssessmentProductStat>> {
+    let rs = await http.get('/api/services/app/AssessmentProduct/GetStarProduct', { params: { idsp: idsp } });
+    if (rs) {
+      return rs.data;
+    }
+    else {
+      return rs;
+    }
+  }
+
   public async getFeatureCartProductService(input: number): Promise<FeatureProductContainerDto[]> {
     let rs = await http.get('/cart-feature-product', { params: { input: input } });
     if (rs) {
@@ -39,6 +73,16 @@ class HDetailService {
     let rs = await http.get("/api/services/app/DetailProduct/GetFeatureDefault", {
       params: { idsp: input },
     });
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
+
+  public async assessmentProductReq(input: AssessmentProductReq)
+    : Promise<ResponsesResource<number>> {
+    let rs = await http.post("/api/services/app/AssessmentProduct/Create", input);
     if (rs) {
       return rs.data;
     } else {

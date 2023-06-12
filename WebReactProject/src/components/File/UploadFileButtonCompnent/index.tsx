@@ -22,8 +22,10 @@ interface IImageUploadComponent {
   multiFile?: true | false;
   processedSameTime?: number;
   removeFile: string;
+  disable: boolean;
   onSuss: (e: string[]) => void;
   onremoveFile: (e: string) => void;
+  
 }
 
 export default function ImageUploadComponent(props: IImageUploadComponent) {
@@ -178,7 +180,7 @@ export default function ImageUploadComponent(props: IImageUploadComponent) {
       <div className='DweGwhCScF'>
         <label htmlFor="file-upload"
           className={showProgress ? "UoPngNvDqx  custom-file-upload" : " custom-file-upload"}>
-          <div style={{ width: ((nowSizeFile / totalSizeFile) * 100).toFixed(2).toString() + "%" }}></div>
+          <div  style={{ width: ((nowSizeFile / totalSizeFile) * 100).toFixed(2).toString() + "%" }}></div>
           <CloudUploadOutlined /> &nbsp;
           {showProgress ? ((nowSizeFile / totalSizeFile) * 100).toFixed(2) + " %" : "Upload File"}
         </label>

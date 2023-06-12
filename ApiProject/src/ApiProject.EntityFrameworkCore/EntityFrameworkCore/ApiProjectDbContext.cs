@@ -117,6 +117,8 @@ namespace ApiProject.EntityFrameworkCore
         public DbSet<UrlRecordEntity> UrlRecordEntitys { get; set; }
         public DbSet<WarehouseEntity> WarehouseEntitys { get; set; }
         public DbSet<LocalizationSystemEntity> LocalizationSystemEntitys { get; set; }
+        public DbSet<AssessmentProductEntity> AssessmentProductEntitys { get; set; }
+        public DbSet<AssessmentImageProductEntity> AssessmentImageProductEntitys { get; set; }
 
 
         public ApiProjectDbContext(DbContextOptions<ApiProjectDbContext> options)
@@ -127,6 +129,26 @@ namespace ApiProject.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<AssessmentImageProductEntity>(entity =>
+            {
+                entity.ToTable("AssessmentImageProduct");
+
+                entity.Property(s => s.IsActive).HasDefaultValueSql("1");
+                entity.Property(s => s.IsDeleted).HasDefaultValueSql("0");
+                entity.Property(s => s.CreationTime).HasDefaultValueSql("GETDATE()");
+                entity.Property(s => s.LastModificationTime).HasDefaultValueSql("GETDATE()");
+            });
+
+            modelBuilder.Entity<AssessmentProductEntity>(entity =>
+            {
+                entity.ToTable("AssessmentProduct");
+
+                entity.Property(s => s.IsActive).HasDefaultValueSql("1");
+                entity.Property(s => s.IsDeleted).HasDefaultValueSql("0");
+                entity.Property(s => s.CreationTime).HasDefaultValueSql("GETDATE()");
+                entity.Property(s => s.LastModificationTime).HasDefaultValueSql("GETDATE()");
+            });
 
             modelBuilder.Entity<CategoryProductEntity>(entity =>
             {
@@ -203,6 +225,7 @@ namespace ApiProject.EntityFrameworkCore
                 entity.Property(s => s.CreationTime).HasDefaultValueSql("GETDATE()");
                 entity.Property(s => s.LastModificationTime).HasDefaultValueSql("GETDATE()");
             });
+            
         }
     }
 }

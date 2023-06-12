@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Utils.ImageProcess.Enum
+{
+    public static class ExtensionType
+    {
+        public const string AAC = ".aac";
+        public const string ABW = ".abw";
+        public const string ARC = ".arc";
+        public const string AVIF = ".avif";
+        public const string AVI = ".avi";
+        public const string AZW = ".azw";
+        public const string BIN = ".bin";
+        public const string BMP = ".bmp";
+        public const string BZ = ".bz";
+        public const string BZ2 = ".bz2";
+        public const string CDA = ".cda";
+        public const string CSH = ".csh";
+        public const string CSS = ".css";
+        public const string CSV = ".csv";
+        public const string DOC = ".doc";
+        public const string DOCX = ".docx";
+        public const string EOT = ".eot";
+        public const string EPUB = ".epub";
+        public const string GZ = ".gz";
+        public const string GIF = ".gif";
+        public const string HTML = ".html";
+        public const string ICO = ".ico";
+        public const string ICS = ".ics";
+        public const string JAR = ".jar";
+        public const string JPG = ".jpg";
+        public const string JS = ".js";
+        public const string JSON = ".json";
+        public const string JSONLD = ".jsonld";
+        public const string MIDI = ".midi";
+        public const string MJS = ".mjs";
+        public const string MP3 = ".mp3";
+        public const string MP4 = ".mp4";
+        public const string MPEG = ".mpeg";
+        public const string MPKG = ".mpkg";
+        public const string ODP = ".odp";
+        public const string ODS = ".ods";
+        public const string ODT = ".odt";
+        public const string OGA = ".oga";
+        public const string OGV = ".ogv";
+        public const string OGX = ".ogx";
+        public const string OPUS = ".opus";
+        public const string OTF = ".otf";
+        public const string PNG = ".png";
+        public const string PDF = ".pdf";
+        public const string PHP = ".php";
+        public const string PPT = ".ppt";
+        public const string PPTX = ".pptx";
+        public const string RAR = ".rar";
+        public const string RTF = ".rtf";
+        public const string SH = ".sh";
+        public const string SVG = ".svg";
+        public const string SWF = ".swf";
+        public const string TAR = ".tar";
+        public const string TIFF = ".tiff";
+        public const string TS = ".ts";
+        public const string TTF = ".ttf";
+        public const string TXT = ".txt";
+        public const string VSD = ".vsd";
+        public const string WAV = ".wav";
+        public const string WEBA = ".weba";
+        public const string WEBM = ".webm";
+        public const string WEBP = ".webp";
+        public const string WOFF = ".woff";
+        public const string WOFF2 = ".woff2";
+        public const string XHTML = ".xhtml";
+        public const string XLS = ".xls";
+        public const string XLSX = ".xlsx";
+        public const string XML = ".xml";
+        public const string XUL = ".xul";
+        public const string ZIP = ".zip";
+        public const string _3GP = ".3gp";
+        public const string _3G2 = ".3g2";
+        public const string _7Z = ".7z";
+        public const string WMF = ".wmf";
+        public const string EMF = ".emf";
+        public const string EXIF = ".exif";
+        public const string JPE = ".jpe";
+    }
+}

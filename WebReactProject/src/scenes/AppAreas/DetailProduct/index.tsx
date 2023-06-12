@@ -43,8 +43,7 @@ export default function DetailProduct(props: IDetailProductProps) {
     const [speccification, setSpeccification] = useState<ProductSpecificationsAttributeDto[]>([]);
     const [groupSpeccification, setGroupSpeccification] = useState<string[]>([]);
     const [dataProduct, setDataProduct] = useState<DetailInfoBasicProductDto>();
-    const ID_PRODUCT = 7;
-    //props.location.pathname.substring(props.location.pathname.lastIndexOf("/adsid=") + 7);
+    const ID_PRODUCT = 52;
 
     useEffect(() => {
         _loadBeginInfoProduct(52);
