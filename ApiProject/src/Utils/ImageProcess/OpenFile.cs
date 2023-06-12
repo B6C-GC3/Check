@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utils.Exceptions;
 using Microsoft.AspNetCore.Hosting;
+using Utils.Aggregate;
 
 namespace Utils.ImageProcess
 {
@@ -30,7 +31,7 @@ namespace Utils.ImageProcess
             }
             catch (Exception ex)
             {
-                throw new ClientException("IMAGE", ERROR_DATA.WRONG_FORMAT);
+                throw new ClientException("IMAGE", "WRONG FORMAT");
             }
             return bitmap;
         }

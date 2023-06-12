@@ -18,7 +18,7 @@ namespace Utils.ImageProcess.Dto
             this.Image = image;
             this.Quality = ConfigImaging.High;
             this.Ratio = true;
-            this.ListSizeImages = new(){
+            this.ListSizeImages = new List<SizeImage>(){
                  SizeImage.S120x120,
                  SizeImage.S300x300,
                  SizeImage.S180x180,
@@ -112,3 +112,4 @@ namespace Utils.ImageProcess.Dto
             };
         }
     }
+}

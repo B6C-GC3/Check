@@ -28,6 +28,7 @@ using ApiProject.Aggregate;
 using Microsoft.Extensions.FileProviders;
 using ApiProject.Authorization;
 using ApiProject.Web.Host.Middleware;
+using Utils.Aggregate;
 
 namespace ApiProject.Web.Host.Startup
 {

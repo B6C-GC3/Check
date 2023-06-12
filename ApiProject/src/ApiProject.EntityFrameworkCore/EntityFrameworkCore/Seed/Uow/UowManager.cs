@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnitOfWork;
+using Utils.Aggregate;
 
 namespace ApiProject.EntityFrameworkCore.Seed.Uow
 {

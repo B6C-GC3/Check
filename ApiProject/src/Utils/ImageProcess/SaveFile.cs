@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Utils.Aggregate;
 using Utils.ImageProcess.Dto;
+using Utils.ImageProcess.Enum;
 
 namespace Utils.ImageProcess
 {
     public class SaveFile
     {
-        public IWebHostEnvironment _environment;
+        public IHostingEnvironment _environment;
         public SaveFile()
         {
-            _environment = (IWebHostEnvironment)StaticServiceProvider.Provider.GetService(typeof(IWebHostEnvironment));
+            _environment = (IHostingEnvironment)StaticServiceProvider.Provider.GetService(typeof(IHostingEnvironment));
         }
 
         public async Task<string> SaveToHostAsync(IFormFile file)
@@ -64,7 +67,7 @@ namespace Utils.ImageProcess
             }
             string fullName = @$"{file.Uid}{ConfigSizeImage.NameSizeDefault(file.Size)}{ExtensionType.JPG}";
             var fullpath = Path.Combine(path, fullName);
-            using (FileStream stream = new(fullpath, FileMode.Create))
+            using (FileStream stream = new FileStream(fullpath, FileMode.Create))
             {
                 try
                 {
