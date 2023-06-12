@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using UnitOfWork;
 using UnitOfWork.Collections;
 using Utils.Exceptions;
+using Utils.ImageProcess.Dto;
+using Utils.ImageProcess;
 
 namespace ApiProject.App.AssessmentProductAppService
 {
@@ -37,13 +39,33 @@ namespace ApiProject.App.AssessmentProductAppService
         [HttpPost]
         public async Task<int> Create([FromBody] AssessmentProductReq input)
         {
+            const string FOLDER_IMAGE_ROOT = "Zzartjvost";
+
             // check
             if (_abpSession.UserId == null) throw new ClientException("LOGIN", ERROR_DATA.DATA_NULL);
             // check any
             foreach (var item in input.Image) if (!File.Exists(_hostingEnvironment.WebRootPath + item)) throw new ClientException("IMAGE", ERROR_DATA.DATA_NULL);
             var listImage = input.Image;
+
             //sử lý ảnh 2 loại 340x340 and 80x80
-            // insert image
+            List<ImageResizeOutput> imgRsl = new();
+            // check image
+            OpenFile openImage = new();
+            SquareImage squareImage = new();
+            SaveFile save = new();
+
+            input.Image.ForEach(async image =>
+            {
+                var bitmapLst = await openImage.ReadImageToBitmap(image);
+                if (bitmapLst is null) throw new ClientException("IMAGE", ERROR_DATA.DATA_NULL);
+                var convertSquareImage = squareImage.ConvertSquareImage(bitmapLst);
+                if (convertSquareImage is null) throw new ClientException("IMAGE", ERROR_DATA.WRONG_FORMAT);
+                // resize
+                var sizeImageConvert = ResizeImage.ResizeImageToBitmap(new List<ResizeImageDto>() { new ResizeImageDto(convertSquareImage, true) });
+                // save image
+                foreach (var sic in sizeImageConvert) imgRsl.Add(save.SaveImageConvert(sic));
+            });
+           
             // insert Assessment
             var assessmentProduct = new AssessmentProductEntity()
             {

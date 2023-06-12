@@ -13,6 +13,17 @@ namespace Utils.ImageProcess.Dto
 
         }
 
+        public ResizeImageDto(Bitmap image, bool isComment)
+        {
+            this.Image = image;
+            this.Quality = ConfigImaging.High;
+            this.Ratio = true;
+            this.ListSizeImages = new List<SizeImage>(){
+                 SizeImage.S340x340,
+                 SizeImage.S80x80
+            };
+        }
+
         public ResizeImageDto(Bitmap image)
         {
             this.Image = image;

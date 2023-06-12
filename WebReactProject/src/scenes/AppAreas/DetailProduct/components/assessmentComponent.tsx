@@ -334,40 +334,44 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
           </div>
         </Modal>
       </div>
-      {dataCommnet.map(item => {
-        return (<div className="SCeJkHPGQW" >
-          <div className="BDVwiLlqTH">
-            <div className="LNOnCyyxQa">
-              <div className="QmalboputO">
-                <img className="UsOtLlsjsj" src={abp.serviceAlbumImage} alt="" />
-                <div className="UyXPaSOgcb">
-                  <p className="afjfYlfVaY">{item.userComment.name}</p>
-                  <p>Đã tham gia : {new Date(Date.now() - new Date(item.userComment.time).getDate()).getDay()} ngày</p>
+
+      {dataCommnet === undefined || dataCommnet.length === 0
+        ? <div className="QKCHfgxgrM">Sản phẩm chưa có đánh giá nào. Hãy là người đầu tiên đánh giá sản phẩm!</div>
+        : <>
+          {dataCommnet.map(item => {
+            return (<div className="SCeJkHPGQW" >
+              <div className="BDVwiLlqTH">
+                <div className="LNOnCyyxQa">
+                  <div className="QmalboputO">
+                    <img className="UsOtLlsjsj" src={abp.serviceAlbumImage} alt="" />
+                    <div className="UyXPaSOgcb">
+                      <p className="afjfYlfVaY">{item.userComment.name}</p>
+                      <p>Đã tham gia : {new Date(Date.now() - new Date(item.userComment.time).getDate()).getDay()} ngày</p>
+                    </div>
+                  </div>
+                  <p className="qCuxZuQMLY">Đã viết: {item.userComment.evaluated} Đánh giá</p>
+                  <p className="qCuxZuQMLY">Đã viết: {item.userComment.respected} Phản hồi</p>
+                  <p className="qCuxZuQMLY">Đã nhận: {item.userComment.incorrected} Lượt cảm ơn</p>
+                  <p className="qCuxZuQMLY">Đã nhận: {item.userComment.responded} Lượt vô nghĩa</p>
                 </div>
-              </div>
-              <p className="qCuxZuQMLY">Đã viết: {item.userComment.evaluated} Đánh giá</p>
-              <p className="qCuxZuQMLY">Đã viết: {item.userComment.respected} Phản hồi</p>
-              <p className="qCuxZuQMLY">Đã nhận: {item.userComment.incorrected} Lượt cảm ơn</p>
-              <p className="qCuxZuQMLY">Đã nhận: {item.userComment.responded} Lượt vô nghĩa</p>
-            </div>
-            <div className="cfgjlVcRMQ">
-              <div className="liyeWatEpD">
-                <Rate
-                  className="LgfLOmjQMW"
-                  value={item.star ?? 0}
-                  disabled
-                  defaultValue={3}
-                />
-              </div>
-              <p className="uVOrGSOXsc">
-                <DropboxOutlined />
-                <span>Đã mua hàng</span>
-                <span>
-                  {"element"} <PushpinOutlined />
-                </span>
-              </p>
-              <div className="GWmMQEuuPK">{item.commnet}</div>
-              {/* <div className="gRDMnIHgdU">
+                <div className="cfgjlVcRMQ">
+                  <div className="liyeWatEpD">
+                    <Rate
+                      className="LgfLOmjQMW"
+                      value={item.star ?? 0}
+                      disabled
+                      defaultValue={3}
+                    />
+                  </div>
+                  <p className="uVOrGSOXsc">
+                    <DropboxOutlined />
+                    <span>Đã mua hàng</span>
+                    <span>
+                      {"element"} <PushpinOutlined />
+                    </span>
+                  </p>
+                  <div className="GWmMQEuuPK">{item.commnet}</div>
+                  {/* <div className="gRDMnIHgdU">
                 <div
                   className="cKqErgPkfl"
                   onClick={() => setIsModalVisible(true)}
@@ -391,63 +395,63 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                   <span className="VNDntFciDM">Hiển thị thêm 111 ảnh khác</span>
                 </div>
               </div> */}
-              <div className="puUSLSJlzZ">
-                <div className="dnBQQNdEwT">
-                  {item.attributeProductComment[0].attributeKeyName} : <span>{item.attributeProductComment[0].attributeValueName} </span>
-                </div>
-                <div className="dnBQQNdEwT">
-                  {item.attributeProductComment[1].attributeKeyName} : <span>{item.attributeProductComment[1].attributeValueName} </span>
-                </div>
-                <div className="dnBQQNdEwT">
-                  {item.attributeProductComment[2].attributeKeyName} : <span>{item.attributeProductComment[2].attributeValueName} </span>
-                </div>
-              </div>
-              <div className="GSUNSRmwNO">
-                {" "}
-                {/*dLGiHcVLYs*/}
-                <Button
-                  type="link"
-                  className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
-                  icon={<LikeOutlined />}
-                >
-                  {" "}
-                  Hữu ích ({item.useful})
-                </Button>
-                <Button
-                  type="link"
-                  className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
-                  icon={<DislikeOutlined />}
-                >
-                  Vô nghĩa ({item.meaningless})
-                </Button>
-                <Button
-                  type="link"
-                  className="aUlQvWccLA"
-                  icon={<MessageOutlined />}
-                >
-                  Phản hồi({item.feedback})
-                </Button>
-              </div>
-              <div
-                style={{
-                  width: "100%",
-                  textAlign: "end",
-                  height: 20,
-                  lineHeight: 1,
-                }}
-              >
-                <Select
-                  className="rzYsHrKrLz"
-                  defaultValue="phuHopNhat"
-                  suffixIcon={<CaretDownOutlined />}
-                  bordered={false}
-                >
-                  <Option value="phuHopNhat">Phù Hợp Nhất</Option>
-                  <Option value="MoiNhat">Mới Nhất</Option>
-                  <Option value="TatCaBinhLuan">Tất Cả Bình Luận</Option>
-                </Select>
-              </div>
-              {/* <div className="YLmZhraSLJ">
+                  <div className="puUSLSJlzZ">
+                    <div className="dnBQQNdEwT">
+                      {item.attributeProductComment[0].attributeKeyName} : <span>{item.attributeProductComment[0].attributeValueName} </span>
+                    </div>
+                    <div className="dnBQQNdEwT">
+                      {item.attributeProductComment[1].attributeKeyName} : <span>{item.attributeProductComment[1].attributeValueName} </span>
+                    </div>
+                    <div className="dnBQQNdEwT">
+                      {item.attributeProductComment[2].attributeKeyName} : <span>{item.attributeProductComment[2].attributeValueName} </span>
+                    </div>
+                  </div>
+                  <div className="GSUNSRmwNO">
+                    {" "}
+                    {/*dLGiHcVLYs*/}
+                    <Button
+                      type="link"
+                      className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
+                      icon={<LikeOutlined />}
+                    >
+                      {" "}
+                      Hữu ích ({item.useful})
+                    </Button>
+                    <Button
+                      type="link"
+                      className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
+                      icon={<DislikeOutlined />}
+                    >
+                      Vô nghĩa ({item.meaningless})
+                    </Button>
+                    <Button
+                      type="link"
+                      className="aUlQvWccLA"
+                      icon={<MessageOutlined />}
+                    >
+                      Phản hồi({item.feedback})
+                    </Button>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      textAlign: "end",
+                      height: 20,
+                      lineHeight: 1,
+                    }}
+                  >
+                    <Select
+                      className="rzYsHrKrLz"
+                      defaultValue="phuHopNhat"
+                      suffixIcon={<CaretDownOutlined />}
+                      bordered={false}
+                    >
+                      <Option value="phuHopNhat">Phù Hợp Nhất</Option>
+                      <Option value="MoiNhat">Mới Nhất</Option>
+                      <Option value="TatCaBinhLuan">Tất Cả Bình Luận</Option>
+                    </Select>
+                  </div>
+                  {/* <div className="YLmZhraSLJ">
                 <div style={{ position: "relative", display: 'flex' }}>
                   <textarea
                     ref={textRef}
@@ -592,16 +596,18 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                   </div>
                 </div>
               </div> */}
-              <Divider className="VTsdGRPspc" orientation="left">
-                <a>Xem thêm 10 bình luận</a>
-              </Divider>
-            </div>
-          </div>
-        </div>)
-      })}
-      <Divider className="VTsdGRPspc" orientation="left">
-        Xem thêm 10 bình luận
-      </Divider>
+                  <Divider className="VTsdGRPspc" orientation="left">
+                    <a>Xem thêm 10 bình luận</a>
+                  </Divider>
+                </div>
+              </div>
+            </div>)
+          })}
+          <Divider className="VTsdGRPspc" orientation="left">
+            Xem thêm 10 bình luận
+          </Divider>
+        </>
+      }
     </div>
   );
 }
