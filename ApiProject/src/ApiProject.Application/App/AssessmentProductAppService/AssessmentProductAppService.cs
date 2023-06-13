@@ -19,6 +19,8 @@ using UnitOfWork.Collections;
 using Utils.Exceptions;
 using Utils.ImageProcess.Dto;
 using Utils.ImageProcess;
+using ApiProject.FileExtention;
+using Utils.ImageProcess.Enum;
 
 namespace ApiProject.App.AssessmentProductAppService
 {
@@ -65,7 +67,28 @@ namespace ApiProject.App.AssessmentProductAppService
                 // save image
                 foreach (var sic in sizeImageConvert) imgRsl.Add(save.SaveImageConvert(sic));
             });
-           
+
+            // add image root
+            var imageRoot = imgRsl.Select(s => new FileSourceEntity
+            {
+                ImageName = Path.GetFileName(s.Url).Substring(0, 36),
+                MimeType = MimeType.JPEGImages,
+                SeoFilename = string.Empty,
+                AltAttribute = string.Empty,
+                TitleAttribute = string.Empty,
+                IsNew = true,
+                VirtualPath = Path.GetFileName(s.Url),
+                Size = s.Size,
+                Folder = FOLDER_IMAGE_ROOT,
+                ImageRoot = null,
+                Types = (int)TypeFile.Image,
+                IsActive = true,
+                IsDeleted = false
+            }).ToList();
+
+            _unitOfWork.GetRepository<Shared.Entitys.FileSourceEntity>().Insert(imageRoot);
+            _unitOfWork.SaveChanges();
+
             // insert Assessment
             var assessmentProduct = new AssessmentProductEntity()
             {
@@ -73,14 +96,35 @@ namespace ApiProject.App.AssessmentProductAppService
                 Star = input.StarNumber,
                 Feel = JsonConvert.SerializeObject(input.Feel),
                 Level = input.Level,
+                AttributeIdOne = 1, 
+                AttributeIdTwo = 10039,
+                AttributeIdThree = 10040,
+                AttributeValueOne = 1,
+                AttributeValueTwo = 10062,
+                AttributeValueThree = 10067,
                 AssessmentProductId = input.AssessmentProductId,
                 CreatorUserId = _abpSession.UserId,
                 LastModifierUserId = _abpSession.UserId,
                 IsNew = true
             };
+
             _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().Insert(assessmentProduct);
             _unitOfWork.SaveChanges();
-            // mapping
+
+            // mapping image vs assessment
+            var mappingContainer = imageRoot.Select(s => new AssessmentImageProductEntity
+            {
+                ImageSourceId = s.Id,
+                AssessmentProductId = assessmentProduct.Id,
+                IsActive = true,
+                IsDeleted = false,
+                CreatorUserId = _abpSession.UserId,
+                LastModifierUserId = _abpSession.UserId
+            });
+
+            _unitOfWork.GetRepository<Shared.Entitys.AssessmentImageProductEntity>().Insert(mappingContainer);
+            _unitOfWork.SaveChanges();
+
             return 1;
         }
 

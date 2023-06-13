@@ -61,7 +61,7 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
     const onChangeHandler = async function () {
         // check
         var rsl = await services.assessmentProductReq({
-            image: [],
+            image: imageevaluates,
             starNumber: star,
             feel: tagRsl,
             commnet: commnet,
