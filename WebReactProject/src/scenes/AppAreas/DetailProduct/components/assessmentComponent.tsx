@@ -1,9 +1,9 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { SyntheticEvent, cloneElement, useEffect, useRef, useState } from "react";
 import {
   Button, Divider, message, Modal, Progress, Rate, Select, Typography,
 } from "antd";
 import {
-  CameraOutlined, CaretDownOutlined, CloseCircleOutlined, DislikeOutlined, DropboxOutlined, EllipsisOutlined, FireOutlined, HeartOutlined, LikeOutlined, MessageOutlined, NotificationOutlined, PushpinOutlined, SmileOutlined, StarFilled,
+  CameraOutlined, CaretDownOutlined, CloseCircleOutlined, CloseOutlined, DislikeOutlined, DropboxOutlined, EllipsisOutlined, FireOutlined, HeartOutlined, LikeOutlined, MessageOutlined, NotificationOutlined, PushpinOutlined, SendOutlined, SmileOutlined, StarFilled,
 } from "@ant-design/icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -12,7 +12,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import Dragger from "antd/lib/upload/Dragger";
 import services from "../services";
-import { AssessmentProductComment, AssessmentProductStat } from "../dtos/assessmentProduct";
+import { AssessmentProductComment, AssessmentProductImage, AssessmentProductStat, TypeLikeComment } from "../dtos/assessmentProduct";
 import { notifyError } from "../../../../components/Common/notification";
 import moment from "moment";
 const { Text } = Typography;
@@ -32,13 +32,13 @@ const settings3 = {
   pauseOnHover: true,
 };
 
-const desc = [
-  "Rất không hài lòng",
-  "Không hài lòng",
-  "Ổn",
-  "Tuyệt vời",
-  "Rất tuyệt vời",
+const options = [
+  { value: 1, label: 'Đóng gói sản phẩm rất đẹp và chắc chắn' },
+  { value: 2, label: 'Chất lượng sản phẩm tuyệt vời' },
+  { value: 3, label: 'Rất đáng tiền' },
+  { value: 4, label: 'Shop phục vụ rất tốt' }
 ];
+const ID_SP = 52;
 
 export default function AssessmentComponent(props: IAssessmentComponent) {
 
@@ -75,7 +75,7 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
   //modal
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageevaluates, setimageevaluates] = useState<string[]>([]);
-  const [selectImage, setselectImage] = useState("");
+  const [selectImage, setselectImage] = useState("/Zzartjvost/dbce5933-1ccc-4418-ac06-bff82185005es340x340.jpg");
 
   // review
   const [provisoOnselect, setprovisoOnselect] = useState<number[]>([]);
@@ -116,42 +116,116 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
     }
   }
 
-  const dateConvert = (date: string) => {
-    var a = new Date(Date.now() - new Date(date).getDate()).getDay();
+  // renderImage Commnet
+  const imageHandleUI = (item: AssessmentProductImage[]) => {
+    if (item.length >= 1 && item.length <= 5)
+      return item.map(m => {
+        return (<>
+          <div
+            className="cKqErgPkfl"
+            onClick={() => _showImageSelected(m.imageName340x340)}
+          >
+            <LazyLoadImage
+              alt={"ádsda"}
+              effect="blur"
+              src={abp.serviceAlbumImage + m.imageName80x80}
+            />
+          </div>
+        </>);
+      });
+    else if (item.length > 5) {
+      return (<>
+        <div
+          className="cKqErgPkfl"
+        >
+          <LazyLoadImage
+            alt={"ádsda"}
+            effect="blur"
+            src={abp.serviceAlbumImage + "itemImage.image80x80"}
+          />
+        </div>
+        <div
+          className="cKqErgPkfl"
+        >
+          <LazyLoadImage
+            alt={"ádsda"}
+            effect="blur"
+            className="cKqErgPkfl"
+            src={abp.serviceAlbumImage + "itemImage.image80x80"}
+          />
+          <span className="VNDntFciDM">Hiển thị thêm 111 ảnh khác</span>
+        </div>
+      </>);
+    }
+    else return (<></>)
   }
-  useEffect(() => { }, []);
+
+  const _showImageSelected = (image340x340: string) => {
+    setIsModalVisible(true);
+    setselectImage(image340x340);
+  }
+
   // like and dislike
-  const likeReviewEvaluate = (levelEvaluates: number, idEvaluates: number) => {
+  const likeReviewEvaluate = async (levelEvaluates: number, typeLikeComment: TypeLikeComment, idEvaluates: number, isStatus: boolean) => {
     if (!!abp.auth.getToken()) {
+
+      var rsl = await services.ChangeLikeOrDislikeAssessment({
+        idsp: ID_SP,
+        idAssessment: idEvaluates,
+        level: levelEvaluates,
+        status: isStatus,
+        typeLike: typeLikeComment
+      });
+
+      if (rsl && rsl.error === false && rsl.result !== undefined) {
+        if (rsl.result === 1) {
+          // change view 
+          let dataCommnetTemp = dataCommnet.map(m => {
+            if (m.id === idEvaluates) {
+              if (isStatus) {
+                if (typeLikeComment === TypeLikeComment.IsLike) {
+                  m.myUseful = isStatus;
+                  m.useful = m.useful + 1;
+                  if (m.myMeaningless) {
+                    m.myMeaningless = false;
+                    m.meaningless = m.meaningless - 1;
+                  }
+                }
+                else {
+                  m.myMeaningless = isStatus;
+                  m.meaningless = m.meaningless + 1;
+                  if (m.myUseful) {
+                    m.myUseful = false;
+                    m.useful = m.useful - 1;
+                  }
+                }
+              }
+              else {
+                if (typeLikeComment === TypeLikeComment.IsLike) {
+                  m.myUseful = isStatus;
+                  m.useful = m.useful - 1;
+                }
+                else {
+                  m.myMeaningless = isStatus;
+                  m.meaningless = m.meaningless - 1;
+                }
+              }
+            }
+
+            return m;
+          });
+
+          setDataCommnet(dataCommnetTemp);
+          return isStatus;
+        }
+      }
+      else {
+        notifyError("STAR", "LỖI");
+      }
     } else {
       message.warning("Bạn cần đăng nhập để like bình luận này!");
     }
   };
-
-  const disLikeReviewEvaluate = (
-    levelEvaluates: number,
-    idEvaluates: number
-  ) => {
-    if (!!abp.auth.getToken()) {
-    } else {
-
-      message.warning("Bạn cần đăng nhập để phản đối bình luận này!");
-    }
-  };
-
-  const textRef = useRef<any>();
-
-  const onChangeHandler = function (e: SyntheticEvent) {
-    const target = e.target as HTMLTextAreaElement;
-    textRef.current.style.height = "30px";
-    textRef.current.style.height = `${target.scrollHeight}px`;
-  };
-
-  const [assessmentRepcommentInput, setassessmentRepcommentInput] = useState("");
-
-  const sendRepCommentlv1 = (id: number) => { };
-
-  const sendRepCommentlv2 = (id: number) => { };
 
   return (
     <div className="OJkXBiXyst">
@@ -311,7 +385,7 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
           onCancel={() => setIsModalVisible(false)}
           bodyStyle={{ textAlign: "center" }}
         >
-          <div className="cKqErgPkfl">
+          <div className="NOetRWlgXg">
             <LazyLoadImage
               alt={"Lựa chọn image"}
               effect="blur"
@@ -319,7 +393,7 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
               src={!selectImage ? "" : abp.serviceAlbumImage + selectImage}
             />
           </div>
-          <div className="CDBhRpMxwl">
+          <div className="PZKHFqYPLI">
             <Slider {...settings3}>
               <img
                 className={
@@ -327,7 +401,7 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                   " " +
                   (selectImage === "element.image80x80" ? "bFpTBTrDfH" : "")
                 }
-                src={abp.serviceAlbumImage + "element.image80x80"}
+                src={abp.serviceAlbumImage + "/Zzartjvost/dbce5933-1ccc-4418-ac06-bff82185005es80x80.jpg"}
                 alt={""}
               />
             </Slider>
@@ -366,35 +440,16 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                   <p className="uVOrGSOXsc">
                     <DropboxOutlined />
                     <span>Đã mua hàng</span>
-                    <span>
-                      {"element"} <PushpinOutlined />
-                    </span>
+                    {item.feel?.map(m => {
+                      return (<span>
+                        {options[m].label} <PushpinOutlined />
+                      </span>)
+                    })}
                   </p>
                   <div className="GWmMQEuuPK">{item.commnet}</div>
-                  {/* <div className="gRDMnIHgdU">
-                <div
-                  className="cKqErgPkfl"
-                  onClick={() => setIsModalVisible(true)}
-                >
-                  <LazyLoadImage
-                    alt={"ádsda"}
-                    effect="blur"
-                    src={abp.serviceAlbumImage + "itemImage.image80x80"}
-                  />
-                </div>
-                <div
-                  className="cKqErgPkfl"
-                  onClick={() => setIsModalVisible(true)}
-                >
-                  <LazyLoadImage
-                    alt={"ádsda"}
-                    effect="blur"
-                    className="cKqErgPkfl"
-                    src={abp.serviceAlbumImage + "itemImage.image80x80"}
-                  />
-                  <span className="VNDntFciDM">Hiển thị thêm 111 ảnh khác</span>
-                </div>
-              </div> */}
+                  <div className="gRDMnIHgdU">
+                    {imageHandleUI(item.image)}
+                  </div>
                   <div className="puUSLSJlzZ">
                     <div className="dnBQQNdEwT">
                       {item.attributeProductComment[0].attributeKeyName} : <span>{item.attributeProductComment[0].attributeValueName} </span>
@@ -407,20 +462,19 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                     </div>
                   </div>
                   <div className="GSUNSRmwNO">
-                    {" "}
-                    {/*dLGiHcVLYs*/}
                     <Button
                       type="link"
-                      className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
+                      className={item.myUseful ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
                       icon={<LikeOutlined />}
+                      onClick={async () => likeReviewEvaluate(1, TypeLikeComment.IsLike, item.id, !item.myUseful)}
                     >
-                      {" "}
                       Hữu ích ({item.useful})
                     </Button>
                     <Button
                       type="link"
-                      className={true ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
+                      className={item.myMeaningless ? "aUlQvWccLA dLGiHcVLYs" : "aUlQvWccLA"}
                       icon={<DislikeOutlined />}
+                      onClick={() => likeReviewEvaluate(1, TypeLikeComment.IsDislike, item.id, !item.myMeaningless)}
                     >
                       Vô nghĩa ({item.meaningless})
                     </Button>
@@ -432,173 +486,10 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                       Phản hồi({item.feedback})
                     </Button>
                   </div>
-                  <div
-                    style={{
-                      width: "100%",
-                      textAlign: "end",
-                      height: 20,
-                      lineHeight: 1,
-                    }}
-                  >
-                    <Select
-                      className="rzYsHrKrLz"
-                      defaultValue="phuHopNhat"
-                      suffixIcon={<CaretDownOutlined />}
-                      bordered={false}
-                    >
-                      <Option value="phuHopNhat">Phù Hợp Nhất</Option>
-                      <Option value="MoiNhat">Mới Nhất</Option>
-                      <Option value="TatCaBinhLuan">Tất Cả Bình Luận</Option>
-                    </Select>
-                  </div>
-                  {/* <div className="YLmZhraSLJ">
-                <div style={{ position: "relative", display: 'flex' }}>
-                  <textarea
-                    ref={textRef}
-                    value={assessmentRepcommentInput}
-                    onChange={(e: any) => {
-                      onChangeHandler(e);
-                      setassessmentRepcommentInput(e.target.value);
-                    }}
-                    onKeyPress={(e) => {
-                      (e.key === "Enter" && e.preventDefault()) ??
-                        sendRepCommentlv1(1);
-                    }}
-                    className="eNzvzXxgia wFAgOaHIBZ"
-                    name=""
-                    id=""
-                    placeholder="Viết Bình luận ..."
-                  />
-                </div>
-                <div className="RPjVXBNSbL">
-                  <div className="cKqErgPkfl">
-                    <CloseCircleOutlined />
-                    <LazyLoadImage
-                      alt={"ádsda"}
-                      effect="blur"
-                      onClick={() => setIsModalVisible(true)}
-                      src={abp.serviceAlbumImage}
-                    />
-                  </div>
-                  <div className="cKqErgPkfl">
-                    <LazyLoadImage
-                      alt={"ádsda"}
-                      effect="blur"
-                      className="cKqErgPkfl"
-                      src={abp.serviceAlbumImage + 1}
-                    />
-                    <span className="VNDntFciDM">
-                      Hiển thị thêm {imageevaluates.length - 6} ảnh khác
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="nNVxrpOumL">
-                <div className="nNVxrpOumL">
-                  <div className="JwMWGpetPE">
-                    <div className="GGKviWLHJH">
-                      <div className="ZCcIcopBuX"></div>
-                      <img
-                        className="EuEinMInHi"
-                        src={abp.serviceAlbumImage + "repcomment.avatarAccount"}
-                        alt=""
-                      />
-                    </div>
-                    <div className="FwoJYIRsKF">
-                      <div className="vytbSMnWZY">
-                        <div className="EFShuNSjPz">{1}</div>
-                        <div className="bRVbtcpFyr">{1}</div>
-                        <div className="RqaOLkKjHG">
-                          <HeartOutlined /> {1}
-                          <FireOutlined /> {1}
-                          <MessageOutlined /> {1}
-                          <NotificationOutlined /> {1}
-                        </div>
-                      </div>
-                      <ul className="nxLBfYxLOR">
-                        <li
-                          className={true ? "iQrPsVgAsr" : ""}
-                          onClick={() => likeReviewEvaluate(1, 1)}
-                        >
-                          Thích
-                        </li>
-                        <li
-                          className={true ? "iQrPsVgAsr" : ""}
-                          onClick={() => disLikeReviewEvaluate(1, 1)}
-                        >
-                          Không thích{" "}
-                        </li>
-                        <li>Phản hồi</li>
-                        <li>fvxncvn</li>
-                      </ul>
-                    </div>
-                    <EllipsisOutlined />
-                  </div>
-                  <div className="ByKVhDewtl uIDCSlWITT">
-                    <div className="GGKviWLHJH">
-                      <div className="bHexDsHAAu"></div>
-                      <img
-                        className="EuEinMInHi"
-                        src={abp.serviceAlbumImage + "replycomment.avatarAccoun"}
-                        alt=""
-                      />
-                    </div>
-                    <div className="FwoJYIRsKF">
-                      <div className="vytbSMnWZY">
-                        <div className="EFShuNSjPz">gh</div>
-                        <div className="bRVbtcpFyr">sfa</div>
-                      </div>
-                      <ul className="nxLBfYxLOR">
-                        <li>Phản hồi</li>
-                        <li></li>
-                      </ul>
-                    </div>
-                    <EllipsisOutlined />
-                  </div>
-                  <div className="ByKVhDewtl uIDCSlWITT">
-                    <div className="GGKviWLHJH">
-                      <div className="bHexDsHAAu"></div>
-                      <img
-                        className="EuEinMInHi"
-                        src={
-                          abp.serviceAlbumImage +
-                          "/product/wekee-wekee-065117d465185d35584804fb16f5ded6-011709-23092021--012154-23092021-S340x340.jpg"
-                        }
-                        alt=""
-                      />
-                    </div>
-                    <div className="FwoJYIRsKF">
-                      <textarea
-                        ref={textRef}
-                        value={assessmentRepcommentInput}
-                        onChange={(e: any) => {
-                          onChangeHandler(e);
-                          setassessmentRepcommentInput(e.target.value);
-                        }}
-                        onKeyPress={(e) => {
-                          (e.key === "Enter" && e.preventDefault()) ??
-                            sendRepCommentlv2(2);
-                        }}
-                        className="eNzvzXxgia wFAgOaHIBZ"
-                        name=""
-                        id=""
-                        placeholder="Viết Bình luận ..."
-                      />
-                    </div>
-                  </div>
-                  <div className="ByKVhDewtl uIDCSlWITT">
-                    <div className="GGKviWLHJH">
-                      <div className="bHexDsHAAu"></div>
-                    </div>
-                    <div className="FwoJYIRsKF TsoLLSKzSx">
-                      Xem thêm 10 bình luận
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-                  <Divider className="VTsdGRPspc" orientation="left">
-                    <a>Xem thêm 10 bình luận</a>
-                  </Divider>
+                  <RepAssessmentCommentComponent
+                    idsp={ID_SP}
+                    idAssessment={item.id}
+                    statusLoading={0} />
                 </div>
               </div>
             </div>)
@@ -610,4 +501,146 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
       }
     </div>
   );
+}
+
+
+interface IRepAssessmentCommentComponent {
+  idsp: number;
+  idAssessment: number;
+  statusLoading: number;
+}
+
+export function RepAssessmentCommentComponent(props: IRepAssessmentCommentComponent) {
+
+  // Commnet
+  const _onRepComment = async (e: any, idAssessment: number) => {
+    if (e.key === 'Enter') {
+      var rsl = await services.CommentAssessmentProduct({
+        idsp: props.idsp,
+        idAssessment: idAssessment,
+        comment: e.target.value
+      });
+
+      if (rsl && rsl.error === false && rsl.result !== undefined) {
+        e.target.value = '';
+      }
+      else {
+        notifyError("STAR", "LỖI");
+      }
+    }
+  }
+
+  return (
+    <>
+      <div
+        style={{
+          width: "100%",
+          textAlign: "end",
+          height: 20,
+          lineHeight: 1,
+        }}
+      >
+        <Select
+          className="rzYsHrKrLz"
+          defaultValue="phuHopNhat"
+          suffixIcon={<CaretDownOutlined />}
+          bordered={false}
+        >
+          <Option value="phuHopNhat">Phù Hợp Nhất</Option>
+          <Option value="MoiNhat">Mới Nhất</Option>
+          <Option value="TatCaBinhLuan">Tất Cả Bình Luận</Option>
+        </Select>
+      </div>
+      <div className="YLmZhraSLJ">
+        <input
+          className="eNzvzXxgia wFAgOaHIBZ"
+          placeholder="Viết Bình luận ..."
+          onKeyDown={(e: any) => _onRepComment(e, props.idAssessment)}
+        />
+      </div>
+      <div className="nNVxrpOumL">
+        <div className="nNVxrpOumL">
+          <div className="JwMWGpetPE">
+            <div className="GGKviWLHJH">
+              <div className="ZCcIcopBuX"></div>
+              <img
+                className="EuEinMInHi"
+                src={"/default-image.jpg"}
+                alt=""
+              />
+            </div>
+            <div className="FwoJYIRsKF">
+              <div className="vytbSMnWZY">
+                <div className="EFShuNSjPz">{"Tài Khoản"}</div>
+                <div className="bRVbtcpFyr">{"Commnet"}</div>
+                <div className="RqaOLkKjHG">
+                  <HeartOutlined /> {1}
+                  <FireOutlined /> {1}
+                  <MessageOutlined /> {1}
+                </div>
+              </div>
+              <ul className="nxLBfYxLOR">
+                <li className={true ? "iQrPsVgAsr" : ""} > Thích </li>
+                <li className={true ? "iQrPsVgAsr" : ""}> Không thích</li>
+                <li>Phản hồi</li>
+                <li>9 giờ trước</li>
+              </ul>
+            </div>
+            <EllipsisOutlined />
+          </div>
+          <div className="ByKVhDewtl uIDCSlWITT">
+            <div className="GGKviWLHJH">
+              <div className="bHexDsHAAu"></div>
+              <img
+                className="EuEinMInHi"
+                src={"/default-image.jpg"}
+                alt=""
+              />
+            </div>
+            <div className="FwoJYIRsKF">
+              <div className="vytbSMnWZY">
+                <div className="EFShuNSjPz">Tài khoản</div>
+                <div className="bRVbtcpFyr">
+                  <span className="nBjCJOqgOK">Phản hồi bình luận: Comment</span> adadasdasdasda
+                </div>
+              </div>
+              <ul className="nxLBfYxLOR">
+                <li>Phản hồi</li>
+                <li>9 giờ trước</li>
+              </ul>
+            </div>
+            <EllipsisOutlined />
+          </div>
+          <div className="ByKVhDewtl uIDCSlWITT">
+            <div className="GGKviWLHJH">
+              <div className="bHexDsHAAu"></div>
+              <img
+                className="EuEinMInHi"
+                src={"/default-image.jpg"}
+                alt=""
+              />
+            </div>
+            <div className="FwoJYIRsKF">
+              <input
+                className="eNzvzXxgia wFAgOaHIBZ"
+                name=""
+                id=""
+                placeholder="Viết Bình luận ..."
+              />
+            </div>
+          </div>
+          <div className="ByKVhDewtl uIDCSlWITT">
+            <div className="GGKviWLHJH">
+              <div className="bHexDsHAAu"></div>
+            </div>
+            <div className="FwoJYIRsKF TsoLLSKzSx">
+              Xem thêm 10 bình luận
+            </div>
+          </div>
+        </div>
+      </div>
+      <Divider className="VTsdGRPspc" orientation="left">
+        <a>Xem thêm 10 bình luận</a>
+      </Divider>
+    </>);
 }

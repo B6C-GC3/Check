@@ -71,6 +71,7 @@ namespace ApiProject.Shared.DataTransfer.AssessmentProduct
         public int? Star { get; set; }
         public string Commnet { get; set; }
         public bool Status { get; set; }
+        public List<int> Feel { get; set; }
         public List<AttributeProductComment> AttributeProductComment { get; set; }
         public int Useful { get; set; }
         public int Meaningless { get; set; }
@@ -102,5 +103,25 @@ namespace ApiProject.Shared.DataTransfer.AssessmentProduct
         public int Level { get; set; }
         public bool Status { get; set; }
         public TypeLikeComment TypeLike { get; set; }
+    }
+
+    public class ReplyCommentAssessmentProduct
+    {
+        public long Idsp { get; set; }
+        public long IdAssessment { get; set; }
+        public string Comment { get; set; }
+    }
+
+    public class LoadRepCommnetAssessmentProduct
+    {
+        public long IdAccount { get; set; }
+        public string Avatar { get; set; }
+        public string Name { get; set; }
+        public long IdComment { get; set; }
+        public string Comment { get; set; }
+        public int NumberLike { get; set;}
+        public int NumberDisike { get; set; }
+        public int NumberRepComment { get; set; }
+        public DateTime TimeComment { get; set; }
     }
 }

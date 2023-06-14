@@ -2,12 +2,32 @@ import { PagedResultDto } from "../../../services/dto/pagedResultDto";
 import { ResponsesResource } from "../../../services/dto/responsesResource";
 import { SearchRequest } from "../../../services/dto/searchRequest ";
 import http from "../../../services/httpService";
-import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat } from "./dtos/assessmentProduct";
+import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat, LikeCommentAssessmentProduct, ReplyCommentAssessmentProduct } from "./dtos/assessmentProduct";
 import { DetailInfoBasicProductDto } from "./dtos/cartBasicProductDto";
 import { FeatureProductContainerDto, FeatureProductReadDto } from "./dtos/featureProductContainerDto";
-import { ImageForProductDto, ImageProductContainerDto } from "./dtos/imageForProductDto";
+import { ImageProductContainerDto } from "./dtos/imageForProductDto";
 
 class HDetailService {
+
+  public async CommentAssessmentProduct(input: ReplyCommentAssessmentProduct)
+    : Promise<ResponsesResource<number>> {
+    let rs = await http.post("/api/services/app/AssessmentProduct/CommentAssessmentProduct", input);
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
+
+  public async ChangeLikeOrDislikeAssessment(input: LikeCommentAssessmentProduct)
+    : Promise<ResponsesResource<number>> {
+    let rs = await http.post("/api/services/app/AssessmentProduct/ChangeLikeOrDislikeAssessment", input);
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
 
   public async getAssessmentProductCommnet(input: SearchRequest)
     : Promise<ResponsesResource<PagedResultDto<AssessmentProductComment>>> {

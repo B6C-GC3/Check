@@ -47,9 +47,31 @@ export interface AssessmentProductComment {
     star: number | null;
     commnet: string;
     status: boolean;
+    feel: number[];
     attributeProductComment: AttributeProductComment[];
     useful: number;
     meaningless: number;
+    myUseful: boolean;
+    myMeaningless: boolean;
     feedback: number;
     image: AssessmentProductImage[];
+}
+
+export enum TypeLikeComment {
+    IsDislike = 0,
+    IsLike = 1
+}
+
+export interface LikeCommentAssessmentProduct {
+    idsp: number;
+    idAssessment: number;
+    level: number;
+    status: boolean;
+    typeLike: TypeLikeComment;
+}
+
+export interface ReplyCommentAssessmentProduct {
+    idsp: number;
+    idAssessment: number;
+    comment: string;
 }

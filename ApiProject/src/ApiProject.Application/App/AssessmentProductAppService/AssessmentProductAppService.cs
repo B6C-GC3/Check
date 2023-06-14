@@ -132,7 +132,7 @@ namespace ApiProject.App.AssessmentProductAppService
         public async Task<AssessmentProductStat> GetStarProduct(long idsp)
         {
             var assessmentProducts = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>()
-                                    .GetAll().Where(s => s.AssessmentProductId == idsp);
+                                    .GetAll().Where(s => s.AssessmentProductId == idsp && s.Level == 1);
             AssessmentProductStat rsl = new()
             {
                 StarOne = assessmentProducts.Count(s => s.Star == 1),
@@ -160,6 +160,9 @@ namespace ApiProject.App.AssessmentProductAppService
             var assessmentProductComment = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().GetAll()
                                                       .Where(w => w.AssessmentProductId == idsp && w.Level == 1 && w.IsActive == true
                                                                && w.IsDeleted == false);
+            var assessmentProductrepComment = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().GetAll()
+                                                     .Where(w => w.AssessmentProductId == idsp && w.Level == 2 && w.IsActive == true
+                                                              && w.IsDeleted == false);
 
             if (assessmentProductComment == null || !assessmentProductComment.Any())
                 throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
@@ -229,9 +232,16 @@ namespace ApiProject.App.AssessmentProductAppService
             // create container
             var result = assessmentProductCommentTemp.Select(s => new AssessmentProductComment
             {
+                Id = s.Id,
                 UserComment = accountSelected.FirstOrDefault(acc => acc.Id == s.CreatorUserId),
                 Star = s.Star,
                 Commnet = s.Comment,
+                Feel = JsonConvert.DeserializeObject<List<int>>(s.Feel),
+                Useful = getAssessmentProductLike.Count(a => a.Islike == true && a.IsActive == true && a.EvaluatesId == s.Id),
+                Meaningless = getAssessmentProductLike.Count(a => a.Isdislike == true && a.IsActive == true && a.EvaluatesId == s.Id),
+                Feedback = assessmentProductrepComment.Count(c => c.AssessmentId == s.Id),
+                MyUseful = getAssessmentProductLike.Any(a => a.Islike == true && a.IsActive == true && a.CreatorUserId == _abpSession.UserId && a.EvaluatesId == s.Id),
+                MyMeaningless = getAssessmentProductLike.Any(a => a.Isdislike == true && a.IsActive == true && a.CreatorUserId == _abpSession.UserId && a.EvaluatesId == s.Id),
                 AttributeProductComment = new List<AttributeProductComment>()
                 {
                     new AttributeProductComment
@@ -322,6 +332,34 @@ namespace ApiProject.App.AssessmentProductAppService
                 _unitOfWork.SaveChanges();
                 return 1;
             }
+        }
+
+        public async Task<int> CommentAssessmentProduct(ReplyCommentAssessmentProduct input)
+        {
+            if (input == null) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+
+            var isProduct = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>()
+                                             .ExistsAsync(s => s.Id == input.Idsp);
+            var assessment = await _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>()
+                                              .GetFirstOrDefaultAsync(predicate: s => s.Id == input.IdAssessment);
+
+            if (!isProduct || assessment is null) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+
+            var repAssessmentCommnet = new AssessmentProductEntity
+            {
+                Comment = input.Comment,
+                Level = assessment.Level + 1,
+                AssessmentProductId = assessment.AssessmentProductId,
+                CreatorUserId = _abpSession.UserId,
+                LastModifierUserId = _abpSession.UserId,
+                IsNew = true,
+                AssessmentId = assessment.Id
+            };
+
+            _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().Insert(repAssessmentCommnet);
+            _unitOfWork.SaveChanges();
+
+            return 1;
         }
     }
 }

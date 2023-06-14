@@ -29,6 +29,8 @@ namespace ApiProject.Shared.Entitys
 
         public bool IsNew { get; set; }
 
+        public long? AssessmentId { get; set; }
+
         /* ---------------------------------------------------------*/
 
         [Required]
