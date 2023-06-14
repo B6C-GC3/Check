@@ -17,7 +17,7 @@ namespace ApiProject.Shared.Entitys
     {
         public bool? Islike { get; set; }
         public bool? Isdislike { get; set; }
-        public int EvaluatesId { get; set; }
+        public long EvaluatesId { get; set; }
 
         /* ---------------------------------------------------------*/
 

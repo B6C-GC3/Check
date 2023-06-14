@@ -15,6 +15,7 @@ namespace ApiProject.App.AssessmentProductAppService
         Task<int> Create(AssessmentProductReq input);
         Task<AssessmentProductStat> GetStarProduct(long idsp);
         Task<List<AssessmentProductImage>> GetAssessmentProductImage(long idsp);
-        Task<IPagedList<AssessmentProductComment>> GetAssessmentProductCommnet(SearchRequest inut);
+        Task<IPagedList<AssessmentProductComment>> GetAssessmentProductCommnet(SearchRequest input);
+        Task<int> ChangeLikeOrDislikeAssessment(LikeCommentAssessmentProduct input);
     }
 }

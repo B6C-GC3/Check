@@ -96,7 +96,7 @@ namespace ApiProject.App.AssessmentProductAppService
                 Star = input.StarNumber,
                 Feel = JsonConvert.SerializeObject(input.Feel),
                 Level = input.Level,
-                AttributeIdOne = 1, 
+                AttributeIdOne = 1,
                 AttributeIdTwo = 10039,
                 AttributeIdThree = 10040,
                 AttributeValueOne = 1,
@@ -168,7 +168,7 @@ namespace ApiProject.App.AssessmentProductAppService
                                       .Where(w => w.TenantId == _abpSession.TenantId && w.IsDeleted == false);
 
             var image = _unitOfWork.GetRepository<Shared.Entitys.FileSourceEntity>().GetAll()
-                                   .Where(w => w.ImageRoot != null && w.IsActive == true && w.IsDeleted == false);
+                                   .Where(w => w.IsActive == true && w.IsDeleted == false);
 
             var attribute = _unitOfWork.GetRepository<Shared.Entitys.AttributeEntity>().GetAll()
                                        .Where(w => w.IsActive == true && w.IsDeleted == false);
@@ -206,6 +206,26 @@ namespace ApiProject.App.AssessmentProductAppService
                                                        .Select(s => new { s.Id, s.Values })
                                                        .ToList();
 
+            var assessmentProductIdCommentTemp = assessmentProductCommentTemp.Select(s => (long?)s.Id).ToList();
+            var imageSelected = imageMapping.Where(w => assessmentProductIdCommentTemp.Contains(w.AssessmentProductId))
+                                .Join(inner: image,
+                                      outerKeySelector: o => o.ImageSourceId,
+                                      innerKeySelector: i => i.Id,
+                                      resultSelector: (o, i) => new ImageQuerySellected
+                                      {
+                                          Name = i.ImageName,
+                                          AssessmentProductId = o.AssessmentProductId,
+                                          Size = i.Size,
+                                          Folder = i.Folder,
+                                          VirtualPath = i.VirtualPath
+                                      });
+
+            var imageSelectedGroup = imageSelected.ToList().GroupBy(g1 => g1.AssessmentProductId).ToList();
+
+            // lấy thông tin tài khoản đang đăng nhập tương tác đánh giá
+
+            var getAssessmentProductLike = assessmentProductLike.Where(w => assessmentProductIdCommentTemp.Contains(w.EvaluatesId)).ToList();
+
             // create container
             var result = assessmentProductCommentTemp.Select(s => new AssessmentProductComment
             {
@@ -213,27 +233,95 @@ namespace ApiProject.App.AssessmentProductAppService
                 Star = s.Star,
                 Commnet = s.Comment,
                 AttributeProductComment = new List<AttributeProductComment>()
+                {
+                    new AttributeProductComment
                     {
-                        new AttributeProductComment
-                        {
-                            AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdOne).Name,
-                            AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueOne).Values
-                        },
-                        new AttributeProductComment
-                        {
-                            AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdTwo).Name,
-                            AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueTwo).Values
-                        },
-                        new AttributeProductComment
-                        {
-                            AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdThree).Name,
-                            AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueThree).Values
-                        },
-                    }
+                        AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdOne).Name,
+                        AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueOne).Values
+                    },
+                    new AttributeProductComment
+                    {
+                        AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdTwo).Name,
+                        AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueTwo).Values
+                    },
+                    new AttributeProductComment
+                    {
+                        AttributeKeyName = attributeSelected.FirstOrDefault(w=>w.Id == s.AttributeIdThree).Name,
+                        AttributeValueName = attributeValueSelected.FirstOrDefault(w=>w.Id == s.AttributeValueThree).Values
+                    },
+                },
+                Image = HandleImage(imageSelectedGroup, s.Id)
             });
 
             // return
             return result.MapToPagedList(input.PageIndex, input.PageSize, assessmentProductComment.Count(), 0);
+        }
+
+        private static List<AssessmentProductImage> HandleImage(List<IGrouping<long, ImageQuerySellected>> image, long id)
+        {
+            List<AssessmentProductImage> rsl = new();
+            image.ForEach(r =>
+            {
+                if (r.Key == id)
+                {
+                    r.GroupBy(g1 => g1.Name).ToList().ForEach(r2 =>
+                    {
+                        AssessmentProductImage rslTemp = new();
+                        r2.ToList().ForEach(r2 =>
+                        {
+                            if (r2.Size == ConfigSizeImage.NameSizeDefault(SizeImage.S80x80))
+                                rslTemp.ImageName80x80 = string.Format("/{0}/{1}", r2.Folder, r2.VirtualPath);
+
+                            else if (r2.Size == ConfigSizeImage.NameSizeDefault(SizeImage.S340x340))
+                                rslTemp.ImageName340x340 = string.Format("/{0}/{1}", r2.Folder, r2.VirtualPath);
+                        });
+                        rsl.Add(rslTemp);
+                    });
+                }
+            });
+            return rsl;
+        }
+
+        [HttpPost]
+        public async Task<int> ChangeLikeOrDislikeAssessment([FromBody] LikeCommentAssessmentProduct input)
+        {
+            if (input == null) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+            var isProduct = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>().ExistsAsync(s => s.Id == input.Idsp);
+            var isAssessment = await _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>()
+                                                .ExistsAsync(s => s.Id == input.IdAssessment && s.Level == input.Level);
+
+            if (!isProduct || !isAssessment) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+
+            // check exists
+            var recordExists = await _unitOfWork.GetRepository<Shared.Entitys.LikeEvaluatesProductEntity>()
+                                                .GetFirstOrDefaultAsync(predicate: s => s.CreatorUserId == _abpSession.UserId
+                                                                                     && s.EvaluatesId == input.IdAssessment);
+
+            if (recordExists is null)
+            {
+                var ins = new LikeEvaluatesProductEntity
+                {
+                    Islike = input.TypeLike == TypeLikeComment.IsLike ? input.Status : false,
+                    Isdislike = input.TypeLike == TypeLikeComment.IsDislike ? input.Status : false,
+                    EvaluatesId = input.IdAssessment,
+                    IsActive = true,
+                    IsDeleted = false,
+                    CreatorUserId = _abpSession.UserId,
+                    LastModifierUserId = _abpSession.UserId,
+                };
+
+                _unitOfWork.GetRepository<Shared.Entitys.LikeEvaluatesProductEntity>().Insert(ins);
+                _unitOfWork.SaveChanges();
+                return 1;
+            }
+            else
+            {
+                recordExists.Islike = input.TypeLike == TypeLikeComment.IsLike ? input.Status : false;
+                recordExists.Isdislike = input.TypeLike == TypeLikeComment.IsDislike ? input.Status : false;
+                _unitOfWork.GetRepository<Shared.Entitys.LikeEvaluatesProductEntity>().Update(recordExists);
+                _unitOfWork.SaveChanges();
+                return 1;
+            }
         }
     }
 }

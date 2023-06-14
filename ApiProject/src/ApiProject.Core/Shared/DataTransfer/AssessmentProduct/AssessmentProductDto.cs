@@ -75,6 +75,32 @@ namespace ApiProject.Shared.DataTransfer.AssessmentProduct
         public int Useful { get; set; }
         public int Meaningless { get; set; }
         public int Feedback { get; set; }
+        public bool MyUseful { get; set; }
+        public bool MyMeaningless { get; set; }
         public List<AssessmentProductImage> Image { get; set; }
+    }
+
+    public class ImageQuerySellected
+    {
+        public string Name { get; set; }
+        public long AssessmentProductId { get; set; }
+        public string Size { get; set; }
+        public string Folder { get; set; }
+        public string VirtualPath { get; set; }
+    }
+
+    public enum TypeLikeComment
+    {
+        IsDislike = 0,
+        IsLike = 1
+    }
+
+    public class LikeCommentAssessmentProduct
+    {
+        public long Idsp { get; set; }
+        public long IdAssessment { get; set; }
+        public int Level { get; set; }
+        public bool Status { get; set; }
+        public TypeLikeComment TypeLike { get; set; }
     }
 }

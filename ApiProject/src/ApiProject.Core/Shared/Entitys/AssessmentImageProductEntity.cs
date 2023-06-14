@@ -12,8 +12,8 @@ namespace ApiProject.Shared.Entitys
     [Table("AssessmentImageProduct")]
     public class AssessmentImageProductEntity : Entity<long>
     {
-        public long? ImageSourceId { get; set; }
-        public long? AssessmentProductId { get; set; }
+        public long ImageSourceId { get; set; }
+        public long AssessmentProductId { get; set; }
         /* ---------------------------------------------------------*/
 
         [Required]
