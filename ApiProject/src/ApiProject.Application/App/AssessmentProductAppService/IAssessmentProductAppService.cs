@@ -18,5 +18,6 @@ namespace ApiProject.App.AssessmentProductAppService
         Task<IPagedList<AssessmentProductComment>> GetAssessmentProductCommnet(SearchRequest input);
         Task<int> ChangeLikeOrDislikeAssessment(LikeCommentAssessmentProduct input);
         Task<int> CommentAssessmentProduct(ReplyCommentAssessmentProduct input);
+        Task<IPagedList<LoadRepCommnetAssessmentProduct>> LoadCommentAssessmentProduct(SearchRequest input);
     }
 }

@@ -166,8 +166,9 @@ export default function YouAssessmentComponent(props: IYouAssessmentComponent) {
                         <textarea
                             ref={textRef}
                             onChange={e => setCommnet(e.target.value)}
+                            placeholder='Nhập đánh giá của bạn'
                             onKeyPress={(e) => { e.key === 'Enter' && e.preventDefault(); }}
-                            className='eNzvzXxgia' name="" id="" />
+                            className='eNzvzXxgia ihNxrRcgQS' name="" id="" />
                         <Divider className="VTsdGRPspc" orientation="center">
                             <Button className='sLiVwLFPQg' onClick={onChangeHandler} loading={loading}>Đánh Giá</Button>
                         </Divider>

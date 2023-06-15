@@ -253,6 +253,11 @@
     },
     "ADMIN_MENU": {},
     "COMMON": {
+        "DAY": "ngày",
+        "HOUR": "giờ",
+        "MINUTE": "phút",
+        "SECOND": "giây",
+        "JUST_FINISHED": "vừa xong",
         "COLUMN_NAME": "Tên cột",
         "ENTER_VALUE": "Nhập giá trị",
         "SORT": "Sắp xếp",

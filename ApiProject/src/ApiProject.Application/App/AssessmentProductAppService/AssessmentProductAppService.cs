@@ -361,5 +361,48 @@ namespace ApiProject.App.AssessmentProductAppService
 
             return 1;
         }
+
+        [HttpGet]
+        public async Task<IPagedList<LoadRepCommnetAssessmentProduct>> LoadCommentAssessmentProduct(SearchRequest input)
+        {
+            List<LoadRepCommnetAssessmentProduct> result = new();
+
+            var isSp = long.TryParse(input.ValuesSearch[0], out long idsp);
+            var isAss = long.TryParse(input.ValuesSearch[1], out long idAss);
+            if (!isSp) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+            var assessmentProductCommentF = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().GetAll()
+                                                      .Where(w => w.AssessmentProductId == idsp && w.AssessmentId == idAss
+                                                               && w.IsActive == true && w.IsDeleted == false);
+            var assessmentProductComment = assessmentProductCommentF.Skip(input.PageIndex * input.PageSize).Take(input.PageSize);
+
+            var useLogin = _unitOfWork.GetRepository<UserAccount>().GetAll()
+                                      .Where(w => w.TenantId == _abpSession.TenantId && w.IsDeleted == false);
+
+            var assessmentProductLike = _unitOfWork.GetRepository<Shared.Entitys.LikeEvaluatesProductEntity>().GetAll()
+                                                   .Where(w => w.IsActive == true && w.IsDeleted == false);
+
+            result = assessmentProductComment.Join(inner: useLogin,
+                                                   outerKeySelector: o => o.CreatorUserId,
+                                                   innerKeySelector: i => i.Id,
+                                                   resultSelector: (o, i) => new LoadRepCommnetAssessmentProduct
+                                                   {
+                                                       IdAccount = i.Id,
+                                                       Avatar = null,
+                                                       Name = i.UserName,
+                                                       IdComment = o.Id,
+                                                       Comment = o.Comment,
+                                                       NumberLike = assessmentProductLike.Count(c=>c.EvaluatesId == o.Id && c.Islike == true),
+                                                       NumberDisike = assessmentProductLike.Count(c => c.EvaluatesId == o.Id && c.Isdislike == true),
+                                                       NumberRepComment = 0,
+                                                       TimeComment = o.LastModificationTime,
+                                                       MyLikes = assessmentProductLike.Any(c => c.EvaluatesId == o.Id && c.Islike == true
+                                                                                             && c.CreatorUserId == _abpSession.UserId),
+                                                       MyDisLikes = assessmentProductLike.Any(c => c.EvaluatesId == o.Id && c.Isdislike == true 
+                                                                                                && c.CreatorUserId == _abpSession.UserId)
+                                                   }).ToList();
+
+            // return
+            return result.MapToPagedList(input.PageIndex, input.PageSize, assessmentProductCommentF.Count(), 0);
+        }
     }
 }

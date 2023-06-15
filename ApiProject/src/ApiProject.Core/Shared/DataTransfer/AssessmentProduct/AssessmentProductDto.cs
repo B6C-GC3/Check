@@ -119,9 +119,11 @@ namespace ApiProject.Shared.DataTransfer.AssessmentProduct
         public string Name { get; set; }
         public long IdComment { get; set; }
         public string Comment { get; set; }
-        public int NumberLike { get; set;}
+        public int NumberLike { get; set; }
         public int NumberDisike { get; set; }
         public int NumberRepComment { get; set; }
-        public DateTime TimeComment { get; set; }
+        public DateTime? TimeComment { get; set; }
+        public bool MyLikes { get; set; }
+        public bool MyDisLikes { get; set; }
     }
 }

@@ -75,3 +75,17 @@ export interface ReplyCommentAssessmentProduct {
     idAssessment: number;
     comment: string;
 }
+
+export interface LoadRepCommnetAssessmentProduct {
+    idAccount: number;
+    avatar: string;
+    name: string;
+    idComment: number;
+    comment: string;
+    numberLike: number;
+    numberDisike: number;
+    numberRepComment: number;
+    timeComment: string;
+    myLikes: boolean;
+    myDisLikes: boolean;
+}

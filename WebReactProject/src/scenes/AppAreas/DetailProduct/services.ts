@@ -2,12 +2,32 @@ import { PagedResultDto } from "../../../services/dto/pagedResultDto";
 import { ResponsesResource } from "../../../services/dto/responsesResource";
 import { SearchRequest } from "../../../services/dto/searchRequest ";
 import http from "../../../services/httpService";
-import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat, LikeCommentAssessmentProduct, ReplyCommentAssessmentProduct } from "./dtos/assessmentProduct";
+import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat, LikeCommentAssessmentProduct, LoadRepCommnetAssessmentProduct, ReplyCommentAssessmentProduct } from "./dtos/assessmentProduct";
 import { DetailInfoBasicProductDto } from "./dtos/cartBasicProductDto";
 import { FeatureProductContainerDto, FeatureProductReadDto } from "./dtos/featureProductContainerDto";
 import { ImageProductContainerDto } from "./dtos/imageForProductDto";
 
 class HDetailService {
+
+  public async LoadCommentAssessmentProduct(input: SearchRequest)
+    : Promise<ResponsesResource<PagedResultDto<LoadRepCommnetAssessmentProduct>>> {
+    let rs = await http.get("/api/services/app/AssessmentProduct/LoadCommentAssessmentProduct",
+      {
+        params: {
+          propertySearch: input.propertySearch,
+          valuesSearch: input.valuesSearch,
+          propertyOrder: input.propertyOrder,
+          valueOrderBy: input.valueOrderBy,
+          pageIndex: input.pageIndex,
+          pageSize: input.pageSize
+        }
+      });
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
 
   public async CommentAssessmentProduct(input: ReplyCommentAssessmentProduct)
     : Promise<ResponsesResource<number>> {

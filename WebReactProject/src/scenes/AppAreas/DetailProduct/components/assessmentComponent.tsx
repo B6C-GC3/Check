@@ -1,20 +1,21 @@
-import React, { SyntheticEvent, cloneElement, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button, Divider, message, Modal, Progress, Rate, Select, Typography,
 } from "antd";
 import {
-  CameraOutlined, CaretDownOutlined, CloseCircleOutlined, CloseOutlined, DislikeOutlined, DropboxOutlined, EllipsisOutlined, FireOutlined, HeartOutlined, LikeOutlined, MessageOutlined, NotificationOutlined, PushpinOutlined, SendOutlined, SmileOutlined, StarFilled,
+  CaretDownOutlined, DislikeOutlined, DropboxOutlined, EllipsisOutlined, FireOutlined, HeartOutlined, LikeOutlined, MessageOutlined, PushpinOutlined, StarFilled,
 } from "@ant-design/icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import Dragger from "antd/lib/upload/Dragger";
 import services from "../services";
-import { AssessmentProductComment, AssessmentProductImage, AssessmentProductStat, TypeLikeComment } from "../dtos/assessmentProduct";
+import { AssessmentProductComment, AssessmentProductImage, AssessmentProductStat, LoadRepCommnetAssessmentProduct, TypeLikeComment } from "../dtos/assessmentProduct";
 import { notifyError } from "../../../../components/Common/notification";
-import moment from "moment";
+import { processInteractTime } from "../../../../lib/abpUtility";
+
+
 const { Text } = Typography;
 const { Option } = Select;
 declare var abp: any;
@@ -420,7 +421,7 @@ export default function AssessmentComponent(props: IAssessmentComponent) {
                     <img className="UsOtLlsjsj" src={abp.serviceAlbumImage} alt="" />
                     <div className="UyXPaSOgcb">
                       <p className="afjfYlfVaY">{item.userComment.name}</p>
-                      <p>Đã tham gia : {new Date(Date.now() - new Date(item.userComment.time).getDate()).getDay()} ngày</p>
+                      <p>Đã tham gia : {processInteractTime(item.userComment.time)}</p>
                     </div>
                   </div>
                   <p className="qCuxZuQMLY">Đã viết: {item.userComment.evaluated} Đánh giá</p>
@@ -512,6 +513,32 @@ interface IRepAssessmentCommentComponent {
 
 export function RepAssessmentCommentComponent(props: IRepAssessmentCommentComponent) {
 
+  const [dataRepcomment, setDataRepcomment] = useState<LoadRepCommnetAssessmentProduct[]>([]);
+  const [totalComment, setTotalComment] = useState<number>(0);
+  const [pageNext, setPageNext] = useState<number>(0);
+
+  useEffect(() => {
+    setDataRepcomment([]);
+    _onLoadRepComment();
+  }, []);
+
+  const _onLoadRepComment = async () => {
+    var rsl = await services.LoadCommentAssessmentProduct({
+      valuesSearch: [props.idsp.toString(), props.idAssessment.toString()],
+      pageIndex: pageNext,
+      pageSize: 5
+    });
+    if (rsl && rsl.error === false && rsl.result !== undefined) {
+      let temp = dataRepcomment.length === 0 ? [] : dataRepcomment;
+      setDataRepcomment(temp.concat(rsl.result.items));
+      setTotalComment(rsl.result.totalCount);
+      setPageNext(pageNext + 1);
+    }
+    else {
+      notifyError("STAR", "LỖI");
+    }
+  }
+
   // Commnet
   const _onRepComment = async (e: any, idAssessment: number) => {
     if (e.key === 'Enter') {
@@ -529,6 +556,67 @@ export function RepAssessmentCommentComponent(props: IRepAssessmentCommentCompon
       }
     }
   }
+
+  // like and dislike
+  const likeReviewEvaluate = async (levelEvaluates: number, typeLikeComment: TypeLikeComment, idEvaluates: number, isStatus: boolean) => {
+    if (!!abp.auth.getToken()) {
+      var rsl = await services.ChangeLikeOrDislikeAssessment({
+        idsp: ID_SP,
+        idAssessment: idEvaluates,
+        level: levelEvaluates,
+        status: isStatus,
+        typeLike: typeLikeComment
+      });
+
+      if (rsl && rsl.error === false && rsl.result !== undefined) {
+        if (rsl.result === 1) {
+          // change view 
+          let dataCommnetTemp = dataRepcomment.map(m => {
+            if (m.idComment === idEvaluates) {
+              if (isStatus) {
+                if (typeLikeComment === TypeLikeComment.IsLike) {
+                  m.myLikes = isStatus;
+                  m.numberLike = m.numberLike + 1;
+                  if (m.myDisLikes) {
+                    m.myDisLikes = false;
+                    m.numberDisike = m.numberDisike - 1;
+                  }
+                }
+                else {
+                  m.myDisLikes = isStatus;
+                  m.numberDisike = m.numberDisike + 1;
+                  if (m.myLikes) {
+                    m.myLikes = false;
+                    m.numberLike = m.numberLike - 1;
+                  }
+                }
+              }
+              else {
+                if (typeLikeComment === TypeLikeComment.IsLike) {
+                  m.myLikes = isStatus;
+                  m.numberLike = m.numberLike - 1;
+                }
+                else {
+                  m.myDisLikes = isStatus;
+                  m.numberDisike = m.numberDisike - 1;
+                }
+              }
+            }
+
+            return m;
+          });
+
+          setDataRepcomment(dataCommnetTemp);
+          return isStatus;
+        }
+      }
+      else {
+        notifyError("STAR", "LỖI");
+      }
+    } else {
+      message.warning("Bạn cần đăng nhập để like bình luận này!");
+    }
+  };
 
   return (
     <>
@@ -558,89 +646,96 @@ export function RepAssessmentCommentComponent(props: IRepAssessmentCommentCompon
           onKeyDown={(e: any) => _onRepComment(e, props.idAssessment)}
         />
       </div>
-      <div className="nNVxrpOumL">
-        <div className="nNVxrpOumL">
-          <div className="JwMWGpetPE">
-            <div className="GGKviWLHJH">
-              <div className="ZCcIcopBuX"></div>
-              <img
-                className="EuEinMInHi"
-                src={"/default-image.jpg"}
-                alt=""
-              />
-            </div>
-            <div className="FwoJYIRsKF">
-              <div className="vytbSMnWZY">
-                <div className="EFShuNSjPz">{"Tài Khoản"}</div>
-                <div className="bRVbtcpFyr">{"Commnet"}</div>
-                <div className="RqaOLkKjHG">
-                  <HeartOutlined /> {1}
-                  <FireOutlined /> {1}
-                  <MessageOutlined /> {1}
+      {dataRepcomment.map(item => {
+        return (
+          <div className="nNVxrpOumL">
+            <div className="nNVxrpOumL">
+              <div className="JwMWGpetPE">
+                <div className="GGKviWLHJH">
+                  <div className="ZCcIcopBuX"></div>
+                  <img
+                    className="EuEinMInHi"
+                    src={"/default-image.jpg"}
+                    alt=""
+                  />
+                </div>
+                <div className="FwoJYIRsKF">
+                  <div className="vytbSMnWZY">
+                    <div className="EFShuNSjPz">{item.name}</div>
+                    <div className="bRVbtcpFyr">{item.comment}</div>
+                    <div className="RqaOLkKjHG">
+                      <HeartOutlined /> {item.numberLike}
+                      <FireOutlined /> {item.numberDisike}
+                      <MessageOutlined /> {item.numberRepComment}
+                    </div>
+                  </div>
+                  <ul className="nxLBfYxLOR">
+                    <li className={item.myLikes ? "iQrPsVgAsr" : ""} onClick={() => likeReviewEvaluate(2, TypeLikeComment.IsLike, item.idComment, !item.myLikes)}> Thích </li>
+                    <li className={item.myDisLikes ? "iQrPsVgAsr" : ""} onClick={() => likeReviewEvaluate(2, TypeLikeComment.IsDislike, item.idComment, !item.myDisLikes)}> Không thích</li>
+                    <li>Phản hồi</li>
+                    <li>{processInteractTime(item.timeComment)}</li>
+                  </ul>
+                </div>
+                <EllipsisOutlined />
+              </div>
+              {/*<div className="ByKVhDewtl uIDCSlWITT">
+                <div className="GGKviWLHJH">
+                  <div className="bHexDsHAAu"></div>
+                  <img
+                    className="EuEinMInHi"
+                    src={"/default-image.jpg"}
+                    alt=""
+                  />
+                </div>
+                <div className="FwoJYIRsKF">
+                  <div className="vytbSMnWZY">
+                    <div className="EFShuNSjPz">Tài khoản</div>
+                    <div className="bRVbtcpFyr">
+                      <span className="nBjCJOqgOK">Phản hồi bình luận: Comment</span> adadasdasdasda
+                    </div>
+                  </div>
+                  <ul className="nxLBfYxLOR">
+                    <li>Phản hồi</li>
+                    <li>9 giờ trước</li>
+                  </ul>
+                </div>
+                <EllipsisOutlined />
+              </div>
+               <div className="ByKVhDewtl uIDCSlWITT">
+                <div className="GGKviWLHJH">
+                  <div className="bHexDsHAAu"></div>
+                  <img
+                    className="EuEinMInHi"
+                    src={"/default-image.jpg"}
+                    alt=""
+                  />
+                </div>
+                <div className="FwoJYIRsKF">
+                  <input
+                    className="eNzvzXxgia wFAgOaHIBZ"
+                    name=""
+                    id=""
+                    placeholder="Viết Bình luận ..."
+                  />
                 </div>
               </div>
-              <ul className="nxLBfYxLOR">
-                <li className={true ? "iQrPsVgAsr" : ""} > Thích </li>
-                <li className={true ? "iQrPsVgAsr" : ""}> Không thích</li>
-                <li>Phản hồi</li>
-                <li>9 giờ trước</li>
-              </ul>
-            </div>
-            <EllipsisOutlined />
-          </div>
-          <div className="ByKVhDewtl uIDCSlWITT">
-            <div className="GGKviWLHJH">
-              <div className="bHexDsHAAu"></div>
-              <img
-                className="EuEinMInHi"
-                src={"/default-image.jpg"}
-                alt=""
-              />
-            </div>
-            <div className="FwoJYIRsKF">
-              <div className="vytbSMnWZY">
-                <div className="EFShuNSjPz">Tài khoản</div>
-                <div className="bRVbtcpFyr">
-                  <span className="nBjCJOqgOK">Phản hồi bình luận: Comment</span> adadasdasdasda
+              <div className="ByKVhDewtl uIDCSlWITT">
+                <div className="GGKviWLHJH">
+                  <div className="bHexDsHAAu"></div>
                 </div>
-              </div>
-              <ul className="nxLBfYxLOR">
-                <li>Phản hồi</li>
-                <li>9 giờ trước</li>
-              </ul>
+                <div className="FwoJYIRsKF TsoLLSKzSx">
+                  Xem thêm bình luận
+                </div>
+              </div> */}
             </div>
-            <EllipsisOutlined />
-          </div>
-          <div className="ByKVhDewtl uIDCSlWITT">
-            <div className="GGKviWLHJH">
-              <div className="bHexDsHAAu"></div>
-              <img
-                className="EuEinMInHi"
-                src={"/default-image.jpg"}
-                alt=""
-              />
-            </div>
-            <div className="FwoJYIRsKF">
-              <input
-                className="eNzvzXxgia wFAgOaHIBZ"
-                name=""
-                id=""
-                placeholder="Viết Bình luận ..."
-              />
-            </div>
-          </div>
-          <div className="ByKVhDewtl uIDCSlWITT">
-            <div className="GGKviWLHJH">
-              <div className="bHexDsHAAu"></div>
-            </div>
-            <div className="FwoJYIRsKF TsoLLSKzSx">
-              Xem thêm 10 bình luận
-            </div>
-          </div>
-        </div>
-      </div>
-      <Divider className="VTsdGRPspc" orientation="left">
-        <a>Xem thêm 10 bình luận</a>
-      </Divider>
+          </div>)
+      })}
+      {
+        totalComment - dataRepcomment.length === 0
+          ? <></>
+          : <Divider className="VTsdGRPspc" orientation="left">
+            <a onClick={() => _onLoadRepComment()}>Xem thêm {totalComment - dataRepcomment.length < 5 ? totalComment - dataRepcomment.length : 5} bình luận</a>
+          </Divider>
+      }
     </>);
 }

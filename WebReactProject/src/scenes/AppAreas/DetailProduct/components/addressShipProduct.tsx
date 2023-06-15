@@ -2,6 +2,7 @@
 import React from 'react'
 import Select from 'antd/lib/select';
 import { Skeleton } from 'antd';
+import GoogleMapsComponents from '../../../../components/GoogleMapsComponents';
 const { Option } = Select;
 
 declare var abp: any;
