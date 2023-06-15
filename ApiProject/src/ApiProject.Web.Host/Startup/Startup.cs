@@ -58,6 +58,7 @@ namespace ApiProject.Web.Host.Startup
                     options.Filters.Add(new UnitOfWorkFilter());
                     options.Filters.Add(new ModelValidationFilterAttribute());
                     options.Filters.Add(new GateActionFilter());
+                    options.Filters.Add(new RedisCacheFilter());
                 }
             ).AddNewtonsoftJson(options =>
             {
@@ -111,6 +112,12 @@ namespace ApiProject.Web.Host.Startup
             {
                 opt.UseSqlServer(_appConfiguration["ConnectionStrings:Default"]);
             }).AddUnitOfWork<ApiProjectDbContext>();
+
+            services.AddStackExchangeRedisCache(opt =>
+            {
+                opt.Configuration = _appConfiguration.GetConnectionString("RedisCache");
+                opt.InstanceName = "redis-local";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -135,6 +142,8 @@ namespace ApiProject.Web.Host.Startup
             app.UseAbpRequestLocalization();
 
             app.UseDbTransaction();
+
+            app.UseRedisCache();
 
             app.UseEndpoints(endpoints =>
             {

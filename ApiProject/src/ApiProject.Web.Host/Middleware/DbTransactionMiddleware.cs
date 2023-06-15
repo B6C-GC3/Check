@@ -41,10 +41,4 @@ namespace ApiProject.Web.Host.Middleware
             await _next(httpContext);
         }
     }
-
-    public static class MiddlewareExtensions
-    {
-        public static IApplicationBuilder UseDbTransaction(this IApplicationBuilder app)
-            => app.UseMiddleware<DbTransactionMiddleware>();
-    }
 }

@@ -1,0 +1,19 @@
+--requirepass changeme # Thay đổi mật khẩu
+--bind 0.0.0.0 # IP kết nối của máy chủ redis
+--port 6379 # Cổng kết nối của Ip máy chủ redis
+--maxclients 10000 # Số yêu cầu kết nối cùng lúc
+--protected-mode yes # bật chế độ bảo vệ để bảo mật
+--tcp-backlog 511 # một cấu hình để xác định kích thước của hàng đợi kết nối hoàn chỉnh. Tăng hiệu xuất bằng cách có thêm hàng chờ khi quá tải
+--timeout N #Đóng kết nối khi không có yêu cầu trong N giây (0 là đóng)
+--tcp-keepalive 300 # giữ kết nối sống khi không có connect nào. Nếu die thì khi connect vào nhìn thì vẫn sống nhưng không lấy được dữ liệu
+--daemonize no # nó sẽ không chạy ở daemon (docker) nếu cần thì đặt là yes
+--logfile "" # chỉ định log file
+--syslog-enabled no #Để cho phép ghi nhật ký vào bộ ghi hệ thống, chỉ cần đặt thành yes.
+--syslog-ident redis # định danh log sys
+--syslog-facility local0 # Chỉ định tiện ích nhật ký hệ thống. Phải là USER hoặc giữa LOCAL0-LOCAL7.
+--databases 16 # Xét số lượng databases
+--save <seconds> <changes> => 
+    #--tiết kiệm 900 1
+    #--tiết kiệm 300 10
+    #--tiết kiệm 60 10000
+    # trong Redis cache được sử dụng để lưu trữ dữ liệu của Redis. Nếu trong vòng 900 giây có ít nhất 1 key thay đổi (thêm mới, sửa đổi hoặc xóa), Redis sẽ tạo ra một bản snapshot của tất cả dữ liệu trong Redis instance dưới dạng một tệp RDB
