@@ -127,72 +127,28 @@ export const userRouter: any = [
     isLayout: true,
     showInMenu: false,
     index: 0
-  },
-  {
-    path: '/user/tenant-app',
-    name: 'Tenant',
-    title: 'Phân Hệ',
-    component: LoadableComponent(() => import('../../scenes/AppAreas/TenantApp')),
+  }, {
+    path: '/user/checkout',
+    name: 'Người dùng',
+    title: 'User',
+    component: LoadableComponent(() => import('../../scenes/UserAreas/CheckoutProduct')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/user/cart',
+    name: 'Người dùng',
+    title: 'User',
+    component: LoadableComponent(() => import('../../scenes/UserAreas/CartProduct')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/user',
+    name: 'Người dùng',
+    title: 'User',
+    component: LoadableComponent(() => import('../../scenes/UserAreas/Dashboard')),
     showInMenu: false,
     index: 0
   },
-  {
-    path: '/user/login-tenant',
-    name: 'login-tenant',
-    title: 'Đăng Nhập Admin',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/Login')),
-    showInMenu: false,
-
-    index: 0
-  },
-  {
-    path: '/user/login',
-    name: 'login',
-    title: 'Đăng Nhập',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  },
-  {
-    path: '/user/token',
-    name: 'Token',
-    title: 'Xác thực',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  },
-  {
-    path: '/user/change-password',
-    name: 'change password',
-    title: 'Thay đổi mật khẩu',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  },
-  {
-    path: '/user/forgot-password',
-    name: 'forgotPassword',
-    title: 'Lấy lại mật khẩu',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  },
-  {
-    path: '/user/signup',
-    name: 'Signup',
-    title: 'Đăng Ký',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  },
-  {
-    path: '/user/Logout',
-    name: 'Logout',
-    title: 'Đăng Xuất',
-    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
-    showInMenu: false,
-    index: 0
-  }
 ];
 export const appRouter: any = [
   {
@@ -204,25 +160,64 @@ export const appRouter: any = [
     isLayout: true,
     showInMenu: false,
     index: 0
-  },
-  {
+  }, {
     path: "/s/register",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/Register"))
-  },
-  {
+  }, {
     path: '/products',
     name: 'products',
     title: 'Danh sách',
     component: LoadableComponent(() => import('../../scenes/AppAreas/HCategoryListProduct')),
     showInMenu: false,
     index: 0
-  },
-  {
+  }, {
     path: '/detail',
     name: 'detail',
     title: 'Chi tiết sản phẩm',
     component: LoadableComponent(() => import('../../scenes/AppAreas/DetailProduct')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/login',
+    name: 'login',
+    title: 'Đăng Nhập',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/token',
+    name: 'Token',
+    title: 'Xác thực',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/change-password',
+    name: 'change password',
+    title: 'Thay đổi mật khẩu',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/forgot-password',
+    name: 'forgotPassword',
+    title: 'Lấy lại mật khẩu',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/signup',
+    name: 'Signup',
+    title: 'Đăng Ký',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
+    showInMenu: false,
+    index: 0
+  }, {
+    path: '/Logout',
+    name: 'Logout',
+    title: 'Đăng Xuất',
+    component: LoadableComponent(() => import('../../scenes/OAuthAreas/UserLogin')),
     showInMenu: false,
     index: 0
   }, {

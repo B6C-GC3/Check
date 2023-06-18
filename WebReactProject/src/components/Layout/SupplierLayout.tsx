@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { Col } from "antd";
-import { adminRouters, supplierRouters } from "../Router/router.config";
+import { supplierRouters } from "../Router/router.config";
 import Layout, { Content } from "antd/lib/layout/layout";
 import MenuSlider from "../../scenes/SupplierAreas/MenuSlider";
 import HeaderSupplier from "../HeaderComponent/HeaderSupplier";

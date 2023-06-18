@@ -1,0 +1,21 @@
+.kSPHAOXmhn>div.ant-tabs-nav>div.ant-tabs-nav-wrap>div.ant-tabs-nav-list {
+    width: 100%;
+    margin: 0 40px;
+    border-radius: 5px;
+}
+
+.kSPHAOXmhn>div.ant-tabs-nav>div.ant-tabs-nav-wrap {
+    border-radius: 5px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.kSPHAOXmhn>div.ant-tabs-nav {
+    background-color: #ffffff;
+    border-radius: 5px;
+}

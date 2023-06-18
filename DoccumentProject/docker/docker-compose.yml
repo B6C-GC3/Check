@@ -26,56 +26,32 @@ services:
   #     - ./_envoy/key.pem:/etc/ssl/certs/key.pem # chứng chỉ https
   #     - D:/envoy/log/envoy:/var/log/envoy #log
 
-  # rabbitmq3:
-  #   image: rabbitmq:3.8-management-alpine
-  #   container_name: "rabbitmq"
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER= WT436
-  #     - RABBITMQ_DEFAULT_PASS= WT436
-  #   ports:
-  #     # AMQP protocol port
-  #     - "5672:5672"
-  #     # HTTP management UI
-  #     - "15672:15672"
-  #   volumes:
-  #     - D:/rabbitmq/data/:/var/lib/rabbitmq/
-  #     - D:/rabbitmq/log/:/var/log/rabbitmq
-  #   networks:
-  #     - go_net
-  #   logging:
-  #     driver: "json-file"
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "10"
+  rabbitmq3:
+    image: rabbitmq:3.8-management-alpine
+    container_name: "rabbitmq"
+    environment:
+      - RABBITMQ_DEFAULT_USER= WT436
+      - RABBITMQ_DEFAULT_PASS= WT436
+    ports:
+      # AMQP protocol port
+      - "5672:5672"
+      # HTTP management UI
+      - "15672:15672"
+    volumes:
+      - D:/rabbitmq/data/:/var/lib/rabbitmq/
+      - D:/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - go_net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
 
-  # redis:
-  #   image: "redis:latest"
-  #   container_name: redis
-  #   command: ["redis-server", "/etc/redis/redis.config"]
-  #   restart: always
-  #   ports:
-  #     - "6379:6379"
-  #   volumes:
-  #     - D:/redis:/var/lib/redis
-  #     - ./_redis/redis.config:/etc/redis/redis.config
-  #   networks:
-  #     - go_net
-  #   environment:
-  #     - REDIS_REPLICATION_MODE=master
-
-  # redis_insight:
-  #   image: redislabs/redisinsight:latest
-  #   container_name: redis_insight
-  #   restart: always
-  #   ports:
-  #     - 8001:8001
-  #   volumes:
-  #     - D:/redis:/var/lib/redis
 
   redis:
     image: redis:6.0.7
     container_name: redis
-    #command: ["redis-server", "/etc/redis/redis.config","--requirepass hainam@99"]
     restart: always
     volumes:
       - D:/redis:/var/lib/redis
@@ -83,10 +59,6 @@ services:
       - ./_redis/redis.config:/etc/redis/redis.config
     ports:
       - 6379:6379
-    #networks:
-    #  - go_net
-    #environment:
-    #  - REDIS_REPLICATION_MODE=master
 
   redis_insight:
     image: redislabs/redisinsight:latest

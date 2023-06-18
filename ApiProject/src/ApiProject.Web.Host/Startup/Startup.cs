@@ -58,7 +58,7 @@ namespace ApiProject.Web.Host.Startup
                     options.Filters.Add(new UnitOfWorkFilter());
                     options.Filters.Add(new ModelValidationFilterAttribute());
                     options.Filters.Add(new GateActionFilter());
-                    options.Filters.Add(new RedisCacheFilter());
+                    //options.Filters.Add(new RedisCacheFilter());
                 }
             ).AddNewtonsoftJson(options =>
             {
