@@ -83,9 +83,6 @@ namespace ApiProject.EntityFrameworkCore
         public DbSet<ProductAttributeCombinationEntity> ProductAttributeCombinationEntitys { get; set; }
         public DbSet<ProductAvailabilityRangeEntity> ProductAvailabilityRangeEntitys { get; set; }
         public DbSet<ProductManufacturerMappingEntity> ProductManufacturerMappingEntitys { get; set; }
-        public DbSet<ProductReviewEntity> ProductReviewEntitys { get; set; }
-        public DbSet<ProductReviewHelpfulnessEntity> ProductReviewHelpfulnessEntitys { get; set; }
-        public DbSet<ProductReviewTypeMappingEntity> ProductReviewTypeMappingEntitys { get; set; }
         public DbSet<ProductTemplateEntity> ProductTemplateEntitys { get; set; }
         public DbSet<ProductWarehouseInventoryEntity> ProductWarehouseInventoryEntitys { get; set; }
         public DbSet<RecurringPaymentEntity> RecurringPaymentEntitys { get; set; }

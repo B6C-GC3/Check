@@ -26,7 +26,7 @@ export default function UserLayout(props: ILayoutProps) {
           <Content
             className="site-layout-background"
           >
-            <div>
+            <div style={{ margin: "10px 0" }}>
               <Switch>
                 {userRouter
                   .filter((item: any) => !item.isLayout)

@@ -2,12 +2,22 @@ import { PagedResultDto } from "../../../services/dto/pagedResultDto";
 import { ResponsesResource } from "../../../services/dto/responsesResource";
 import { SearchRequest } from "../../../services/dto/searchRequest ";
 import http from "../../../services/httpService";
-import { AssessmentProductComment, AssessmentProductReq, AssessmentProductRes, AssessmentProductStat, LikeCommentAssessmentProduct, LoadRepCommnetAssessmentProduct, ReplyCommentAssessmentProduct } from "./dtos/assessmentProduct";
-import { DetailInfoBasicProductDto } from "./dtos/cartBasicProductDto";
+import { AssessmentProductComment, AssessmentProductReq, AssessmentProductStat, LikeCommentAssessmentProduct, LoadRepCommnetAssessmentProduct, ReplyCommentAssessmentProduct } from "./dtos/assessmentProduct";
+import { CartProductReqDto, DetailInfoBasicProductDto } from "./dtos/cartBasicProductDto";
 import { FeatureProductContainerDto, FeatureProductReadDto } from "./dtos/featureProductContainerDto";
 import { ImageProductContainerDto } from "./dtos/imageForProductDto";
 
 class HDetailService {
+
+  public async AddToCart(input: CartProductReqDto)
+    : Promise<ResponsesResource<number>> {
+    let rs = await http.post("/api/services/app/CartProduct/AddToCart", input);
+    if (rs) {
+      return rs.data;
+    } else {
+      return rs;
+    }
+  }
 
   public async LoadCommentAssessmentProduct(input: SearchRequest)
     : Promise<ResponsesResource<PagedResultDto<LoadRepCommnetAssessmentProduct>>> {

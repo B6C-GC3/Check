@@ -12,6 +12,11 @@ namespace ApiProject.Shared.Entitys
     [Table("Order")]
     public class OrderEntity : Entity<long>
     {
+        public long FutureProductId { get; set; }
+        public int NumberOrder { get; set; }
+        public long DiscountId { get; set; }
+        public long IdSupplier { get; set; }
+
         /* ---------------------------------------------------------*/
 
         [Required]

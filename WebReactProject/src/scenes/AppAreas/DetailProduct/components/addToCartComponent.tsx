@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { InputNumber, Input, Button, Typography, Skeleton } from "antd";
 import { ProductReadForCartDto } from "../dtos/cartBasicProductDto";
+import services from "../services";
+import { notifyError, notifySuccess } from "../../../../components/Common/notification";
 
 const { Text } = Typography;
 declare var abp: any;
+
 interface IAddToCartComponentProps {
   productReadForCartDto: ProductReadForCartDto | undefined;
   orderMax: number;
@@ -13,10 +15,11 @@ interface IAddToCartComponentProps {
 }
 
 export default function AddToCartComponent(props: IAddToCartComponentProps) {
+
   const [orderQutity, setorderQutity] = useState<number>(props.orderMin);
   useEffect(() => {
-    setorderQutity(props.orderMin)
-  }, [props.productReadForCartDto])
+    setorderQutity(props.orderMin);
+  }, [props.productReadForCartDto]);
 
   const _changeQuatityOrder = (up: boolean) => {
     let data: number = orderQutity;
@@ -35,7 +38,26 @@ export default function AddToCartComponent(props: IAddToCartComponentProps) {
     if (data === null || data === undefined) data = props.orderMin;
     setorderQutity(data);
   };
-  
+
+  const _adToCart = async () => {
+    if (props.productReadForCartDto) {
+      var rsl = await services.AddToCart({
+        idFeature: props.productReadForCartDto?.id,
+        numberProduct: orderQutity
+      });
+      if (rsl.error === false && rsl.result !== undefined) {
+        notifySuccess("Success", "Success");
+      }
+      else {
+        notifyError("ERROR", "ERROR");
+      }
+
+    }
+    else {
+      notifyError("ERROR", "ERROR");
+    }
+  };
+
   return (
     <>
       <Skeleton className="gkchWemBrr" loading={false} active paragraph={{ rows: 0 }}>
@@ -80,14 +102,13 @@ export default function AddToCartComponent(props: IAddToCartComponentProps) {
               </div>
             </div>
             <div className="cqCDvWHHAI">
-              <Button className="NtyBxGgasl" type="primary" block>
+              <Button onClick={_adToCart} className="NtyBxGgasl" type="primary" block>
                 Thêm Vào Giỏ Hàng
               </Button>
             </div>
           </div>
         )}
       </Skeleton>
-
     </>
   );
 }

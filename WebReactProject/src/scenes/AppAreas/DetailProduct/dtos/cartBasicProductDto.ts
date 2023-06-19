@@ -41,3 +41,8 @@ export interface ProductReadForCartDto {
     iMGS80x80: string;
     name: string;
 }
+
+export interface CartProductReqDto {
+    idFeature: number;
+    numberProduct: number;
+}
