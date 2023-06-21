@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
-import { CheckOutlined, DeleteOutlined, InfoCircleOutlined, PlayCircleOutlined, RightOutlined, ShopOutlined } from '@ant-design/icons';
+import { CheckOutlined, DeleteOutlined, InfoCircleOutlined, RightOutlined, ShopOutlined } from '@ant-design/icons';
 import { Checkbox } from 'antd';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import services from './services';
 import { notifyError, notifySuccess } from '../../../components/Common/notification';
-import { ReadCartProductResDto } from './dtos/ReadCartProductResDto';
+import { ReadCartProductResDto } from './dtos/readCartProductResDto';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import PaymentsComponents from './components/paymentsComponents';
 

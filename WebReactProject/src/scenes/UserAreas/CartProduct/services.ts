@@ -1,6 +1,6 @@
 import { ResponsesResource } from '../../../services/dto/responsesResource';
 import http from '../../../services/httpService';
-import { ReadCartProductResDto } from './dtos/ReadCartProductResDto';
+import { ReadCartProductResDto } from './dtos/readCartProductResDto';
 
 class CartProductService {
     public async readCartForUser(): Promise<ResponsesResource<ReadCartProductResDto[]>> {

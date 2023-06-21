@@ -20,6 +20,11 @@
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="SystemManage\LocalizationSystem\**" />
+    <EmbeddedResource Remove="SystemManage\LocalizationSystem\**" />
+    <None Remove="SystemManage\LocalizationSystem\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="SystemManage\Users\4cblyop3.w1e~" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +40,5 @@
     <Folder Include="Supplier\SupplierAttributeValueService\" />
     <Folder Include="Supplier\SupplierFollowSevice\" />
     <Folder Include="Supplier\SupplierMappingService\" />
-    <Folder Include="SystemManage\LocalizationSystem\" />
   </ItemGroup>
 </Project>

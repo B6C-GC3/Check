@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MimeKit.Text;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -8,11 +9,12 @@ using System.Text;
 
 namespace Lib.ImageProcessing
 {
-    public class NameAvatarDefault
+    public static class NameAvatarDefault
     {
-        public string GenerateAvtarImage(string text, string urlSave)
+        public static string GenerateAvtarImage(string text, string urlSave)
         {
-            text = text.Substring(text.LastIndexOf(" ")).Trim();
+            var a = text.LastIndexOf(" ");
+            text = text.Substring(text.LastIndexOf(" ") == -1 ? 0 : text.LastIndexOf(" ")).Trim();
             Random rnd = new Random();
             int X = 70;
             int size = 25;
@@ -23,8 +25,12 @@ namespace Lib.ImageProcessing
             if (text.Length == 4) { X = 15; size = 40; Y = 55; }
             if (text.Length == 5) { X = 15; size = 35; Y = 60; }
             if (text.Length == 6) { X = 10; size = 30; Y = 65; }
+            if (text.Length == 7) { X = 12; size = 25; Y = 69; }
+            if (text.Length > 7) { X = 12; size = 25; Y = 69; text = text.Substring(0, 7); }
+
             Font font = new Font(FontFamily.GenericMonospace, size, FontStyle.Bold);
-            string Url = "";
+            string url = "";
+            string name = Guid.NewGuid().ToString("N");
             using (Image img = new Bitmap(180, 180))
             {
                 using (Graphics drawing = Graphics.FromImage(img))
@@ -42,20 +48,20 @@ namespace Lib.ImageProcessing
                     }
                 }
 
-                Url = urlSave + text.Trim() + ".png";
+                url = name + ".png";
                 int i = 0;
             next:
-                var sa = System.IO.File.Exists(Url);
+                var sa = System.IO.File.Exists(url);
                 if (sa)
                 {
-                    Url = urlSave + text.Trim() + "(" + i + ").png";
+                    url = name + "(" + i + ").png";
                     i++;
                     goto next;
                 }
 
-                img.Save(Url);
+                img.Save(urlSave + url);
             }
-            return Url;
+            return url;
         }
     }
 }

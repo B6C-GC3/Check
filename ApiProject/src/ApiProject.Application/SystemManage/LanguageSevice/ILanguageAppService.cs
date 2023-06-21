@@ -10,6 +10,6 @@ namespace ApiProject.SystemManage.LanguageSevice
 {
     public interface ILanguageAppService : IApplicationService
     {
-        Task<IList<LanguageSystemDto>> GetAllLaguage();
+        Task<List<LanguageSystemDto>> GetAllLaguage();
     }
 }

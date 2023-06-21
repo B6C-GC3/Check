@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApiProject.FileExtention
+namespace ApiProject.Shared.DataTransfer.Me
 {
-    public enum TypeFile
+    public class LocationDetectionDto
     {
-        Image = 0,
-        Avatar = 1,
+        public string Location {get;set;}
     }
 }

@@ -15,6 +15,7 @@
 body {
     background-color: rgb(0 0 0 / 7%) !important;
     margin: 0;
+    font-family: Roboto,Helvetica,Arial,sans-serif;
 }
 
 #root {

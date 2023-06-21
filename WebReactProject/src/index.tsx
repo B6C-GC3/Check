@@ -9,39 +9,31 @@ import Utils from './utils/utils';
 import registerServiceWorker from './registerServiceWorker';
 import abpLocalizationConfigService from './services/abpLocalizationConfigService';
 import defaultConfig from './localization/defaultConfig.json';
-import service from './scenes/OAuthAreas/UserLogin/services';
+import service, { LocationDetectionDto } from './services';
 import configureStore from './redux/configureStore';
 import { Provider } from 'react-redux';
+import { notifyError } from './components/Common/notification';
 
 declare var abp: any;
 Utils.setLocalization();
 
 abpLocalizationConfigService.getLocalization().then(async function (res) {
     Utils.extend(true, abp, defaultConfig);
+
     if (!!abp.auth.getToken()) {
-        //let checktoken = await service.checkToken(abp.auth.getToken());
-        // console.log('checktoken', checktoken)
-        // if (checktoken) {
-        //     abp.session.userId = checktoken.userId;
-        //     abp.auth.setRoles(checktoken.roleList, undefined);
-        // }
-        // else {
-        //     // localStorage.clear();
-        //     // sessionStorage.clear();
-        //     // abp.auth.clearToken();
-        // }
+        loadDefault();
     }
-    else{
-       // service.setCookie();
+    else {
+
     }
-    
+
     service.setCookie();
     var loadingEl = document.getElementById('root-loading');
 
     if (loadingEl) {
         loadingEl.remove();
     }
-    localStorage.setItem("wiSQy", "e807f1fcf82d132f9bb018ca6738a19f");
+
     abp.localization.values = res;
 
     abpLocalizationConfigService.getCurrentLanguage().then(function (res) {
@@ -68,3 +60,18 @@ abpLocalizationConfigService.getLocalization().then(async function (res) {
 
     registerServiceWorker();
 });
+
+async function loadDefault() {
+    var rsl = await service.DefaultLoader();
+    if (rsl.error === true || rsl.result !== undefined) {
+        abp.utils.setCookieValue(
+            'Localization',
+            rsl.result.location,
+            new Date(new Date().getTime() + 5 * 365 * 86400000), //5 year
+            abp.appPath
+        );
+    }
+    else {
+        notifyError("ERROR", "ERROR");
+    }
+}

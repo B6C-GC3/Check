@@ -1,15 +1,15 @@
 {
     "localization": {
         "currentCulture": {
-            "name": "vi",
+            "name": "vn",
             "displayName": "Vietnamese"
         },
         "languages": [
             { "name": "en", "displayName": "English", "icon": "famfamfam-flags gb", "isDefault": false, "isDisabled": false, "isRightToLeft": false },
-            { "name": "vi", "displayName": "Vietnamese", "icon": "famfamfam-flags vn", "isDefault": false, "isDisabled": false, "isRightToLeft": false }
+            { "name": "vn", "displayName": "Vietnamese", "icon": "famfamfam-flags vn", "isDefault": false, "isDisabled": false, "isRightToLeft": false }
         ],
         "currentLanguage": {
-            "name": "vi",
+            "name": "vn",
             "displayName": "Vietnamese",
             "icon": "famfamfam-flags vn",
             "isDefault": false,

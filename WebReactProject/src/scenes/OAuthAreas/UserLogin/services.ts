@@ -51,17 +51,6 @@ class LoginService {
         }
     }
 
-    public async setCookie()
-        : Promise<ResponsesResource<void> | undefined> {
-        try {
-            let rs = await http.get('/AntiForgery/SetCookie');
-            return rs ? rs.data : rs;
-        } catch {
-            notifyError("Cảnh báo lỗi!", "Đã sảy ra lỗi trong yêu cầu của bạn!");
-            return undefined;
-        }
-    }
-
     public async loggin(input: AuthenticationInput, tenant: number)
         : Promise<ResponsesResource<AuthenticationResult> | undefined> {
         try {

@@ -7,7 +7,7 @@ class AbpLocalizationConfigService {
   public async getLocalization() {
     let language;
     if (!abp.utils.getCookieValue('Localization')) {
-      language = "vi";
+      language = "vn";
     }
     else {
       language = abp.utils.getCookieValue('Localization');
@@ -18,7 +18,7 @@ class AbpLocalizationConfigService {
       case "en":
         objReturn = enJson;
         break;
-      case "vi":
+      case "vn":
         objReturn = viJson;
         break;
       default:
@@ -32,7 +32,7 @@ class AbpLocalizationConfigService {
   public async getCurrentLanguage() {
     let language: string;
     if (!abp.utils.getCookieValue('Localization')) {
-      language = "vi";
+      language = "vn";
     }
     else {
       language = abp.utils.getCookieValue('Localization');

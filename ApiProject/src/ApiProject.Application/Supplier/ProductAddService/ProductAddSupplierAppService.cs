@@ -128,7 +128,7 @@ namespace ApiProject.Supplier.ProductAddService
             // add image root
             var imageRoot = images.Select(s => new FileSourceEntity
             {
-                ImageName = Path.GetFileName(s).Substring(0, 36),
+                ImageName = Path.GetFileName(s).Substring(0, 32),
                 MimeType = MimeType.JPEGImages,
                 SeoFilename = string.Empty,
                 AltAttribute = string.Empty,
@@ -175,7 +175,7 @@ namespace ApiProject.Supplier.ProductAddService
                         VirtualPath = item.Url,
                         Size = item.Size,
                         Folder = FOLDER_IMAGE_ROOT,
-                        ImageRoot = imageRoot.FirstOrDefault(f => f.ImageName == Path.GetFileName(image).Substring(0, 36)).Id,
+                        ImageRoot = imageRoot.FirstOrDefault(f => f.ImageName == Path.GetFileName(image).Substring(0, 32)).Id,
                         Types = (int)TypeFile.Image,
                         IsActive = true,
                         IsDeleted = false

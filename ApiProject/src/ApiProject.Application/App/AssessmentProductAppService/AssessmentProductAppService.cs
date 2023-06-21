@@ -71,7 +71,7 @@ namespace ApiProject.App.AssessmentProductAppService
             // add image root
             var imageRoot = imgRsl.Select(s => new FileSourceEntity
             {
-                ImageName = Path.GetFileName(s.Url).Substring(0, 36),
+                ImageName = Path.GetFileName(s.Url).Substring(0, 32),
                 MimeType = MimeType.JPEGImages,
                 SeoFilename = string.Empty,
                 AltAttribute = string.Empty,

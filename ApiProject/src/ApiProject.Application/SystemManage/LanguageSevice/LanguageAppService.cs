@@ -23,7 +23,7 @@ namespace ApiProject.SystemManage.LanguageSevice
         }
 
         [HttpGet]
-        public async Task<IList<LanguageSystemDto>> GetAllLaguage()
+        public async Task<List<LanguageSystemDto>> GetAllLaguage()
         {
             var dataLag = await _unitOfWork.GetRepository<ApplicationLanguage>()
                                            .GetAllAsync(predicate: p => p.IsDisabled == false && p.IsDeleted == false);

@@ -42,7 +42,6 @@ export default function Signin(props: ISigninProps) {
                 var expireDate = new Date(Date.now() + (dataAuth.result.expireInSeconds * 1000));
                 abp.auth.setToken(dataAuth.result.accessToken, expireDate);
                 if (dataAuth.result.accessToken) {
-                    var a = await service.setCookie();
                 }
                 //window.location.href = "/";
             }
