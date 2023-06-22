@@ -22,18 +22,19 @@ export default function UserAccountComponent(props: IUserAccountComponentProps) 
                                     <object data="/default-image.jpg" type="image/webp">
                                         <img src="./avatar-user-default.webp" alt="" />
                                     </object>
-                                    <span><a href="/">Trần Hải Nam</a></span>
+                                    <span><a href="/user">Trần Hải Nam</a></span>
                                 </div>
                                 <Divider />
                                 <div>
-                                    <span>Admin : <a href="/">My stoce</a></span>
-                                    <span>Nhà cung cấp : <a href="/">My stoce</a></span>
+                                    <span>Admin : <a href="/admin">Trần Hải Nam</a></span>
+                                    <span>Nhà cung cấp : <a href="/supplier">Trần Hải Nam</a></span>
+                                    <span>Giỏ hàng : <a href="/user">Trần Hải Nam</a></span>
                                 </div>
                             </div>
                         </Skeleton>
                         <Menu.Divider />
                         <Menu.Item key="sadfsa" >
-                            <a href="/user/login" className="UWRJovyiDd">
+                            <a href="/login" className="UWRJovyiDd">
                                 <div className="gakytfzMKN">
                                     <IdcardFilled />
                                 </div>

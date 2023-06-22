@@ -1,11 +1,12 @@
 import * as React from "react";
 import './style.css'
-import { Col, Row } from "antd";
+import { Breadcrumb, Col, Input, Row } from "antd";
 import AppComponentBase from "../../ComponentGlobal";
 //import "antd/dist/antd.css";
 import { Helmet } from "react-helmet";
 import LocalizationSelect from "../../LocalizationSelect";
 import Search from "antd/lib/input/Search";
+import { BellOutlined, HomeOutlined, SearchOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 declare var abp: any;
 
 export interface IHeaderSupplierProps {
@@ -20,28 +21,44 @@ class HeaderSupplier extends AppComponentBase<
 > {
   public render() {
     return (
-      <Col className="aGrmknEhRc">
-        <Helmet>
-          <link rel="stylesheet" href={abp.serviceAlbumCss + "/headerSupplier.css"} />
-        </Helmet>
-        <Row className="LnnmANqsmU">
-          <Col span={4} className="biOoNRMTcn">
-            <a href="#">
-              <img src="" />
-            </a>
-          </Col>
-          <Col span={20}>
-            <Row gutter={[10, 10]} className="UsOtXrnlIG">
-              <Col span={20} className="tIergMVJuj">
-                <Search placeholder="Nhập dữ liệu tìm kiếm" className="NThvCrGafX" enterButton />
-              </Col>
-              <Col span={4} className="NoNeJumIOX">
-                <div><LocalizationSelect /></div>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </Col>
+      <div className="LnnmANqsmU">
+        <div className="biOoNRMTcn">
+          <Breadcrumb
+            items={[
+              {
+                href: '',
+                title: <HomeOutlined />,
+              },
+              {
+                href: '',
+                title: (
+                  <>
+                    <UserOutlined />
+                    <span>Application List</span>
+                  </>
+                ),
+              },
+              {
+                title: 'Application',
+              },
+            ]}
+          />
+          <div>Dashboard</div>
+        </div>
+        <div >
+          <Row gutter={[10, 10]} className="UsOtXrnlIG">
+            <div className="tIergMVJuj">
+              <Input placeholder="large size" prefix={<SearchOutlined />} />
+            </div>
+            <div className="noNeJumIOX">
+              <div><LocalizationSelect /></div>
+              <div><UserOutlined /></div>
+              <div><BellOutlined /></div>
+              <div><SettingOutlined /></div>
+            </div>
+          </Row>
+        </div>
+      </div>
     );
   }
 }

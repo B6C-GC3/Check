@@ -1,71 +1,49 @@
 .LnnmANqsmU {
     width: 100%;
     height: 50px;
-    background-color: #150799;
+    background-color: #4096ff;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
     padding: 0 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: #ffff;
+    font-size: 12px;
 }
 
-.aGrmknEhRc {
+.biOoNRMTcn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.biOoNRMTcn>nav.ant-breadcrumb.css-dev-only-do-not-override-1wazalj>ol>li>a,
+.biOoNRMTcn>nav.ant-breadcrumb.css-dev-only-do-not-override-1wazalj>ol>li {
+    font-weight: 600;
+    color: #ffff;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.ant-breadcrumb a:hover {
+    background: #fff;
+    color: #000 !important;
+}
+
+.noNeJumIOX {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    align-content: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
 }
 
-.NoNeJumIOX {
-    display: flex !important;
-    align-items: center;
-}
 
-.NoNeJumIOX>div {
-    width: 32px;
-    height: 32px;
+.noNeJumIOX>div {
+    width: 24px;
+    height: 24px;
+    margin: 0 5px;
     display: flex;
-    align-content: center;
     justify-content: center;
     align-items: center;
-    background: #d9d9d9;
-    border-radius: 50%;
-}
-
-.tIergMVJuj {
-    width: 100%;
-    display: flex !important;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.UsOtXrnlIG {}
-
-.tIergMVJuj {}
-
-.NThvCrGafX {
-    max-width: 500px;
-    min-width: 300px;
-}
-
-.NThvCrGafX>span.ant-input-wrapper.ant-input-group {}
-
-.NThvCrGafX>span.ant-input-wrapper.ant-input-group>input {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-}
-
-.NThvCrGafX>span.ant-input-wrapper.ant-input-group>span {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-
-.NThvCrGafX>span.ant-input-wrapper.ant-input-group>span>button {
-    border-top-right-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
+    cursor: pointer;
 }

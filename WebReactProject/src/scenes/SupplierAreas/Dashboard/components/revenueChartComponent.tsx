@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Select } from "antd";
-import { L } from "../../lib/abpUtility";
-import './style.css';
+import { L } from "../../../../lib/abpUtility";
+import '../index.css';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Tooltip, Brush } from "recharts";
-import utils from "../../utils/utils";
+import utils from "../../../../utils/utils";
 
 const { Option } = Select;
 interface IChartComponent<T> {
@@ -15,15 +15,17 @@ interface IChartComponent<T> {
     XAxis?: string | undefined,
     YAxis?: string | undefined,
     numberItem?: number | undefined
+    style?: any;
 }
 
-export default function ChartComponent<T>(props: IChartComponent<T>) {
+export default function RevenueChartComponent<T>(props: IChartComponent<T>) {
     const _processNameObject = () => {
         return (
             <>{props.keyGen.map((m: any, index: number) =>
                 <Line type='linear'
                     dataKey={m}
                     name={m + " of pages"}
+                    strokeDasharray={index !== 1 ? "1 3 2" : ""}
                     stroke={utils._randomColor(index)}
                     activeDot={{ r: 3 }}
                     strokeWidth={2}
@@ -39,15 +41,16 @@ export default function ChartComponent<T>(props: IChartComponent<T>) {
                 title={props.title}
                 size="small"
                 type='inner'
+                className="cfEdpDCjaO"
                 loading={props.loading}
-                style={{ marginBottom: '5px' }}
+                style={props.style}
             >
-                <Select placeholder="Chọn chế độ hiển thị">
+                {/* <Select placeholder="Chọn chế độ hiển thị">
                     <Option key={1}> 1 Ngày</Option>
                     <Option key={2}> 1 Tuần</Option>
                     <Option key={3}> 1 Tháng</Option>
                     <Option key={4}> 1 Quý</Option>
-                </Select>
+                </Select> */}
                 <ResponsiveContainer>
                     <LineChart
                         data={props.data}
@@ -55,12 +58,7 @@ export default function ChartComponent<T>(props: IChartComponent<T>) {
                     >
                         <CartesianGrid vertical={false} />
                         <XAxis dataKey="name" />
-                        <YAxis width={30} />
-                        <Legend verticalAlign="top" />
-                        <Brush
-                            height={0}
-                            startIndex={props.data.length > 15 ? props.data.length - 15 : 0}
-                            endIndex={props.data.length - 1} />
+                        <YAxis width={30} tickCount={10} />
                         <Tooltip />
                         {_processNameObject()}
                     </LineChart>
@@ -69,4 +67,3 @@ export default function ChartComponent<T>(props: IChartComponent<T>) {
         </>
     );
 }
-

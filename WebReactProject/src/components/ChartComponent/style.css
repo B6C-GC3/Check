@@ -1,6 +1,6 @@
 .recharts-responsive-container {
     width: 100% !important;
-    height: 300px !important;
+    height: 350px !important;
 }
 
 .recharts-legend-wrapper {
@@ -13,7 +13,8 @@
     margin: 0px;
     text-align: center;
     width: 100%;
-    overflow-x: scroll;
+    height: 32px;
+    line-height: 32px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;

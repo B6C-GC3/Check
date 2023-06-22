@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace ApiProject.Authorization
 {
+    public interface ISupplierConfigGlobal
+    {
+        long? SupplierId { get; }
+        void Use(long? supplierId);
+    }
+
     public class SupplierConfigGlobal : ISupplierConfigGlobal
     {
-        private long supplierId;
+        private long? _supplierId;
 
-        public long SupplierId { get => supplierId; set => SetSupplierId(); }
+        public long? SupplierId { get => _supplierId; }
 
-        public void SetSupplierId()
+        public void Use(long? supplierId)
         {
-            supplierId = 3;
+            _supplierId = supplierId;
         }
     }
 }

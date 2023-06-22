@@ -17,6 +17,7 @@
     -moz-user-select: -moz-none;
     -o-user-select: none;
     user-select: none;
+    height: 100vh;
 }
 
 .ant-menu-sub.ant-menu-inline>.ant-menu-item,

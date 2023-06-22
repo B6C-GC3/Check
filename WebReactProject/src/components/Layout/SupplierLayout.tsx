@@ -17,7 +17,7 @@ class SupplierLayout extends React.Component<any> {
               className="site-layout-background"
             >
               <HeaderSupplier />
-              <div style={{ margin: '5px' }}><Switch>
+              <div style={{ margin: '5px', position: 'relative' }}><Switch>
                 {supplierRouters
                   .filter((item: any) => !item.isLayout)
                   .map((item: any, index: number) => (
