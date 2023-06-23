@@ -56,11 +56,6 @@ export const adminRouters: any = [
     component: LoadableComponent(() => import("../../scenes/AdminAreas/Adress"))
   },
   {
-    path: "/admin/add-product",
-    exact: true,
-    component: LoadableComponent(() => import("../../scenes/AdminAreas/ProductAdd"))
-  },
-  {
     path: "/admin/product",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/AdminAreas/Product"))
@@ -110,6 +105,21 @@ export const supplierRouters: any = [
     path: "/supplier/staff",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/Staff"))
+  },
+  {
+    path: "/supplier/product",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Product"))
+  },
+  {
+    path: "/supplier/add-product",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/ProductAdd"))
+  },
+  {
+    path: "/supplier/bank-card",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/BankCard"))
   },
   {
     path: "/supplier",

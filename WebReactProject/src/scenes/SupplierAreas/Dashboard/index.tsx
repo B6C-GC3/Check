@@ -18,9 +18,7 @@ export default function Dashboard(props: IDashboardProps) {
 
     return (
         <>
-            <div className='vfqVMuXEsF'>
-
-            </div>
+            <div className='vfqVMuXEsF'></div>
             <div className='jlcaNFyBnC'>
                 <Card bordered={false} className='efsKzbtqxG'>
                     <Statistic

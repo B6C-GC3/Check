@@ -1,5 +1,5 @@
 import Entity from "../../../../services/dto/entity";
-import { AttributeUL } from "../../ProductAdd/dtos/atributeTypes";
+import { AttributeUL } from "../../../SupplierAreas/ProductAdd/dtos/atributeTypes";
 
 export interface ProductAttributeValueSupplier extends Entity<number> {
     attributeId: number;

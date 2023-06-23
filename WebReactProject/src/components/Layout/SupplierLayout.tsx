@@ -17,19 +17,20 @@ class SupplierLayout extends React.Component<any> {
               className="site-layout-background"
             >
               <HeaderSupplier />
-              <div style={{ margin: '5px', position: 'relative' }}><Switch>
-                {supplierRouters
-                  .filter((item: any) => !item.isLayout)
-                  .map((item: any, index: number) => (
-                    <Route
-                      key={index}
-                      path={item.path}
-                      component={item.component}
-                      exact={item.exact}
-                    />
-                  ))}
-                <Redirect from="/supplier" to="/supplier" />
-              </Switch>
+              <div style={{ margin: '5px', position: 'relative' }}>
+                <Switch>
+                  {supplierRouters
+                    .filter((item: any) => !item.isLayout)
+                    .map((item: any, index: number) => (
+                      <Route
+                        key={index}
+                        path={item.path}
+                        component={item.component}
+                        exact={item.exact}
+                      />
+                    ))}
+                  <Redirect from="/supplier" to="/supplier" />
+                </Switch>
               </div>
             </Content>
           </Layout>

@@ -43,16 +43,28 @@ export default function MenuSlider(props: IMenuSliderAdminProps) {
           </Menu.Item>
 
           <Menu.SubMenu key="menu001" icon={<SettingOutlined />} title="Cấu hình">
-            <Menu.Item key="menu001_1_1">
+            <Menu.Item key="menu001_1">
               <Link to="/supplier/category/cai-dat">Category</Link>
+            </Menu.Item>
+            <Menu.Item key="menu001_2">
+              <Link to="/supplier/bank-card">Thẻ ngân hàng</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu002" icon={<SettingOutlined />} title="Sản phẩm">
+            <Menu.Item key="menu002_1">
+              <Link to="/supplier/product">Tổng quan</Link>
+            </Menu.Item>
+            <Menu.Item key="menu002_2">
+              <Link to="/supplier/add-product">Thêm sản phẩm</Link>
             </Menu.Item>
           </Menu.SubMenu>
 
           <Menu.SubMenu key="menu9999" icon={<SettingOutlined />} title="Thông tin">
-            <Menu.Item key="item0_1" defaultChecked={true}>
+            <Menu.Item key="menu9999_1" defaultChecked={true}>
               <Link to="/supplier/info">Cơ bản</Link>
             </Menu.Item>
-            <Menu.Item key="item0_2" defaultChecked={true}>
+            <Menu.Item key="menu9999_2" defaultChecked={true}>
               <Link to="/supplier/staff">Nhân Viên</Link>
             </Menu.Item>
           </Menu.SubMenu>

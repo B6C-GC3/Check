@@ -2,7 +2,6 @@ import { Button, Select, Steps, message, Typography, TourProps, Tour } from 'ant
 import React, { useEffect, useRef, useState } from 'react';
 import { L, mapThat } from "../../../lib/abpUtility";
 import './style.css';
-import '../admin_table.css';
 import { CategorySelectedDto, DataTypeProductAdd, DataTypeProductDto, ProductAddDto, ProductQueryDto } from './dtos/productAddDto';
 import Title from 'antd/es/typography/Title';
 import CategorySelectAdd from './components/categorySelectAdd';
@@ -42,7 +41,7 @@ const KEY_CATEGORY_TECHNICAL = "TpXmW";
 export default function ProductAdd(props: IProductAddProps) {
     //constructor
 
-    const [current, setCurrent] = useState<number>(9);
+    const [current, setCurrent] = useState<number>(0);
     const [activeButtonNext, setactiveButtonNext] = useState<boolean>(false);
     const [openTour, setOpenTour] = useState<boolean>(false);
     const ref1 = useRef(null);

@@ -2,7 +2,7 @@ import { PagedResultDto } from '../../../services/dto/pagedResultDto';
 import { ResponsesResource } from '../../../services/dto/responsesResource';
 import { SearchRequest } from '../../../services/dto/searchRequest ';
 import http from '../../../services/httpService';
-import { SupplierCategorAddProductDto } from '../ProductAdd/dtos/productAddDto';
+import { SupplierCategorAddProductDto } from '../../SupplierAreas/ProductAdd/dtos/productAddDto';
 import { ProductAttributeValueSupplier } from './dtos/productAttributeDto';
 import { ProductAttributeInsertDto, ProductAttributeUpdateDto, ProductAttributeUpdateOutDto } from './dtos/productAttributeQuery';
 
