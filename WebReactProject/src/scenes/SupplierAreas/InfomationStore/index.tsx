@@ -5,7 +5,7 @@ import { notifyError } from '../../../components/Common/notification';
 import { L } from "../../../lib/abpUtility";
 import AddComponents from '../Register/components/addComponents';
 import { SupplierInfoDto } from './dataTypes/supplierInfoDto';
-
+import '../supplier_table.css';
 import './index.css';
 import service from './service';
 
@@ -54,6 +54,7 @@ export default function InfomationStore(props: IInfomationStoreComponents) {
 
     return (
         <>
+            <div className='vfqVMuXEsF'></div>
             <div className='dKtREVzljA'>{L("TITLE_SUPPLIER_INFOMATION_STORE", SCREEN_KEY)}</div>
             <Card className='OTTSvDfhsa' loading={loadding}>
                 <Descriptions

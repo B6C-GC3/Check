@@ -75,8 +75,6 @@ namespace ApiProject.Supplier.RegisterAccountService
                 var insertData = MappingData.InitializeAutomapper().Map<SupplierEntity>(input);
                 // mã hóa password
                 insertData.Status = (int)STATUS_SUPPLIER_MAPPING.PENDING;
-                insertData.HaskPass = RanDomBase.RandomString(10);
-                insertData.PassWordShop = SecurityProcess.SHA256Hash(input.PassWordShop + insertData.HaskPass);
                 var supplierEntityInsert = _unitOfWork.GetRepository<SupplierEntity>()
                                                       .Insert(insertData);
                 _unitOfWork.SaveChanges();
@@ -119,8 +117,6 @@ namespace ApiProject.Supplier.RegisterAccountService
 
                     // mã hóa password
                     updateData.Status = (int)STATUS_SUPPLIER_MAPPING.PENDING;
-                    updateData.HaskPass = RanDomBase.RandomString(10);
-                    updateData.PassWordShop = SecurityProcess.SHA256Hash(input.PassWordShop + updateData.HaskPass);
                     updateData.CompanyVat = input.CompanyVat;
                     updateData.NumberPhone = input.NumberPhone;
                     updateData.Email = input.Email;

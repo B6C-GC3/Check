@@ -87,7 +87,7 @@ const HeaderAppComponent = () => {
                         <SettingAppComponents />
                     </div>
                     <div>
-                        <a href='/supplier' className='cIcajICXbl'>Trở thành đối tác</a>
+                        <a href='/supplie-registration' className='cIcajICXbl'>Trở thành đối tác</a>
                     </div>
                 </div>
             </div>

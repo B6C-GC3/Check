@@ -49,7 +49,7 @@ namespace ApiProject.Web.Host.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ISupplierConfigGlobal, SupplierConfigGlobal>();
+            services.AddScoped<ISupplierSession, SupplierSession>();
             //MVC
             services.AddControllersWithViews(
                 options =>
@@ -144,6 +144,8 @@ namespace ApiProject.Web.Host.Startup
             app.UseDbTransaction();
 
             app.UseRedisCache();
+
+            app.UseSupplier();
 
             app.UseEndpoints(endpoints =>
             {

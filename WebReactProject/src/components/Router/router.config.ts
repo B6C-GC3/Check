@@ -231,6 +231,13 @@ export const appRouter: any = [
     showInMenu: false,
     index: 0
   }, {
+    path: '/supplie-registration',
+    name: 'SupplierRegistration',
+    title: 'Đăng ký nhà cung cấp',
+    component: LoadableComponent(() => import('../../scenes/AppAreas/SupplierRegistration')),
+    showInMenu: false,
+    index: 0
+  }, {
     path: '/',
     name: 'Home',
     title: 'Trang chủ',

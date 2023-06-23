@@ -20,10 +20,10 @@ namespace ApiProject.App.DetailProductAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAbpSession _abpSession;
-        private readonly ISupplierConfigGlobal _supplierConfigGlobal;
+        private readonly ISupplierSession _supplierConfigGlobal;
         private readonly UserManager _userManager;
 
-        public DetailProductApplicationService(IUnitOfWork unitOfWork, IAbpSession abpSession, ISupplierConfigGlobal supplierConfigGlobal, UserManager userManager)
+        public DetailProductApplicationService(IUnitOfWork unitOfWork, IAbpSession abpSession, ISupplierSession supplierConfigGlobal, UserManager userManager)
         {
             _unitOfWork = unitOfWork;
             _abpSession = abpSession;

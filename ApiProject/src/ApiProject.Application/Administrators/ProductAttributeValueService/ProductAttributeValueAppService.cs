@@ -24,10 +24,10 @@ namespace ApiProject.Administrators.ProductAttributeValueService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAbpSession _abpSession;
-        private readonly ISupplierConfigGlobal _supplierGlobal;
+        private readonly ISupplierSession _supplierGlobal;
         private const long SUPPLIER_ID = 3;
 
-        public ProductAttributeValueAppService(IUnitOfWork unitOfWork, IAbpSession abpSession, ISupplierConfigGlobal supplierGlobal)
+        public ProductAttributeValueAppService(IUnitOfWork unitOfWork, IAbpSession abpSession, ISupplierSession supplierGlobal)
         {
             _unitOfWork = unitOfWork;
             _abpSession = abpSession;

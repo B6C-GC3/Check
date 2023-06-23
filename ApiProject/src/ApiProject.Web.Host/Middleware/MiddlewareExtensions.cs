@@ -9,6 +9,9 @@ namespace ApiProject.Web.Host.Middleware
 
         public static IApplicationBuilder UseRedisCache(this IApplicationBuilder app)
                => app.UseMiddleware<RedisCacheMiddleware>();
+
+        public static IApplicationBuilder UseSupplier(this IApplicationBuilder app)
+             => app.UseMiddleware<SupplierMiddleware>();
     }
 
 }

@@ -1,8 +1,6 @@
 ﻿using Abp.Application.Services;
-using ApiProject.Shared.Common;
 using ApiProject.Shared.DataTransfer.Supplier;
 using System.Threading.Tasks;
-using UnitOfWork.Collections;
 
 namespace ApiProject.Supplier.InfoSupplier
 {

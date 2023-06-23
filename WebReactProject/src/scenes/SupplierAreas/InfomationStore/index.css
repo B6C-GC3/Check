@@ -1,13 +1,13 @@
 .dKtREVzljA {
     width: 100%;
+    position: relative;
     margin: 15px 0;
     margin-top: 5px;
     font-size: 32px;
     font-weight: bold;
+    color: #fff;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
-    border-bottom: 1px solid #d9d9d9;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .OTTSvDfhsa {
@@ -23,6 +23,6 @@
     border-radius: 10px;
 }
 
-.xfNtIGwtCu{
+.xfNtIGwtCu {
     border-radius: 10px;
 }

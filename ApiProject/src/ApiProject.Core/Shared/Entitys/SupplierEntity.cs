@@ -25,12 +25,6 @@ namespace ApiProject.Shared.Entitys
         public string Email { get; set; }
 
         [Required]
-        public string PassWordShop { get; set; }
-
-        [Required]
-        public string HaskPass { get; set; }
-
-        [Required]
         public string NameShop { get; set; }
 
         public string LinkShop { get; set; }
