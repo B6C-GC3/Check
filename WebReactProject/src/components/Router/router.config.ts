@@ -122,6 +122,11 @@ export const supplierRouters: any = [
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/BankCard"))
   },
   {
+    path: "/supplier/product-comment",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/CommentProduct"))
+  },
+  {
     path: "/supplier",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/Dashboard"))

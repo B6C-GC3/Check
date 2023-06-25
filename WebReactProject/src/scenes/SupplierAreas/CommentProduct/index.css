@@ -1,0 +1,30 @@
+.qKulFWRevV {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    margin: 5px 10px;
+}
+
+.qKulFWRevV>div.ant-card {
+    width: 33%;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.qKulFWRevV>div.ant-card>div.ant-card-body {
+    padding: 17px;
+}
+
+.bxnEzbucoS {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto !important;
+    top: 50px;
+}
+
+.bxnEzbucoS>div.ant-modal-content {
+    width: 60vw;
+    padding: 10px 15px;
+}

@@ -2,11 +2,20 @@ import { PagedResultDto } from "../../../services/dto/pagedResultDto";
 import { ResponsesResource } from "../../../services/dto/responsesResource";
 import { SearchRequest } from "../../../services/dto/searchRequest ";
 import http from "../../../services/httpService";
-import { ProductSupplierDto } from "./dtos/productSupplierDto";
+import { AssessmentSupplierCommentDto, AssessmentSupplierOverviewDto } from "./dtos/assessmentSupplierOverviewDto";
 
-class ProductService {
-    public async GetProduct(input: SearchRequest): Promise<ResponsesResource<PagedResultDto<ProductSupplierDto>>> {
-        let rs = await http.get('/api/services/app/ProductSupplier/GetProduct',
+class Service {
+    public async GetOverrview(input: number): Promise<ResponsesResource<AssessmentSupplierOverviewDto>> {
+        let rs = await http.get('/api/services/app/AssessmentSupplier/GetOverrview',
+            {
+                params: { productId: input }
+            });
+
+        return rs ? rs.data : rs;
+    }
+
+    public async GetCommentProduct(input: SearchRequest): Promise<ResponsesResource<PagedResultDto<AssessmentSupplierCommentDto>>> {
+        let rs = await http.get('/api/services/app/AssessmentSupplier/GetCommentProduct',
             {
                 params: {
                     propertySearch: input.propertySearch,
@@ -17,8 +26,9 @@ class ProductService {
                     pageSize: input.pageSize
                 }
             });
-            
+
         return rs ? rs.data : rs;
     }
 }
-export default new ProductService();
+
+export default new Service();

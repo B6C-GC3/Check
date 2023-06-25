@@ -1,4 +1,6 @@
-﻿using ApiProject.Shared.DataTransfer.StaffSupplier;
+﻿using ApiProject.Shared.DataTransfer.AssessmentSupplier;
+using ApiProject.Shared.DataTransfer.ProductSupplier;
+using ApiProject.Shared.DataTransfer.StaffSupplier;
 using ApiProject.Shared.DataTransfer.Supplier;
 using ApiProject.Shared.Entitys;
 using AutoMapper;
@@ -23,6 +25,13 @@ namespace ApiProject.MappingExtention
             cfg.CreateMap<StaffSupplierDto, SupplierMappingEntity>();
             cfg.CreateMap<SupplierMappingEntity, StaffSupplierDto>();
             #endregion
+
+            cfg.CreateMap<ProductSupplierDto, ProductEntity>();
+            cfg.CreateMap<ProductEntity, ProductSupplierDto>();
+
+            cfg.CreateMap<AssessmentSupplierCommentDto, AssessmentProductEntity>();
+            cfg.CreateMap<AssessmentProductEntity, AssessmentSupplierCommentDto> ();
+
         }
     }
 }

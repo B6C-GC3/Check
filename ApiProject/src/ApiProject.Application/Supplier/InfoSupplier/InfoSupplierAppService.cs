@@ -37,7 +37,7 @@ namespace ApiProject.Supplier.InfoSupplier
             var idUser = _abpSession.UserId;
 
             var supplier = await _unitOfWork.GetRepository<Shared.Entitys.SupplierEntity>()
-                                            .GetFirstOrDefaultAsync(predicate: p => p.Id == idSupplier && p.CreatorUserId == idUser);
+                                            .GetFirstOrDefaultAsync(predicate: p => p.Id == idSupplier && p.CreatorUserId == idUser)
                            ?? throw new ClientException("ID", ERROR_DATA.DATA_NULL);
 
             var rsl = MappingData.InitializeAutomapper().Map<SupplierInfoDto>(supplier);
