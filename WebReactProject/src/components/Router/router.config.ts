@@ -127,6 +127,11 @@ export const supplierRouters: any = [
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/CommentProduct"))
   },
   {
+    path: "/supplier/product-edit",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/EditProduct"))
+  },
+  {
     path: "/supplier",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/Dashboard"))
@@ -240,6 +245,14 @@ export const appRouter: any = [
     name: 'SupplierRegistration',
     title: 'Đăng ký nhà cung cấp',
     component: LoadableComponent(() => import('../../scenes/AppAreas/SupplierRegistration')),
+    showInMenu: false,
+    index: 0
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    title: 'shop',
+    component: LoadableComponent(() => import('../../scenes/AppAreas/ShopSupplier')),
     showInMenu: false,
     index: 0
   }, {

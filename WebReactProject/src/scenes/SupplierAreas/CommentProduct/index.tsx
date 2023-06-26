@@ -11,7 +11,7 @@ import './index.css';
 import { valueType } from 'antd/es/statistic/utils';
 import { AssessmentSupplierCommentDto, AssessmentSupplierOverviewDto } from './dtos/assessmentSupplierOverviewDto';
 import services from './services';
-import { notifyError } from '../../../components/Common/notification';
+import { notifyError, notifySuccess } from '../../../components/Common/notification';
 import { TableRowSelection } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
 import CommentDetailComponent from './components/commentDetailComponent';
@@ -195,7 +195,25 @@ export default function CommentProduct() {
     if (loadingTable) return;
     _onLoadCommnetDefault();
   }, [pageIndex, pageSize]);
-  
+
+  const _onWatchedComment = async () => {
+    var rsl = await services.WatchedComment(dataSelectFromTable);
+    if (rsl.error == false && rsl.result !== undefined) {
+      var newData = dataSource.map(item => {
+        if (dataSelectFromTable.some(s => s === item.id)) {
+          item.isNew = false;
+        }
+        return item;
+      });
+
+      setDataSource(newData);
+      notifySuccess("SUCCESS", "INSERT " + rsl.result + " RECORD SUCCESS");
+    }
+    else {
+      notifyError("ERROR", "ERROR");
+    }
+  }
+
   return (
     <>
       <div className='vfqVMuXEsF'></div>
@@ -266,7 +284,7 @@ export default function CommentProduct() {
               <Button loading={loadingAll} type="text">
                 {<RetweetOutlined />}
               </Button>
-              <Button loading={loadingAll} type="text">
+              <Button loading={loadingAll} type="text" onClick={_onWatchedComment}>
                 {<EyeOutlined />}
               </Button>
               <ExportFileComponent

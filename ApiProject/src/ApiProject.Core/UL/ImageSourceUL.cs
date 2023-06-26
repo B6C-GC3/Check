@@ -9,7 +9,7 @@ namespace ApiProject.UL
     public enum ImageSourceUL
     {
         PRODUCT = 0,
-        CAROUSE = 1,
+        CAROUSEL = 1,
         SUPPLIER = 2,
         ADMIN = 3,
         BLOG = 4,

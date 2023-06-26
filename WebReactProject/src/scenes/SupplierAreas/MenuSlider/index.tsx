@@ -61,6 +61,9 @@ export default function MenuSlider(props: IMenuSliderAdminProps) {
             <Menu.Item key="menu002_3">
               <Link to="/supplier/product-comment">Đánh giá sản phẩm</Link>
             </Menu.Item>
+            <Menu.Item key="menu002_4">
+              <Link to="/supplier/product-edit">Chỉnh sửa sản phẩm</Link>
+            </Menu.Item>
           </Menu.SubMenu>
 
           <Menu.SubMenu key="menu9999" icon={<SettingOutlined />} title="Thông tin">

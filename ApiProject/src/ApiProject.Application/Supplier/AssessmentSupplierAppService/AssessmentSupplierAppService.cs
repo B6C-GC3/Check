@@ -24,6 +24,7 @@ namespace ApiProject.Supplier.AssessmentSupplierAppService
     {
         Task<AssessmentSupplierOverviewDto> GetOverrview(long productId);
         Task<IPagedList<AssessmentSupplierCommentDto>> GetCommentProduct(SearchRequest input);
+        Task<int> WatchedComment(List<long> ids);
     }
 
     public class AssessmentSupplierAppService : IAssessmentSupplierAppService
@@ -39,6 +40,7 @@ namespace ApiProject.Supplier.AssessmentSupplierAppService
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
         public async Task<IPagedList<AssessmentSupplierCommentDto>> GetCommentProduct(SearchRequest input)
         {
             // xác minh
@@ -104,6 +106,27 @@ namespace ApiProject.Supplier.AssessmentSupplierAppService
             });
 
             return rsl;
+        }
+
+        [HttpPatch]
+        public async Task<int> WatchedComment(List<long> ids)
+        {
+            if (ids.Count == 0) throw new ClientException("INPUT", ERROR_DATA.DATA_NULL);
+
+            var assessmentProducts = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>()
+                                                .GetAll().Where(w => ids.Contains(w.Id));
+
+            if (assessmentProducts.Count() != ids.Count) throw new ClientException("DATA", ERROR_DATA.DATA_NULL);
+
+            var rsl = assessmentProducts.ToList();
+            rsl.ForEach(item =>
+            {
+                item.IsNew = false;
+            });
+
+            _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().Update(rsl);
+            _unitOfWork.SaveChanges();
+            return rsl.Count;
         }
     }
 }

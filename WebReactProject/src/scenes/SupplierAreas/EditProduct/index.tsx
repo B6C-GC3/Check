@@ -9,11 +9,11 @@ import { } from '../../../components/Common/notification';
 declare var abp: any;
 const SCENES_KEY = "ADRESS";
 
-interface IBankCard {
+interface IEditProduct {
 
 }
 
-export default function BankCard(props:IBankCard) {
+export default function EditProduct(props:IEditProduct) {
     return (
         <>
             <div className='vfqVMuXEsF'></div>

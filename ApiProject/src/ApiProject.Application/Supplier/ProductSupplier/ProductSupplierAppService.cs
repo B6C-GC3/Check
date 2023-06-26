@@ -42,7 +42,7 @@ namespace ApiProject.Supplier.ProductSupplier
 
             var product = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>()
                                            .GetPagedListAsync(predicate: p => p.SupplierId == _supplier.SupplierId,
-                                                              pageIndex: input.PageIndex,
+                                                              pageIndex: input.PageIndex - 1,
                                                                pageSize: input.PageSize);
 
             rsl = product.Items.Select(s => MappingData.InitializeAutomapper().Map<ProductSupplierDto>(s)).ToList();

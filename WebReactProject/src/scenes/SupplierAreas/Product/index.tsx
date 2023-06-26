@@ -1,4 +1,4 @@
-import { EditOutlined, UnlockOutlined, LockOutlined, DeleteOutlined, SearchOutlined, PlusOutlined, RedoOutlined, RetweetOutlined, DeploymentUnitOutlined, FilterOutlined, SortAscendingOutlined, EyeOutlined, StarOutlined, StarFilled, LikeFilled, MessageFilled } from '@ant-design/icons';
+import { EditOutlined, UnlockOutlined, LockOutlined, DeleteOutlined, SearchOutlined, PlusOutlined, RedoOutlined, RetweetOutlined, DeploymentUnitOutlined, FilterOutlined, SortAscendingOutlined, EyeOutlined, StarOutlined, StarFilled, LikeFilled, MessageFilled, PieChartOutlined, SettingOutlined } from '@ant-design/icons';
 import { Tooltip, Button, Row, Col, Input, Select, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useState } from 'react';
@@ -139,7 +139,13 @@ export default function Product() {
           <Tooltip title={L("DELETE", "COMMON")}>
             <Button
               type="link"
-              icon={<DeleteOutlined />}
+              icon={<PieChartOutlined />}
+            ></Button>
+          </Tooltip>
+          <Tooltip title={L("DELETE", "COMMON")}>
+            <Button
+              type="link"
+              icon={<SettingOutlined />}
             ></Button>
           </Tooltip>
         </>
@@ -177,7 +183,7 @@ export default function Product() {
   }
 
   useEffect(() => {
-    if(!loadingTable) return;
+    if (!loadingTable) return;
     _loadData();
   }, []);
 

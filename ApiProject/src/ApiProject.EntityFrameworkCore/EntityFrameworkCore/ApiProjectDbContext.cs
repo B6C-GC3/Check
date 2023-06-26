@@ -12,6 +12,7 @@ namespace ApiProject.EntityFrameworkCore
     {
         /* Define a DbSet for each entity of the application */
         public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<MainPageSettingEntity> MainPageSettingEntitys { get; set; }
         public DbSet<InfoUser> InfoUsers { get; set; }
         public DbSet<CategoryProductEntity> CategoryProducts { get; set; }
         public DbSet<CarouselSupplierEntity> CarouselSupplierEntitys { get; set; }
