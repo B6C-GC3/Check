@@ -7,7 +7,7 @@ import { DoubleRightOutlined } from '@ant-design/icons';
 import { CategorySelectedDto, SupplierCategorAddProductDto } from '../dtos/productAddDto';
 import services from '../services';
 import { notifyError } from '../../../../components/Common/notification';
-import CryptoJS from 'crypto-js';
+import '../style.css';
 const { Search } = Input;
 
 const SCENES_KEY = "PRODUCT_ADD";
@@ -131,6 +131,7 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
               onSelect={onSelect}
               selectedKeys={selectedKeys}
               treeData={treeData}
+              className='zhtrtxKvQm'
               style={{ width: "100%", height: "65vh", overflowY: 'scroll' }}
             />
           </Col>
@@ -142,6 +143,7 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
             <List
               style={{ width: "100%", height: "55vh", background: "#ffffff", borderRadius: "6px", overflowY: 'scroll' }}
               size='small'
+              className='xkCJSyqDzS'
               dataSource={categorySelected}
               renderItem={(item: CategorySelectedDto) => (
                 <List.Item key={item.id} style={(item.value.toLocaleLowerCase().indexOf(searchTextCategorySelected.toLocaleLowerCase()) > -1 && searchTextCategorySelected) ? { background: "#d9d9d9" } : {}}>

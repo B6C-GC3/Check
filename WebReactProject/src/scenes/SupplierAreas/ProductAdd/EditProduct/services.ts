@@ -1,5 +1,5 @@
 
-import http from "../../../services/httpService";
+import http from "../../../../services/httpService";
 
 class EditProductService {
     // public async GetProduct(input: SearchRequest): Promise<ResponsesResource<PagedResultDto<ProductSupplierDto>>> {

@@ -167,6 +167,7 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
                 name="basic"
                 autoComplete="off"
                 layout="vertical"
+                className='fxeetzbilc'
                 onValuesChange={_onValueChange}
             >
                 <Row gutter={[5, 5]}>

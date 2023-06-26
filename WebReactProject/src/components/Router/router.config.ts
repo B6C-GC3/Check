@@ -129,7 +129,7 @@ export const supplierRouters: any = [
   {
     path: "/supplier/product-edit",
     exact: true,
-    component: LoadableComponent(() => import("../../scenes/SupplierAreas/EditProduct"))
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/ProductAdd/EditProduct"))
   },
   {
     path: "/supplier",

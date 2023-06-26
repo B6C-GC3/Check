@@ -1,0 +1,104 @@
+.vfqVMuXEsF {
+  position: absolute;
+  background-color: #4096ff;
+  width: calc(100% + 10px);
+  height: 40vh;
+  top: -5px;
+  left: -5px;
+  z-index: 0;
+}
+
+
+.vfqVMuXEsF::before {
+  position: absolute;
+  content: "";
+  left: 30%;
+  top: -3%;
+  width: 450px;
+  height: 450px;
+  background: #ff8f00;
+  border-radius: 62% 47% 82% 35% / 45% 45% 80% 66%;
+  will-change: border-radius, transform, opacity;
+  animation: sliderShape 5s linear infinite;
+  display: block;
+  z-index: 100;
+  -webkit-animation: sliderShape 5s linear infinite;
+}
+
+@keyframes sliderShape {
+
+  0%,
+  100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+    transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+    background: #ff8f00;
+  }
+
+  34% {
+    border-radius: 70% 30% 46% 54% / 30% 29% 71% 70%;
+    transform: translate3d(0, 5px, 0) rotateZ(0.01deg);
+    background: blue;
+  }
+
+  50% {
+    transform: translate3d(0, 0, 0) rotateZ(0.01deg);
+    background: #4096ff;
+  }
+
+  67% {
+    border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%;
+    transform: translate3d(0, -3px, 0) rotateZ(0.01deg);
+    background: aqua;
+  }
+}
+
+.qHBuAKkaAv {
+  width: calc(100% + 10px);
+  height: calc(100vh - 60px);
+  position: relative;
+  left: -5px;
+}
+
+.qHBuAKkaAv>div.ant-tabs-nav {
+  color: #150799;
+  margin: 0;
+}
+
+.qHBuAKkaAv>div.ant-tabs-content-holder {
+  background-color: #d9d9d9d9;
+  padding: 10px;
+}
+
+.qHBuAKkaAv>div.ant-tabs-nav>div.ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right>div.ant-tabs-nav-list>div.ant-tabs-tab {
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-1wazalj).ant-tabs-card>.ant-tabs-nav .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-1wazalj).ant-tabs-card>div>.ant-tabs-nav .ant-tabs-tab {
+  color: #ffffff !important;
+  border: 1px solid transparent !important;
+  padding: 5px 10px;
+}
+
+.zhtrtxKvQm {
+  height: calc(85vh - 10px) !important;
+}
+
+.xkCJSyqDzS{
+  height: calc(100% - 42px) !important;
+}
+
+.zhtrtxKvQm>div.ant-tree-list{
+  height: 100% !important;
+  padding: 10px;
+}
+
+:where(.css-dev-only-do-not-override-1wazalj).ant-tabs-card >.ant-tabs-nav .ant-tabs-tab-active, :where(.css-dev-only-do-not-override-1wazalj).ant-tabs-card >div>.ant-tabs-nav .ant-tabs-tab-active {
+  background: #d9d9d9d9;
+}
+.fxeetzbilc{
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+}
