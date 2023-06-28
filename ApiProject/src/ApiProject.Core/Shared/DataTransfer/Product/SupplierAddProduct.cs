@@ -59,6 +59,7 @@ namespace ApiProject.Shared.DataTransfer.Product
 
     public class DataTypeProductAdd
     {
+        public long? Id { get; set; }
         public string Key { get; set; }
         public string Name { get; set; }
         public long? KeyAttributeOne { get; set; }

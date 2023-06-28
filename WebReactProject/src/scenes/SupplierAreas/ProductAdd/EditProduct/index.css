@@ -64,9 +64,14 @@
   margin: 0;
 }
 
+.qHBuAKkaAv>div.ant-tabs-nav::before{
+border-bottom: 0px;
+}
+
 .qHBuAKkaAv>div.ant-tabs-content-holder {
   background-color: #d9d9d9d9;
   padding: 10px;
+  overflow-y: scroll;
 }
 
 .qHBuAKkaAv>div.ant-tabs-nav>div.ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right>div.ant-tabs-nav-list>div.ant-tabs-tab {

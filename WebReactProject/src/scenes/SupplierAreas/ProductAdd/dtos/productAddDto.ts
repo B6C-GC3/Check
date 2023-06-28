@@ -20,6 +20,7 @@ export interface DataTypeProductAdd extends DataTypeProductDto {
     attribute3: string | undefined;
 }
 export interface DataTypeProductDto {
+    id:number;
     key: string;
     name: string;
     price: string;

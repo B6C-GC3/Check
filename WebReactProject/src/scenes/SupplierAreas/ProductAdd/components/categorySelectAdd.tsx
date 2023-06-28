@@ -32,9 +32,8 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
   useEffect(() => {
     _loadCategory(0);
     if (props.categoryInit.length !== 0) {
-      let historyCategorySelected: CategorySelectedDto[] = JSON.parse(localStorage.getItem(KEY_CATEGORY_SELECTED) || '') ?? [];
-      setcategorySelected(historyCategorySelected);
       setCheckedKeys(props.categoryInit);
+      setExpandedKeys(props.categoryInit);
     }
   }, []);
 
@@ -62,6 +61,21 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
   useEffect(() => {
     props.onCategorySelected(categorySelected.map(m => m.id));
   }, [categorySelected])
+
+  useEffect(() => {
+    if (props.categoryInit.length !== 0 && categorySelected.length !== props.categoryInit.length) {
+      let data: CategorySelectedDto[] = [];
+      treeData.forEach(item => {
+        if (props.categoryInit.some(s => s === item.key)) {
+          
+          data.push({ id: item.key ?? 0, value: item.title?.toString() ?? '' } as CategorySelectedDto);
+        }
+      });
+
+      setcategorySelected(data);
+      setCheckedKeys(props.categoryInit);
+    }
+  }, [treeData])
 
 
   const onExpand = (expandedKeysValue: React.Key[]) => {

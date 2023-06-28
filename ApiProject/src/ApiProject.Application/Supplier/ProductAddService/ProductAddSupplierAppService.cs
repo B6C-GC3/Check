@@ -17,18 +17,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.Application.Services;
+using ApiProject.Authorization;
 
 namespace ApiProject.Supplier.ProductAddService
 {
+    public interface IProductAddSupplierAppService : IApplicationService
+    {
+        Task<int> InsertProduct(ProductAddInsertsDto input);
+    }
+
     public class ProductAddSupplierAppService : IProductAddSupplierAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAbpSession _abpSession;
+        private readonly ISupplierSession _supplierSession;
 
-        public ProductAddSupplierAppService(IUnitOfWork unitOfWork, IAbpSession abpSession)
+        public ProductAddSupplierAppService(IUnitOfWork unitOfWork, IAbpSession abpSession, ISupplierSession supplierSession)
         {
             _unitOfWork = unitOfWork;
             _abpSession = abpSession;
+            _supplierSession = supplierSession;
         }
 
         [Transaction]
@@ -204,10 +213,11 @@ namespace ApiProject.Supplier.ProductAddService
                 Name = input.Name,
                 Fragile = input.Fragile,
                 Trademark = input.Trademark,
-                UnitProduct = input.UnitProduct
+                UnitProduct = input.UnitProduct,
+                ProductAlbum = input.ProductAlbum
             };
 
-            
+
 
             _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>().Insert(productRsl);
             await _unitOfWork.SaveChangesAsync();

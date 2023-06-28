@@ -18,83 +18,6 @@ import LoadingProcess from '../../../../components/LoadingProcess';
 const SCENES_KEY = "PRODUCT_ADD";
 declare var abp: any;
 
-const EditableContext = React.createContext<FormInstance<any> | null>(null);
-
-const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
-    const [form] = Form.useForm();
-    return (
-        <Form form={form} component={false}>
-            <EditableContext.Provider value={form}>
-                <tr {...props} />
-            </EditableContext.Provider>
-        </Form>
-    );
-};
-
-const EditableCell: React.FC<EditableCellProps> = ({
-    title,
-    editable,
-    children,
-    dataIndex,
-    record,
-    handleSave,
-    ...restProps
-}) => {
-    const [editing, setEditing] = useState(false);
-    const inputRef = useRef<InputRef>(null);
-    const form = useContext(EditableContext)!;
-
-    useEffect(() => {
-        if (editing) {
-            inputRef.current!.focus();
-        }
-    }, [editing]);
-
-    const toggleEdit = () => {
-        setEditing(!editing);
-        form.setFieldsValue({ [dataIndex]: record[dataIndex] });
-    };
-
-    const save = async () => {
-        try {
-            const values = await form.validateFields();
-            toggleEdit();
-            handleSave({ ...record, ...values });
-        } catch (errInfo) {
-            L('Save failed', SCENES_KEY);
-        }
-    };
-
-    let childNode = children;
-
-    if (editable) {
-        childNode = editing ? (
-            <Form.Item
-                style={{ margin: 0 }}
-                name={dataIndex}
-                rules={[
-                    {
-                        required: true,
-                        message: L("NOT_NULL", 'COMMON'),
-                    },
-                ]}
-            >
-                <Input
-                    ref={inputRef}
-                    onPressEnter={save}
-                    onBlur={save}
-                />
-            </Form.Item>
-        ) : (
-            <div className="ant-input editable-cell-value-wrap" onClick={toggleEdit}>
-                {children}
-            </div>
-        );
-    }
-
-    return <td {...restProps}>{childNode}</td>;
-};
-
 type EditableTableProps = Parameters<typeof Table>[0];
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
@@ -132,53 +55,59 @@ export default function FutureProductComponents(props: IFutureProductComponents)
     const [pageIndexThree, setpageIndexThree] = useState<number>(0);
     const [attributeValueSelectedThree, setattributeValueSelectedThree] = useState<number[]>([]);
 
+    const [priceCommon, setPriceCommon] = useState<string>('');
+    const [quantityCommon, setQuantityCommon] = useState<string>('');
+
     useEffect(() => {
-        setLoadingAll(true);
-        const run = async () => {
-            await _loadInitAttribute();
-            if (props.dataSourceInit !== undefined && props.dataSourceInit.length !== 0) {
-                let _one: number[] = [];
-                let _two: number[] = [];
-                let _three: number[] = [];
+        if (attributeValue?.length !== 0 && attributeValueTwo?.length !== 0 && attributeValueThree?.length !== 0) {
+            setLoadingAll(true);
+            const run = async () => {
+                await _loadInitAttribute();
+                if (props.dataSourceInit !== undefined && props.dataSourceInit.length !== 0) {
+                    let _one: number[] = [];
+                    let _two: number[] = [];
+                    let _three: number[] = [];
 
-                let _valueOne: number[] = [];
-                let _valueTwo: number[] = [];
-                let _valueThree: number[] = [];
+                    let _valueOne: number[] = [];
+                    let _valueTwo: number[] = [];
+                    let _valueThree: number[] = [];
 
-                props.dataSourceInit.forEach(item => {
-                    if (item.idKeyAttributeOne !== undefined) _one.push(item.idKeyAttributeOne);
-                    if (item.idKeyAttributeTwo !== undefined) _two.push(item.idKeyAttributeTwo);
-                    if (item.idKeyAttributeThree !== undefined) _three.push(item.idKeyAttributeThree);
+                    props.dataSourceInit.forEach(item => {
+                        if (item.idKeyAttributeOne !== undefined) _one.push(item.idKeyAttributeOne);
+                        if (item.idKeyAttributeTwo !== undefined) _two.push(item.idKeyAttributeTwo);
+                        if (item.idKeyAttributeThree !== undefined) _three.push(item.idKeyAttributeThree);
 
-                    if (item.keyAttributeOne !== undefined) _valueOne.push(item.keyAttributeOne);
-                    if (item.keyAttributeTwo !== undefined) _valueTwo.push(item.keyAttributeTwo);
-                    if (item.keyAttributeThree !== undefined) _valueThree.push(item.keyAttributeThree);
-                });
+                        if (item.keyAttributeOne !== undefined) _valueOne.push(item.keyAttributeOne);
+                        if (item.keyAttributeTwo !== undefined) _valueTwo.push(item.keyAttributeTwo);
+                        if (item.keyAttributeThree !== undefined) _valueThree.push(item.keyAttributeThree);
+                    });
 
+                    await Promise.resolve().then(() => {
+                        onChangeAttribute(([...new Set(_one)].filter(s => s !== 0))[0], 1);
+                        _handleChangeValueAttribute([...new Set(_valueOne)].filter(s => s !== 0), 1);
+                    });
+
+                    await Promise.resolve().then(() => {
+                        onChangeAttribute(([...new Set(_two)].filter(s => s !== 0))[0], 2);
+                        _handleChangeValueAttribute([...new Set(_valueTwo)].filter(s => s !== 0), 2);
+                    });
+
+                    await Promise.resolve().then(() => {
+                        onChangeAttribute(([...new Set(_three)].filter(s => s !== 0))[0], 3);
+                        _handleChangeValueAttribute([...new Set(_valueThree)].filter(s => s !== 0), 3);
+                    });
+
+                }
                 await Promise.resolve().then(() => {
-                    onChangeAttribute(([...new Set(_one)].filter(s => s !== 0))[0], 1);
-                    _handleChangeValueAttribute([...new Set(_valueOne)].filter(s => s !== 0), 1);
+                    setTimeout(() => {
+                        setLoadingAll(false);
+                    }, 1000);
                 });
-
-                await Promise.resolve().then(() => {
-                    onChangeAttribute(([...new Set(_two)].filter(s => s !== 0))[0], 2);
-                    _handleChangeValueAttribute([...new Set(_valueTwo)].filter(s => s !== 0), 2);
-                });
-
-                await Promise.resolve().then(() => {
-                    onChangeAttribute(([...new Set(_three)].filter(s => s !== 0))[0], 3);
-                    _handleChangeValueAttribute([...new Set(_valueThree)].filter(s => s !== 0), 3);
-                });
-
             }
-            await Promise.resolve().then(() => {
-                setTimeout(() => {
-                    setLoadingAll(false);
-                }, 1000);
-            });
+            run();
         }
-        run();
-    }, []);
+    }, [attributeValue, attributeValueTwo, attributeValueThree])
+
 
     const _loadInitAttribute = async () => {
         var result = await services.getAttribute(props.category);
@@ -294,13 +223,6 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         }
     }
 
-    const components = {
-        body: {
-            row: EditableRow,
-            cell: EditableCell,
-        },
-    };
-
     const _handleChangeValueAttribute = (value: number[], numberAttribute: number) => {
         if (value.length <= 5) {
             switch (numberAttribute) {
@@ -332,9 +254,6 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         });
         setDataSource(newData);
     };
-
-    const [priceCommon, setPriceCommon] = useState<string>('');
-    const [quantityCommon, setQuantityCommon] = useState<string>('');
 
     const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
         {
@@ -484,6 +403,7 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         if (arr1.length === 0) {
             rslArr = arr2.map((item, ixdex): DataTypeProductAdd => {
                 return {
+                    id: arr1[ixdex]?.id,
                     key: ixdex.toString(),
                     name: '',
                     attribute1: "",
@@ -509,6 +429,7 @@ export default function FutureProductComponents(props: IFutureProductComponents)
             }
             else {
                 arr1.forEach(io => {
+                    console.log('io', io)
                     for (let index = 0; index < arr2.length; index++) {
                         let a = Object.assign({}, io);
                         if (numberOrder === 1) a.keyAttributeOne = Number(arr2[index]);
@@ -521,12 +442,12 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         }
         return rslArr;
     }
-
-    // sử lý mảng source cho table theo sự thay đổi của attribute value
+ 
+    //============= sử lý mảng source cho table theo sự thay đổi của attribute value ===========//
     useEffect(() => {
         if (!loadingAll) {
             let datasourceTemp: DataTypeProductAdd[] = (dataSource.length === 0 ? props.dataSourceInit : dataSource);
-            let processLv1 = _processArray([], attributeValueSelectedOne, 1);
+            let processLv1 = _processArray(dataSource, attributeValueSelectedOne, 1);
             var processLv2 = _processArray(processLv1, attributeValueSelectedTwo, 2);
             datasourceTemp = _processArray(processLv2, attributeValueSelectedThree, 3);
             var a = datasourceTemp.map((m, i) => {
@@ -541,7 +462,8 @@ export default function FutureProductComponents(props: IFutureProductComponents)
                 m.idKeyAttributeThree = attributeSelectedThree;
                 return m;
             });
-            setDataSource(a);
+            console.log('datasourceTemp', datasourceTemp)
+            setDataSource(datasourceTemp);
         }
         else {
             setDataSource(props.dataSourceInit);
@@ -556,7 +478,7 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         setQuantityCommon(value);
     }
 
-    // sử lý mảng source cho table theo sự thay đổi của giá chung và số lượng chung
+    //============= sử lý mảng source cho table theo sự thay đổi của giá chung và số lượng chung ===========//
     useEffect(() => {
         let dataSourceTemp = dataSource;
         let isUpdateOrCreatePriceAndQuantity = Boolean(
@@ -670,7 +592,7 @@ export default function FutureProductComponents(props: IFutureProductComponents)
 
     return (
         <>
-            <LoadingProcess open={loadingAll} />
+            <LoadingProcess className='zVaDEJphbu' open={loadingAll} />
             <Row gutter={[5, 5]}>
                 <Col span={8}>
                     <Row gutter={[5, 5]}>
@@ -962,3 +884,89 @@ const AddAttributeSupplierComponent: React.FC<IAddAttributeSupplierProps> = ({
             </Form>
         </Modal>);
 }
+
+
+const EditableContext = React.createContext<FormInstance<any> | null>(null);
+
+const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
+    const [form] = Form.useForm();
+    return (
+        <Form form={form} component={false}>
+            <EditableContext.Provider value={form}>
+                <tr {...props} />
+            </EditableContext.Provider>
+        </Form>
+    );
+};
+
+const EditableCell: React.FC<EditableCellProps> = ({
+    title,
+    editable,
+    children,
+    dataIndex,
+    record,
+    handleSave,
+    ...restProps
+}) => {
+    const [editing, setEditing] = useState(false);
+    const inputRef = useRef<InputRef>(null);
+    const form = useContext(EditableContext)!;
+
+    useEffect(() => {
+        if (editing) {
+            inputRef.current!.focus();
+        }
+    }, [editing]);
+
+    const toggleEdit = () => {
+        setEditing(!editing);
+        form.setFieldsValue({ [dataIndex]: record[dataIndex] });
+    };
+
+    const save = async () => {
+        try {
+            const values = await form.validateFields();
+            toggleEdit();
+            handleSave({ ...record, ...values });
+        } catch (errInfo) {
+            L('Save failed', SCENES_KEY);
+        }
+    };
+
+    let childNode = children;
+
+    if (editable) {
+        childNode = editing ? (
+            <Form.Item
+                style={{ margin: 0 }}
+                name={dataIndex}
+                rules={[
+                    {
+                        required: true,
+                        message: L("NOT_NULL", 'COMMON'),
+                    },
+                ]}
+            >
+                <Input
+                    ref={inputRef}
+                    onPressEnter={save}
+                    onBlur={save}
+                />
+            </Form.Item>
+        ) : (
+            <div className="ant-input editable-cell-value-wrap" onClick={toggleEdit}>
+                {children}
+            </div>
+        );
+    }
+
+    return <td {...restProps}>{childNode}</td>;
+};
+
+
+const components = {
+    body: {
+        row: EditableRow,
+        cell: EditableCell,
+    },
+};

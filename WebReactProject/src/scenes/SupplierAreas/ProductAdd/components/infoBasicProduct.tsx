@@ -44,7 +44,7 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
     useEffect(() => {
         _loadTrademark();
         _loadUnit();
-        form.setFieldsValue(props.infoInit);
+        //form.setFieldsValue(props.infoInit);
     }, []);
 
     const _loadTrademark = async () => {
@@ -111,6 +111,16 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
         _loadUnit();
     }, [valueSearchUnit, pageIndexUnit]);
 
+    //========== WAIT LOAD DATA
+    useEffect(() => {
+        if (optionsTrademark.length !== 0 && optionsUnit.length !== 0) {
+            form.setFieldsValue(props.infoInit);
+            form.setFieldValue('trademark', optionsTrademark.find(f => f.value === props.infoInit.trademark.toString()));
+            form.setFieldValue('unitProduct', optionsUnit.find(f => f.value === props.infoInit.unitProduct.toString()));
+            form.setFieldValue('productAlbum', { value: props.infoInit.productAlbum, label: props.infoInit.productAlbum });
+        }
+    }, [optionsTrademark, optionsUnit])
+
     const onNameAlbumChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNameAlbum({ label: event.target.value, value: event.target.value });
     };
@@ -135,10 +145,12 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
     //============== CREATE ATTRIBUTE
     const [open, setOpen] = useState(false);
     const [typeAttribute, setTypeAttribute] = useState<number>(0);
+
     const onCreate = (typeAttributeId: number) => {
         setTypeAttribute(typeAttributeId);
         setOpen(true);
     };
+
     const onSuccessAddAttribute = (typeAdd: number) => {
         setloading(true);
         if (typeAdd === 1) {
@@ -149,7 +161,7 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
         setOpen(false);
     }
 
-    //===============================
+    //========== CHANGE VALUE FORM
 
     var delayTimer: NodeJS.Timeout;
     const _onValueChange = (_: any, allFields: ProductQueryDto) => {
@@ -266,7 +278,6 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
                             name="unitProduct"
                             rules={[{ required: true, message: L("", SCENES_KEY) }]}
                             tooltip={{ title: L("", SCENES_KEY), icon: <InfoCircleOutlined className='AjSeNamxBs' /> }}
-
                         >
                             <Select
                                 showSearch
@@ -275,7 +286,7 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
                                 loading={loading || loadingUnit}
                                 style={{ width: "100%" }}
                                 filterOption={(input, option) =>
-                                    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                                    (option?.label ?? '').toString().toLowerCase().includes(input.toLowerCase())
                                 }
                                 dropdownRender={(menu) => (
                                     <>
@@ -289,7 +300,8 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
                                         </Space>
                                     </>
                                 )}
-                                options={optionsUnit} />
+                                options={optionsUnit}
+                            />
                         </Form.Item>
                     </Col>
                     <Col span={8}>

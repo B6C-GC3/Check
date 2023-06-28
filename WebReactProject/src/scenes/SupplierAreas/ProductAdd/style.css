@@ -244,7 +244,7 @@ input[type="radio"]:checked + label {
 
 .yzlFQaVhSY {
   width: 100%;
-  height: auto;
+  height: calc(80vh - 20px);
   background: #ffffff;
   padding: 5px 10px;
   margin: 5px 0;
@@ -414,4 +414,11 @@ input[type="radio"]:checked + label {
   align-content: center;
   align-items: center;
   width: 100%;
+}
+
+.zVaDEJphbu{
+  width: calc(100% + 20px) !important;
+  left: -10px !important;
+  top: -10px !important;
+  height: calc(100vh - 94px) !important;
 }

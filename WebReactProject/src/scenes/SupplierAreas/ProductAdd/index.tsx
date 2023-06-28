@@ -253,7 +253,7 @@ export default function ProductAdd(props: IProductAddProps) {
                 idKeyAttributeTwo: s.idKeyAttributeTwo,
                 idKeyAttributeThree: s.idKeyAttributeThree
             }
-        });
+        }) as DataTypeProductDto[];
         let dataInput: ProductAddInsertsDto = {
             categorys: categoryArr.map(a => a.id),
             infoBasic: infomationPublic,
