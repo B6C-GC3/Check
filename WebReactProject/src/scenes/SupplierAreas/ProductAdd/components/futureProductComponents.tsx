@@ -429,7 +429,6 @@ export default function FutureProductComponents(props: IFutureProductComponents)
             }
             else {
                 arr1.forEach(io => {
-                    console.log('io', io)
                     for (let index = 0; index < arr2.length; index++) {
                         let a = Object.assign({}, io);
                         if (numberOrder === 1) a.keyAttributeOne = Number(arr2[index]);
@@ -442,33 +441,51 @@ export default function FutureProductComponents(props: IFutureProductComponents)
         }
         return rslArr;
     }
- 
+
     //============= sử lý mảng source cho table theo sự thay đổi của attribute value ===========//
     useEffect(() => {
-        if (!loadingAll) {
-            let datasourceTemp: DataTypeProductAdd[] = (dataSource.length === 0 ? props.dataSourceInit : dataSource);
-            let processLv1 = _processArray(dataSource, attributeValueSelectedOne, 1);
-            var processLv2 = _processArray(processLv1, attributeValueSelectedTwo, 2);
-            datasourceTemp = _processArray(processLv2, attributeValueSelectedThree, 3);
-            var a = datasourceTemp.map((m, i) => {
-                m.key = (i + 1).toString();
-                m.displayOrder = (i + 1);
-                m.name = props.infoBasic.name;
-                m.attribute1 = attributeValue?.find(f => f.id === m.keyAttributeOne)?.value;
-                m.attribute2 = attributeValueTwo?.find(f => f.id === m.keyAttributeTwo)?.value;
-                m.attribute3 = attributeValueThree?.find(f => f.id === m.keyAttributeThree)?.value;
-                m.idKeyAttributeOne = attributeSelectedOne;
-                m.idKeyAttributeTwo = attributeSelectedTwo;
-                m.idKeyAttributeThree = attributeSelectedThree;
-                return m;
-            });
-            console.log('datasourceTemp', datasourceTemp)
-            setDataSource(datasourceTemp);
-        }
-        else {
-            setDataSource(props.dataSourceInit);
-        }
+        // create billet with attributeSelected of each feature product and return a container billet
+        let containerBillets: DataTypeProductAdd[] = (dataSource.length === 0 ? props.dataSourceInit : dataSource);
+        let processLv1 = _processArray([], attributeValueSelectedOne, 1);
+        var processLv2 = _processArray(processLv1, attributeValueSelectedTwo, 2);
+        containerBillets = _processArray(processLv2, attributeValueSelectedThree, 3);
+        setDataSource(processContainerBillet(containerBillets))
     }, [attributeValueSelectedOne, attributeValueSelectedTwo, attributeValueSelectedThree, attributeValue, attributeValueTwo, attributeValueThree]);
+
+    //========== PROCESS MERGE DATA TO BILLET
+    // why process in render table? : because => when attribute value seleced change. I render not check. so that render new all data.
+    // but not have data old. this func sync dât old and data new 
+    const processContainerBillet = (billet: DataTypeProductAdd[]) => {
+        var dataNew = billet.map((m, i) => {
+
+            m.key = (i + 1).toString();
+            m.displayOrder = (i + 1);
+            m.attribute1 = attributeValue?.find(f => f.id === m.keyAttributeOne)?.value;
+            m.attribute2 = attributeValueTwo?.find(f => f.id === m.keyAttributeTwo)?.value;
+            m.attribute3 = attributeValueThree?.find(f => f.id === m.keyAttributeThree)?.value;
+            m.idKeyAttributeOne = attributeSelectedOne;
+            m.idKeyAttributeTwo = attributeSelectedTwo;
+            m.idKeyAttributeThree = attributeSelectedThree;
+
+            var oldDataExists = props.dataSourceInit.find(s => s.keyAttributeOne === m.keyAttributeOne
+                && s.keyAttributeTwo === m.keyAttributeTwo
+                && s.keyAttributeThree === m.keyAttributeThree);
+            if (oldDataExists) {
+                console.log('true')
+                m.avatar = oldDataExists.avatar;
+                m.id = oldDataExists.id;
+                m.name = oldDataExists.name;
+                m.price = oldDataExists.price;
+                m.quantity = oldDataExists.quantity;
+            }
+            else{
+                console.log('false')
+                m.name = props.infoBasic.name;
+            }
+            return m;
+        });
+        return dataNew;
+    }
 
     const _onChangePublicPrice = (value: string) => {
         setPriceCommon(value);
@@ -550,12 +567,13 @@ export default function FutureProductComponents(props: IFutureProductComponents)
 
     useEffect(() => {
         const timeOutId = setTimeout(() => {
-            let tempDataSource = dataSource.length === 0 ? props.dataSourceInit : dataSource;
-            let rslArr = tempDataSource.map((item): DataTypeProductAdd => {
-                return item;
-            });
-            props.onOk(rslArr);
-            localStorage.setItem(KEY_LOCAL_STORAGE_FUTURE, JSON.stringify(rslArr));
+            // let tempDataSource = dataSource.length === 0 ? props.dataSourceInit : dataSource;
+            // let rslArr = tempDataSource.map((item): DataTypeProductAdd => {
+            //     return item;
+            // });
+            // props.onOk(rslArr);
+            // localStorage.setItem(KEY_LOCAL_STORAGE_FUTURE, JSON.stringify(rslArr));
+            props.onOk(dataSource);
         }, 1000);
         return () => clearTimeout(timeOutId);
     }, [dataSource]);

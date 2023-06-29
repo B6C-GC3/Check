@@ -41,16 +41,16 @@ export default function EditProduct(props: IEditProduct) {
         var rsl = await services.GetProduct(DEFAULT_ID_PRODUCT);
         if (rsl.error === false && rsl.result !== undefined) {
             let data = rsl.result;
-            console.log('data', data)
             setCategorySelected(data.categorys);
             setinfomationPublic(data.infoBasic);
             setUploadImageProduct(data.images);
-            setDataSource(data.futureProduct);
+            setDataSource(data.futureProduct as DataTypeProductAdd[]);
         }
         else {
             notifyError("ERROR", "ERROR");
         }
     }
+    
     const items: TabsProps['items'] = [
         {
             key: '1',

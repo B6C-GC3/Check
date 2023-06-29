@@ -37,6 +37,14 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
     }
   }, []);
 
+  useEffect(() => {
+    if(treeData.length !== 0)
+    {
+      setCheckedKeys(props.categoryInit);
+      setExpandedKeys(props.categoryInit);
+    }
+  }, [props.categoryInit])
+  
   // load root category
   const _loadCategory = async (idCategoryMain: number) => {
     var result = await services.loadCategoryBySupplier({
