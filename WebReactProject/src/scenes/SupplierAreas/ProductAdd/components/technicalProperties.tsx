@@ -1,5 +1,5 @@
-import Icon, { AppstoreOutlined, DeploymentUnitOutlined, EyeOutlined, InfoCircleOutlined, MinusCircleOutlined, PlusOutlined, QuestionOutlined, RedoOutlined, SettingOutlined, WarningOutlined } from '@ant-design/icons';
-import { Form, Row, Col, Input, Space, Select, Button, Tooltip, Modal, Checkbox, Divider } from 'antd';
+import Icon, { AppstoreOutlined, DeploymentUnitOutlined, EyeOutlined, PlusOutlined, QuestionOutlined, RedoOutlined, SettingOutlined, WarningOutlined } from '@ant-design/icons';
+import { Form, Row, Col, Input, Space, Select, Button, Tooltip, Modal, Checkbox, Divider, Pagination } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
 import { L } from "../../../../lib/abpUtility";
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
@@ -9,6 +9,7 @@ import { SelectedModel } from '../../../../services/common/selectedModel';
 import services from '../services';
 import { KeyAndValue, KeyAndValueDefault } from '../../../../services/common/keyAndValue';
 import utils from '../../../../utils/utils';
+import Search from 'antd/es/input/Search';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -33,6 +34,9 @@ export default function TechnicalProperties(props: TechnicalPropertiesProps) {
     const [groupingAttribute, setGroupingAttribute] = useState<IMappingGroupAndValue[]>([]);
     const [result, setResult] = useState<KeyAndValue<string, KeyAndValue<number, string>[]>[]>([]);
     const [defaultData, setDefaultData] = useState<KeyAndValue<number, string>[]>([]);
+    const [pageIndex, setPageIndex] = useState<number>(1);
+    const [pageSize, setPageSize] = useState<number>(20);
+    const [totalRecord, setTotalRecord] = useState<number>(0);
     useEffect(() => {
         _fetchData();
     }, []);
@@ -40,10 +44,9 @@ export default function TechnicalProperties(props: TechnicalPropertiesProps) {
     const _fetchData = async () => {
         var result = await services.getAttributeSpecifications({
             valuesSearch: [JSON.stringify(props.categoty), ''],
-            pageIndex: 0,
-            pageSize: 20
+            pageIndex: pageIndex - 1,
+            pageSize: pageSize
         });
-
         if (result.error || !result.result) {
             notifyError("Lỗi", SCENES_KEY);
             return false;
@@ -51,9 +54,16 @@ export default function TechnicalProperties(props: TechnicalPropertiesProps) {
         else {
             setDataAttribute(result.result.items);
             _recyclingDataInit(result.result.items);
+            setTotalRecord(result.result.totalCount);
+            setPageIndex(result.result.pageIndex + 1);
+            setPageSize(result.result.pageSize);
             return true;
         }
     }
+
+    useEffect(() => {
+        _fetchData();
+    }, [pageIndex, pageSize])
 
     const _recyclingDataInit = (value: SelectedModel[]) => {
         const dataInit = props.initData;
@@ -83,22 +93,43 @@ export default function TechnicalProperties(props: TechnicalPropertiesProps) {
         _onValueChange('', form.getFieldsValue());
     }, [defaultData])
 
+    //========== SELECT TECH FOR PRODUCT ==========
     const _selectAttribute = (dataAttributeStateProp: CheckboxValueType[] | undefined) => {
         const onChange = (checkedValues: CheckboxValueType[]) => {
-            setdataAttributeState([]);
             setdataAttributeState(checkedValues);
         };
+
         return Modal.info({
             title: L('SELECT_ATTRIBUTE', SCENES_KEY),
             icon: <DeploymentUnitOutlined />,
             className: 'lgvNbwrkVm',
             content: (
                 <>
+                    <Search />
                     <Checkbox.Group defaultValue={dataAttributeStateProp?.map(i => Number(i))} style={{ width: '100%' }} onChange={onChange}>
                         <Row className='gVXWWSAXjo'>
-                            {dataAttribute.map(m => <Checkbox value={m.id}>{m.value}</Checkbox>)}
+                            {dataAttribute.map(m =>
+                                <Checkbox
+                                    key={m.id}
+                                    value={m.id}
+                                >
+                                    {m.value}
+                                </Checkbox>)}
                         </Row>
                     </Checkbox.Group>
+                    <Pagination
+                        total={totalRecord}
+                        className='kmCdlkDCkL'
+                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                        defaultPageSize={pageSize}
+                        defaultCurrent={pageIndex}
+                        showSizeChanger
+                        pageSizeOptions={[1, 20, 50, 100]}
+                        onChange={(page: number, pageSize: number) => {
+                            setPageIndex(page);
+                            setPageSize(pageSize);
+                        }}
+                    />
                 </>
             )
         });
@@ -209,7 +240,6 @@ export default function TechnicalProperties(props: TechnicalPropertiesProps) {
                 onValuesChange={_onValueChange}
             >
                 {
-
                     groupingAttribute.length === 0 ?
                         <div className='yzlFQaVhSY'>
                             <Divider orientation="left">{L("default", SCENES_KEY)}</Divider>
@@ -294,7 +324,6 @@ const GroupingAttribute: React.FC<IGroupingAttributeProps> = ({
     const [valueSelected, setValueSelected] = useState<string[]>([]);
 
     useEffect(() => {
-        console.log('initData :>> ', initData);
         setItems(initData.map(s => s.group));
     }, [])
 

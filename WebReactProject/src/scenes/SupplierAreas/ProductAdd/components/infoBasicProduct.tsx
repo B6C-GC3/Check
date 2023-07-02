@@ -115,8 +115,8 @@ export default function InfoBasicProduct(props: IInfoBasicProduct) {
     useEffect(() => {
         if (optionsTrademark.length !== 0 && optionsUnit.length !== 0) {
             form.setFieldsValue(props.infoInit);
-            form.setFieldValue('trademark', optionsTrademark.find(f => f.value === props.infoInit.trademark.toString()));
-            form.setFieldValue('unitProduct', optionsUnit.find(f => f.value === props.infoInit.unitProduct.toString()));
+            form.setFieldValue('trademark', optionsTrademark.find(f => f.value === props.infoInit.trademark?.toString()));
+            form.setFieldValue('unitProduct', optionsUnit.find(f => f.value === props.infoInit.unitProduct?.toString()));
             form.setFieldValue('productAlbum', { value: props.infoInit.productAlbum, label: props.infoInit.productAlbum });
         }
     }, [optionsTrademark, optionsUnit])

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './index.css';
 import services from './services';
-import { AndroidOutlined, AppleOutlined, ForwardOutlined } from '@ant-design/icons';
-import { Button, Tabs, TabsProps } from 'antd';
+import { AndroidOutlined, AppleOutlined, ForwardOutlined, WarningOutlined } from '@ant-design/icons';
+import { Button, Modal, Tabs, TabsProps } from 'antd';
 import { L } from "../../../../lib/abpUtility";
-import { notifyError } from '../../../../components/Common/notification';
+import { notifyError, notifySuccess } from '../../../../components/Common/notification';
 import CategorySelectAdd from '../components/categorySelectAdd';
 import SettingProductComponents from './components/settingProductComponents';
 import InfoBasicProduct from '../components/infoBasicProduct';
@@ -16,6 +16,7 @@ import TechnicalProperties from '../components/technicalProperties';
 import PromotionsComponents from '../components/promotionsComponents';
 import EditerProduct from '../components/editerProduct';
 import SeoAndTagProduct from '../components/seoAndTagProduct';
+const { confirm } = Modal;
 
 declare var abp: any;
 const SCENES_KEY = "ADRESS";
@@ -25,8 +26,10 @@ interface IEditProduct {
 }
 
 const DEFAULT_ID_PRODUCT = 52;
-const DEFAULT_KEY_TAB = "1";
 export default function EditProduct(props: IEditProduct) {
+    const [tabSelected, setTabSelected] = useState<number>(1);
+    const [itMightChange, setItMightChange] = useState<boolean>(true);
+
     const [categorySelected, setCategorySelected] = useState<number[]>([]);
     const [infomationPublic, setinfomationPublic] = useState<ProductQueryDto>({} as ProductQueryDto);
     const [uploadImageProduct, setUploadImageProduct] = useState<string[]>([]);
@@ -50,12 +53,12 @@ export default function EditProduct(props: IEditProduct) {
             notifyError("ERROR", "ERROR");
         }
     }
-    
+
     const items: TabsProps['items'] = [
         {
             key: '1',
             label:
-                <span>
+                <span className='noselect'>
                     Category
                 </span>,
             children:
@@ -69,7 +72,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '2',
             label:
-                <span>
+                <span className='noselect'>
                     Thông tin chung
                 </span>,
             children: <InfoBasicProduct
@@ -82,7 +85,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '3',
             label:
-                <span>
+                <span className='noselect'>
                     Ảnh sản phẩm
                 </span>,
             children: <UploadImageProduct
@@ -94,7 +97,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '4',
             label:
-                <span>
+                <span className='noselect'>
                     Chủng loại sản phẩm
                 </span>,
             children: <FutureProductComponents
@@ -109,7 +112,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '5',
             label:
-                <span>
+                <span className='noselect'>
                     Thuộc tính kỹ thuật
                 </span>,
             children: <TechnicalProperties
@@ -120,7 +123,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '6',
             label:
-                <span>
+                <span className='noselect'>
                     Khuyến mãi
                 </span>,
             children: <PromotionsComponents />,
@@ -128,7 +131,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '7',
             label:
-                <span>
+                <span className='noselect'>
                     Bài viết sản phẩm
                 </span>,
             children: <EditerProduct />,
@@ -136,7 +139,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '8',
             label:
-                <span>
+                <span className='noselect'>
                     Tìm kiếm sản phẩm
                 </span>,
             children: <SeoAndTagProduct />,
@@ -144,7 +147,7 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '9',
             label:
-                <span>
+                <span className='noselect'>
                     Kho hàng
                 </span>,
             children: 'Kho Hàng',
@@ -152,19 +155,48 @@ export default function EditProduct(props: IEditProduct) {
         {
             key: '10',
             label:
-                <span>
+                <span className='noselect'>
                     Khác
                 </span>,
             children: <SettingProductComponents />,
         },
     ];
 
+    const _onChangeTab = (activeKey: string) => {
+        // if (itMightChange) {
+        //     confirm({
+        //         title: 'Ê thằng kia, ',
+        //         icon: <WarningOutlined />,
+        //         content: 'Tao vừa tìm thấy mấy cái khang khác, giờ mày có muốn thay đổi không để tao còn biết?',
+        //         onOk() {
+        //             setTabSelected(Number(activeKey));
+        //             notifySuccess("Thông báo","Ta vừa đổi đổi dữ liệu cho mày rồi đấy, Cảm ơn đê!")
+        //         },
+        //         onCancel() {
+
+        //         },
+        //         okText: "Làm luôn bạn ơi",
+        //         cancelText: "Dell"
+        //     });
+        // }
+        // else {
+        //     setTabSelected(Number(activeKey));
+        // }
+
+        setTabSelected(Number(activeKey));
+    }
+
+    const _processDataChange = (activeKey: string) => {
+
+    }
+
     return (
         <>
             <div className='vfqVMuXEsF'></div>
             <Tabs
                 animated={{ inkBar: true, tabPane: true }}
-                defaultActiveKey={DEFAULT_KEY_TAB}
+                onChange={_onChangeTab}
+                activeKey={tabSelected.toString()}
                 type="card"
                 className='qHBuAKkaAv'
                 items={items}

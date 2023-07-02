@@ -141,7 +141,7 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
       <Skeleton loading={loading} paragraph={{ rows: 4 }}>
         <Row gutter={[5, 5]}>
           <Col span={17}>
-            {/* <Search className='WvLXmbGjwb' placeholder={L("input search text", SCENES_KEY)} /> */}
+            <Search className='WvLXmbGjwb' placeholder={L("Input search text", SCENES_KEY)} />
             <Tree
               checkable
               onExpand={onExpand}
@@ -163,7 +163,7 @@ export default function CategorySelectAdd(props: ICategorySelectAdd) {
           <Col span={6}>
             <Input className='WvLXmbGjwb' onChange={(e: React.ChangeEvent<HTMLInputElement>) => _setsearchTextCategorySelected(e.target.value)} placeholder={L("input search text", SCENES_KEY)} />
             <List
-              style={{ width: "100%", height: "55vh", background: "#ffffff", borderRadius: "6px", overflowY: 'scroll' }}
+              style={{ width: "100%", height: "65vh", background: "#ffffff", borderRadius: "6px", overflowY: 'scroll' }}
               size='small'
               className='xkCJSyqDzS'
               dataSource={categorySelected}
