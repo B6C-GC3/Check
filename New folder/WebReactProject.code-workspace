@@ -1,9 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "ApiProject",
+			"path": "../ApiProject"
+		},
+		{
+			"name": "WebReactProject",
 			"path": "../WebReactProject"
 		},
 		{
+			"name": "DoccumentProject",
 			"path": "../DoccumentProject"
 		}
 	],

@@ -2,15 +2,19 @@ import {
   SearchOutlined,
   PlusOutlined,
   RedoOutlined,
-  DeleteOutlined,
   RetweetOutlined,
   FilterOutlined,
   SortAscendingOutlined,
   MenuOutlined,
   DragOutlined,
   EditOutlined,
+  DeploymentUnitOutlined,
+  EyeOutlined,
+  SignalFilled,
+  MessageFilled,
+  StarFilled,
 } from "@ant-design/icons";
-import { Row, Col, Input, Button, Select, Table, Tooltip, InputRef, Space } from "antd";
+import { Row, Col, Input, Button, Select, Table, Tooltip, InputRef, Space, Card, Statistic } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { L } from "../../../lib/abpUtility";
 import type { SortableContainerProps, SortEnd } from "react-sortable-hoc";
@@ -21,15 +25,17 @@ import {
 } from "react-sortable-hoc";
 import { arrayMoveImmutable } from "array-move";
 import "./style.css";
+import "../supplier_table.css";
 import { CategoryInOrUpDto, CategoryTableDto } from "./dataTypes/categoryDtos";
-import { CategoryTableFake } from "./dataTypes/dataFake";
 import UriManage from "../../../utils/uriManage";
 import service from "./services";
-import AddCategoryComponent from "./components/addCategoryComponent";
 import ExportFileComponent from "../../../components/File/ExportFileComponent";
 import type { ColumnsType, ColumnType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
+import CountUp from "react-countup";
+import { valueType } from "antd/es/statistic/utils";
+import AddModalCompoments from "./components/addModalCompoments";
 
 const { Option } = Select;
 
@@ -49,10 +55,10 @@ export default function Category(props: ICategoryProps) {
   const [loadingAll, setloadingAll] = useState<boolean>(false);
   const [loadingTable, setloadingTable] = useState<boolean>(false);
   const [dataSelectFromTable, setdataSelectFromTable] = useState<React.Key[]>([]);
-  const [onShowModal, setonShowModal] = useState<boolean>(false);
+  const [onShowModal, setonShowModal] = useState<boolean>(true);
   const [dataBeginEdit, setdataBeginEdit] = useState<CategoryInOrUpDto | undefined>(undefined);
   // Local
-  const [dataSource, setDataSource] = useState<CategoryTableDto[]>(CategoryTableFake);
+  const [dataSource, setDataSource] = useState<CategoryTableDto[]>([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
@@ -61,11 +67,7 @@ export default function Category(props: ICategoryProps) {
 
   // fetch data
   const fetchInitData = async () => {
-    var dataInit = await service.getdataTable({
-      pageIndex: 0,
-      pageSize: 0,
-    });
-    setDataSource(dataInit);
+
   };
 
   //constructor
@@ -292,12 +294,13 @@ export default function Category(props: ICategoryProps) {
 
   return (
     <>
-      <Row gutter={[10, 10]}>
+      <div className='vfqVMuXEsF'></div>
+      <Row gutter={[5, 5]}>
         <Col span={24}>
-          <Row gutter={[5, 10]} className="ZrJziiKjUH">
+          <Row gutter={[5, 5]} className="ZrJziiKjUH">
             <Col span={12} className="JUVFCIUZTy">
               <Input
-                className="kkLwRiTajL"
+                className="kkLwRiTajL dCdYg"
                 allowClear
                 onChange={(text: any) => _onchangeInput(text)}
                 placeholder={L("SEARCH_INPUT", "COMMON")}
@@ -312,44 +315,61 @@ export default function Category(props: ICategoryProps) {
               <Button
                 loading={loadingAll}
                 type="text"
-                onClick={() => {
-                  onFill(undefined);
-                  setonShowModal(true);
-                }}
+                className="whIyGhlXlY dCdYg"
+                onClick={() => setonShowModal(true)}
               >
                 {<PlusOutlined />} {L("ADD", "COMMON")}
               </Button>
             </Col>
           </Row>
         </Col>
+        <Col className='qKulFWRevV'>
+          <Card bordered={false}>
+            <Statistic title="Tổng sao/Trung bình"
+              value={1}
+              formatter={(value: valueType) => formatter(Number(value))}
+              prefix={<StarFilled style={{ color: "gold" }} />}
+              suffix={<>
+                / {0}
+              </>} />
+          </Card>
+          <Card bordered={false}>
+            <Statistic
+              title="Đánh giá và bình luận"
+              value={0}
+              formatter={(value: valueType) => formatter(Number(value))}
+              prefix={<MessageFilled style={{ color: '#1677ff' }} />}
+            />
+          </Card>
+          <Card bordered={false}>
+            <Statistic
+              title="Xếp hạng chung"
+              value={112893}
+              formatter={(value: valueType) => formatter(Number(value))}
+              prefix={<SignalFilled style={{ color: 'cornflowerblue' }} />}
+            />
+          </Card>
+        </Col>
         <Col span={24}>
-          <Row gutter={[5, 5]} className="ZrJziiKjUH">
-            <Col span={12} className="JUVFCIUZTy">
+          <Row className="ZrJziiKjUH wWLxpWXYpA">
+            <Col className="JUVFCIUZTy">
               <Button
                 loading={loadingAll}
                 type="text"
                 onClick={() => _restartData()}
               >
                 {<RedoOutlined />}
-                {L("REFRESH", "COMMON")}
               </Button>
               <Button loading={loadingAll} type="text">
-                {<DeleteOutlined />}
-                {L("DELETE", "COMMON")}
+                {<RetweetOutlined />}
               </Button>
               <Button loading={loadingAll} type="text">
-                {<RetweetOutlined />} {L("CHANGE", "COMMON")}
+                {<EyeOutlined />}
               </Button>
-              <ExportFileComponent<CategoryTableDto>
+              <ExportFileComponent
                 location={undefined}
                 urlServer="https://docs.oracle.com/cd/E11882_01/server.112/e40540.pdf"
-                paramUri={{
-                  id: 0,
-                  name: "string",
-                  level: "string",
-                  idParent: 0,
-                  nameParent: "string",
-                }}
+                paramUri={undefined}
               />
             </Col>
             <Col
@@ -357,19 +377,21 @@ export default function Category(props: ICategoryProps) {
               className="JUVFCIUZTy"
               style={{ justifyContent: "flex-end" }}
             >
+              <Button loading={loadingAll} type="text">
+                {<DeploymentUnitOutlined />}
+              </Button>
               <Button
                 loading={loadingAll}
                 type="text"
                 onClick={() => _restartData()}
               >
                 {<FilterOutlined />}
-                {L("REFRESH", "COMMON")}
               </Button>
               <Button loading={loadingAll} type="text">
                 {<SortAscendingOutlined />}
-                {L("DELETE", "COMMON")}
+                {L("Cấp độ hiển thị", "COMMON")}
               </Button>
-              <Select placeholder={L("REPORT_FILE", "COMMON")} bordered={false}>
+              <Select placeholder={L("Chỉ cấp 0", "COMMON")}>
                 <Option value={0}>{L("SELECT", "COMMON")}</Option>
                 <Option value={1}>{L("EXCEL", "COMMON")}</Option>
                 <Option value={2}>{L("PDF", "COMMON")}</Option>
@@ -378,7 +400,7 @@ export default function Category(props: ICategoryProps) {
             </Col>
           </Row>
         </Col>
-        <Col style={{ borderRadius: 5, padding: 0, width: "100%", boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px" }}>
+        <Col className='xutqvxhEdP'>
           <Table
             dataSource={dataSource}
             columns={columns}
@@ -394,8 +416,8 @@ export default function Category(props: ICategoryProps) {
               ...rowSelection,
             }}
             loading={loadingTable}
-            style={{ width: "100%" }}
             size="small"
+            scroll={{ y: '47vh' }}
             pagination={{
               pageSize: pageSize,
               total: totalCount,
@@ -410,16 +432,16 @@ export default function Category(props: ICategoryProps) {
       </Row>
 
       {onShowModal ? (
-        <AddCategoryComponent
-          location={undefined}
-          value={dataBeginEdit}
-          onClose={() => {
-            setonShowModal(false);
-          }}
-        />
+        <AddModalCompoments open={onShowModal} onClose={() => setonShowModal(false)} />
       ) : (
         <></>
       )}
     </>
   );
+}
+
+
+
+const formatter = (value: number) => {
+  return (<CountUp end={value} separator="," />);
 }

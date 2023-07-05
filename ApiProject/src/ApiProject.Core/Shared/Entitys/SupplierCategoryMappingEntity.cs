@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ApiProject.Shared.Entitys
 {
-    [Table("SupplierCategoryMapping")]
+    [Table("SupplierCategoryMapping")] 
     public class SupplierCategoryMappingEntity : Entity<long>
     {
         public long CategoryId { get; set; }

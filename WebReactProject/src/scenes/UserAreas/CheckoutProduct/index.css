@@ -19,3 +19,8 @@
     background-color: #ffffff;
     border-radius: 5px;
 }
+
+.kSPHAOXmhn{
+    width: calc(100% - 10px);
+    margin: 0 5px;
+}
