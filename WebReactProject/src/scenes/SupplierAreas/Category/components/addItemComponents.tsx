@@ -8,7 +8,7 @@ import services from '../services';
 import { SelectedModel } from '../../../../services/common/selectedModel';
 import { notifyError } from '../../../../components/Common/notification';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { CategoryInterview, CategorySelectedProps } from '../dataTypes/categoryDtos';
+import { CategoryInterview, CategorySelectedProps } from '../dtos/categoryDtos';
 
 const SCENES_KEY = "CATEGORY_PRODUCT";
 

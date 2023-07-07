@@ -23,3 +23,13 @@ export interface CategorySelectedProps {
     level: number;
     ids: number[];
 }
+
+export interface CategorySupplierMappingDto {
+    id: number;
+    name: string;
+    categoryMain: number;
+    categoryMainName: string;
+    isActived: boolean;
+    userEdit: number;
+    userName: string;
+}

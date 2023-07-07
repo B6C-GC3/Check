@@ -35,7 +35,7 @@ namespace ApiProject.App.DetailProductAppService
         public async Task<DetailInfoBasicProductDto> GetDefaultProduct(long idsp)
         {
             var a = _abpSession.UserId;
-            var iii = _supplierConfigGlobal.SupplierId;
+            var iii = _supplierConfigGlobal.Id;
             var rsl = new DetailInfoBasicProductDto();
             // check product
             var product = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>()

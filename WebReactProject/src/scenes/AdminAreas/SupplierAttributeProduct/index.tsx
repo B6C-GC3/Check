@@ -363,8 +363,7 @@ export default function SupplierAttributeProduct(props: ISupplierAttributeProduc
                             location={undefined}
                             urlServer="https://docs.oracle.com/cd/E11882_01/server.112/e40540.pdf"
                             paramUri={undefined}
-                            border={true}
-                        />
+                            border={true} type={[]}                        />
                     </Tooltip>
                 </Col>
                 <Col

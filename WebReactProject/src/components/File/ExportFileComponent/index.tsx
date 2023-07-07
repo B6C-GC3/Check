@@ -18,6 +18,7 @@ export interface IExportFileProps<T> {
   review?: boolean;
   onShow?: boolean;
   border?: boolean;
+  type: TypeExportFile[]
 }
 
 export default function ExportFileComponent<T>(props: IExportFileProps<T>) {
@@ -36,6 +37,7 @@ export default function ExportFileComponent<T>(props: IExportFileProps<T>) {
   };
 
   const _onChangeFile = (value: any) => {
+    console.log('value', value)
     setselectTypeFile(value);
   };
 
@@ -63,12 +65,8 @@ export default function ExportFileComponent<T>(props: IExportFileProps<T>) {
         dropdownStyle={{ color: "black" }}
         suffixIcon={<CaretDownOutlined style={{ color: "blue" }} />}
       >
-        {(Object.keys(TypeExportFile) as (keyof typeof TypeExportFile)[]).map(
-          (enumKey) => {
-            if (isNaN(Number(enumKey))) {
-              return <Option value={enumKey}>{L(enumKey, "COMMON")}</Option>;
-            }
-          }
+        {[...Array(props.type.length).keys()].map(
+          (enumKey) => <Option value={enumKey}>{L(TypeExportFile[enumKey], "COMMON")}</Option>
         )}
       </Select>
       <Modal

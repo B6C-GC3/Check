@@ -8,7 +8,7 @@ namespace ApiProject.Authorization
 {
     public interface ISupplierSession
     {
-        long? SupplierId { get; }
+        long? Id { get; }
         void Use(long? supplierId);
     }
 
@@ -16,7 +16,7 @@ namespace ApiProject.Authorization
     {
         private long? _supplierId;
 
-        public long? SupplierId { get => _supplierId; }
+        public long? Id { get => _supplierId; }
 
         public void Use(long? supplierId)
         {

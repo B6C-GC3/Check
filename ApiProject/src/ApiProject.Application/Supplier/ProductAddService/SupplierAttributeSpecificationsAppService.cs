@@ -50,7 +50,7 @@ namespace ApiProject.Supplier.ProductAddService
                                         .GetPagedListAsync(predicate: p => categoryIds.Contains(p.CategoryProductId)
                                                                         && p.Types == (int)AttributeUL.SPECIFICATIONS
                                                                         && p.IsActive == true
-                                                                        && (p.SupplierId == null || p.SupplierId == _supplierSession.SupplierId),
+                                                                        && (p.SupplierId == null || p.SupplierId == _supplierSession.Id),
                                                            pageIndex: input.PageIndex,
                                                             pageSize: input.PageSize);
                        

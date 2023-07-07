@@ -14,7 +14,7 @@ import {
   MessageFilled,
   StarFilled,
 } from "@ant-design/icons";
-import { Row, Col, Input, Button, Select, Table, Tooltip, InputRef, Space, Card, Statistic } from "antd";
+import { Row, Col, Input, Button, Select, Table, Tooltip, InputRef, Space, Card, Statistic, Tag } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { L } from "../../../lib/abpUtility";
 import type { SortableContainerProps, SortEnd } from "react-sortable-hoc";
@@ -26,7 +26,6 @@ import {
 import { arrayMoveImmutable } from "array-move";
 import "./style.css";
 import "../supplier_table.css";
-import { CategoryInOrUpDto, CategoryTableDto } from "./dataTypes/categoryDtos";
 import UriManage from "../../../utils/uriManage";
 import service from "./services";
 import ExportFileComponent from "../../../components/File/ExportFileComponent";
@@ -36,6 +35,10 @@ import Highlighter from 'react-highlight-words';
 import CountUp from "react-countup";
 import { valueType } from "antd/es/statistic/utils";
 import AddModalCompoments from "./components/addModalCompoments";
+import services from "./services";
+import { notifyError } from "../../../components/Common/notification";
+import { CategorySupplierMappingDto } from "./dtos/categoryDtos";
+import { TypeExportFile } from "../../../components/File/ExportFileComponent/dataTypes/typeExport";
 
 const { Option } = Select;
 
@@ -46,29 +49,53 @@ export interface ICategoryProps {
 export default function Category(props: ICategoryProps) {
   // Default
   const [pageSize, setpageSize] = useState<number>(20);
-  const [pageIndex, setpageIndex] = useState<number>(1);
+  const [pageIndex, setpageIndex] = useState<number>(0);
   const [totalCount, settotalCount] = useState<number>(0);
   const [propertySearch, setpropertySearch] = useState<string[] | undefined>(undefined);
-  const [valueSearch, setvalueSearch] = useState<string[] | undefined>(undefined);
+  const [valueSearch, setvalueSearch] = useState<string[] | undefined>([]);
   const [propertyOrder, setpropertyOrder] = useState<string | undefined>();
   const [valueOrderBy, setvalueOrderBy] = useState<boolean | undefined>(undefined);
   const [loadingAll, setloadingAll] = useState<boolean>(false);
   const [loadingTable, setloadingTable] = useState<boolean>(false);
   const [dataSelectFromTable, setdataSelectFromTable] = useState<React.Key[]>([]);
-  const [onShowModal, setonShowModal] = useState<boolean>(true);
-  const [dataBeginEdit, setdataBeginEdit] = useState<CategoryInOrUpDto | undefined>(undefined);
+  const [onShowModal, setonShowModal] = useState<boolean>(false);
   // Local
-  const [dataSource, setDataSource] = useState<CategoryTableDto[]>([]);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [dataSource, setDataSource] = useState<CategorySupplierMappingDto[]>([]);
+  const [searchText, setSearchText] = useState<string>('');
+  const [searchedColumn, setSearchedColumn] = useState<string>('');
   const searchInput = useRef<InputRef>(null);
 
-  type DataIndex = keyof CategoryTableDto;
+  type DataIndex = keyof CategorySupplierMappingDto;
 
   // fetch data
   const fetchInitData = async () => {
+    setloadingAll(true);
+    let rsl = await services.GetDataPagedList({
+      valuesSearch: valueSearch,
+      propertySearch: propertySearch,
+      pageIndex: pageIndex,
+      pageSize: pageSize
+    });
 
+    if (rsl.error == false && rsl.result !== undefined) {
+      let data = rsl.result;
+      setDataSource(data.items);
+      setpageIndex(data.pageIndex);
+      setpageSize(data.pageSize);
+      settotalCount(data.totalCount);
+
+      setloadingAll(false);
+    }
+    else {
+      notifyError("ERROR", "ERROR");
+      setloadingAll(false);
+    }
   };
+  useEffect(() => {
+    setpageIndex(0);
+    setpageSize(20);
+    fetchInitData();
+  }, [valueSearch, propertySearch])
 
   //constructor
   useEffect(() => {
@@ -84,28 +111,17 @@ export default function Category(props: ICategoryProps) {
     setpageIndex(page);
   };
 
-  var timeout: any = 0;
-  const _onchangeInput = (text: any) => {
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-
-    timeout = setTimeout(function () {
-      setvalueSearch(text.target.value);
-    }, 500);
-  };
-
   const onFill = (value: any) => { };
 
   const _restartData = () => {
     setvalueSearch([]);
     settotalCount(0);
     setloadingTable(false);
-    setpageIndex(1);
+    setpageIndex(0);
     setpageSize(20);
   };
 
-  // search 
+  // search single
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -114,6 +130,10 @@ export default function Category(props: ICategoryProps) {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
+    setvalueSearch(selectedKeys);
+    setpropertySearch([dataIndex]);
+    setpageIndex(0);
+    setpageSize(20);
   };
 
   const handleReset = (clearFilters: () => void) => {
@@ -121,7 +141,20 @@ export default function Category(props: ICategoryProps) {
     setSearchText('');
   };
 
-  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<CategoryTableDto> => ({
+  // full search
+  var timeout: any = 0;
+  const handleFullSearch = (value: string) => {
+    if (timeout) {
+      clearTimeout(timeout);
+    };
+
+    timeout = setTimeout(function () {
+      setpropertySearch(undefined);
+      setvalueSearch([value]);
+    }, 500);
+  }
+
+  const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<CategorySupplierMappingDto> => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
@@ -173,7 +206,7 @@ export default function Category(props: ICategoryProps) {
     <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
   ));
 
-  const columns: ColumnsType<CategoryTableDto> = [
+  const columns: ColumnsType<CategorySupplierMappingDto> = [
     {
       title: (
         <>
@@ -192,34 +225,49 @@ export default function Category(props: ICategoryProps) {
       dataIndex: "name",
       key: "name",
       ...getColumnSearchProps('name'),
-      sorter: (a, b) => a.name.length - b.name.length,
+      sorter: (a, b) => a.name?.length - b.name?.length,
       sortDirections: ['descend', 'ascend'],
       className: "drag-visible",
       render: (text: string) => {
-        return <a>{text}</a>;
+        return <a onClick={() => handleFullSearch(text)}>{text}</a>;
       },
     },
     {
-      title: "level",
-      key: "level",
-      ...getColumnSearchProps('level'),
-      sorter: (a, b) => a.level.length - b.level.length,
+      title: "CategoryMainName ",
+      key: "categoryMainName ",
+      dataIndex: "categoryMainName",
+      ...getColumnSearchProps('categoryMainName'),
+      sorter: (a, b) => a.categoryMainName?.length - b.categoryMainName?.length,
       sortDirections: ['descend', 'ascend'],
-      dataIndex: "level",
+      render: (text: string) => {
+        return <a onClick={() => handleFullSearch(text)}>{text}</a>;
+      },
     },
     {
-      title: "nameParent",
-      key: "nameParent",
-      ...getColumnSearchProps('nameParent'),
-      sorter: (a, b) => a.nameParent.length - b.nameParent.length,
-      sortDirections: ['descend', 'ascend'],
-      dataIndex: "nameParent",
+      title: "userName ",
+      key: "userName ",
+      dataIndex: "userName",
+      align: 'center',
+      ...getColumnSearchProps('userName'),
+      sorter: (a, b) => a.categoryMainName?.length - b.categoryMainName?.length,
+      sortDirections: ['descend', 'ascend'], render: (text: string) => {
+        return <a onClick={() => handleFullSearch(text)}>{text}</a>;
+      },
+    },
+    {
+      title: L("isActived", "SCENES_KEY"),
+      dataIndex: 'isActived',
+      key: "isActived",
+      align: 'center',
+      render: (text: string) => {
+        return (text ? <Tag color='green'>TRUE</Tag> : <Tag color='red'>FALSE</Tag>);
+      }
     },
     {
       title: L("ACTION", "COMMON"),
       key: "x",
       width: 120,
-      render: (text: CategoryTableDto) => (
+      render: (text: CategorySupplierMappingDto) => (
         <div style={{ textAlign: "center" }}>
           <Tooltip title={L("EDIT", "COMMON")}>
             <Button
@@ -238,11 +286,11 @@ export default function Category(props: ICategoryProps) {
   const rowSelection = {
     onChange: (
       selectedRowKeys: React.Key[],
-      selectedRows: CategoryTableDto[]
+      selectedRows: CategorySupplierMappingDto[]
     ) => {
       setdataSelectFromTable(selectedRowKeys);
     },
-    getCheckboxProps: (record: CategoryTableDto) => ({
+    getCheckboxProps: (record: CategorySupplierMappingDto) => ({
       name: record.name,
     }),
   };
@@ -253,10 +301,7 @@ export default function Category(props: ICategoryProps) {
         dataSource.slice(),
         oldIndex,
         newIndex
-      ).filter((el: CategoryTableDto) => !!el);
-      console.log("oldIndex, newIndex :>> ", oldIndex, newIndex);
-      console.log("DataSource[oldIndex]", dataSource[oldIndex]);
-      console.log("Sorted items: ", newData);
+      ).filter((el: CategorySupplierMappingDto) => !!el);
       setDataSource(newData);
     }
   };
@@ -302,7 +347,8 @@ export default function Category(props: ICategoryProps) {
               <Input
                 className="kkLwRiTajL dCdYg"
                 allowClear
-                onChange={(text: any) => _onchangeInput(text)}
+                onChange={(text: any) => handleFullSearch(text.target.value)}
+                //defaultValue={valueSearch ? valueSearch[0] : ""}
                 placeholder={L("SEARCH_INPUT", "COMMON")}
                 prefix={<SearchOutlined />}
               />
@@ -361,16 +407,13 @@ export default function Category(props: ICategoryProps) {
                 {<RedoOutlined />}
               </Button>
               <Button loading={loadingAll} type="text">
-                {<RetweetOutlined />}
-              </Button>
-              <Button loading={loadingAll} type="text">
                 {<EyeOutlined />}
               </Button>
               <ExportFileComponent
                 location={undefined}
                 urlServer="https://docs.oracle.com/cd/E11882_01/server.112/e40540.pdf"
                 paramUri={undefined}
-              />
+                type={[TypeExportFile.Default, TypeExportFile.Excel]} />
             </Col>
             <Col
               span={12}
@@ -380,23 +423,6 @@ export default function Category(props: ICategoryProps) {
               <Button loading={loadingAll} type="text">
                 {<DeploymentUnitOutlined />}
               </Button>
-              <Button
-                loading={loadingAll}
-                type="text"
-                onClick={() => _restartData()}
-              >
-                {<FilterOutlined />}
-              </Button>
-              <Button loading={loadingAll} type="text">
-                {<SortAscendingOutlined />}
-                {L("Cấp độ hiển thị", "COMMON")}
-              </Button>
-              <Select placeholder={L("Chỉ cấp 0", "COMMON")}>
-                <Option value={0}>{L("SELECT", "COMMON")}</Option>
-                <Option value={1}>{L("EXCEL", "COMMON")}</Option>
-                <Option value={2}>{L("PDF", "COMMON")}</Option>
-                <Option value={3}>{L("ALL", "COMMON")}</Option>
-              </Select>
             </Col>
           </Row>
         </Col>

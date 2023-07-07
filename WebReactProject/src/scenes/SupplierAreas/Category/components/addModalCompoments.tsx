@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import '../style.css'
 import AddItemComponents from './addItemComponents';
-import { CategoryInterview, CategorySelectedProps } from '../dataTypes/categoryDtos';
+import { CategoryInterview, CategorySelectedProps } from '../dtos/categoryDtos';
 import services from '../services';
 import { notifyError } from '../../../../components/Common/notification';
 

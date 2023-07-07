@@ -33,7 +33,7 @@ namespace ApiProject.Supplier.InfoSupplier
         [HttpGet]
         public async Task<SupplierInfoDto> GetSingleSupplier()
         {
-            var idSupplier = _supplier.SupplierId;
+            var idSupplier = _supplier.Id;
             var idUser = _abpSession.UserId;
 
             var supplier = await _unitOfWork.GetRepository<Shared.Entitys.SupplierEntity>()

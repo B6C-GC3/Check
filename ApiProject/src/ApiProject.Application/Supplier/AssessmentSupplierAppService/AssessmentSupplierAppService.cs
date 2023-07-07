@@ -87,7 +87,7 @@ namespace ApiProject.Supplier.AssessmentSupplierAppService
             var product = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>()
                                            .GetFirstOrDefaultAsync(predicate: p => p.Id == productId);
 
-            if (product is null || product.SupplierId != _supplier.SupplierId)
+            if (product is null || product.SupplierId != _supplier.Id)
                 throw new ClientException("PRODUCT_SUPPLIER", ERROR_DATA.CHECK_FAIL);
 
             var assessmentProducts = _unitOfWork.GetRepository<Shared.Entitys.AssessmentProductEntity>().GetAll();

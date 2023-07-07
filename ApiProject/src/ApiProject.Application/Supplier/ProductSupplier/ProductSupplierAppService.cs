@@ -41,7 +41,7 @@ namespace ApiProject.Supplier.ProductSupplier
             var rsl = new List<ProductSupplierDto>();
 
             var product = await _unitOfWork.GetRepository<Shared.Entitys.ProductEntity>()
-                                           .GetPagedListAsync(predicate: p => p.SupplierId == _supplier.SupplierId,
+                                           .GetPagedListAsync(predicate: p => p.SupplierId == _supplier.Id,
                                                               pageIndex: input.PageIndex - 1,
                                                                pageSize: input.PageSize);
 
