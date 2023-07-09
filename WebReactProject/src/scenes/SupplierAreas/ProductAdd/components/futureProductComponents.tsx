@@ -1,18 +1,14 @@
-import { Row, Col, Image, Select, TreeSelect, Table, Divider, Button, Tooltip, Space, Pagination, Tag, Form, Input, InputRef, FormInstance, Modal, Checkbox } from 'antd'
-import Title from 'antd/es/typography/Title';
+import { Row, Col, Image, Select, Table, Divider, Button, Tooltip, Space, Pagination, Tag, Form, Input, InputRef, FormInstance, Modal } from 'antd'
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { L } from "../../../../lib/abpUtility";
 import '../style.css';
-import { EditOutlined, UnlockOutlined, LockOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import { ColumnsType } from 'antd/es/table';
+import {DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import services from '../services';
 import { notifyError, notifySuccess } from '../../../../components/Common/notification';
 import { SelectedModel } from '../../../../services/common/selectedModel';
 import { PagedResultDto } from '../../../../services/dto/pagedResultDto';
-import { AsyncLocalStorage } from 'async_hooks';
 import { DataTypeProductAdd, EditableCellProps, EditableRowProps, ProductQueryDto, Values } from '../dtos/productAddDto';
 import NumericInput from '../../../../components/NumericInput';
-import { resolve } from 'path';
 import LoadingProcess from '../../../../components/LoadingProcess';
 
 const SCENES_KEY = "PRODUCT_ADD";
@@ -96,7 +92,6 @@ export default function FutureProductComponents(props: IFutureProductComponents)
                         onChangeAttribute(([...new Set(_three)].filter(s => s !== 0))[0], 3);
                         _handleChangeValueAttribute([...new Set(_valueThree)].filter(s => s !== 0), 3);
                     });
-
                 }
                 await Promise.resolve().then(() => {
                     setTimeout(() => {
