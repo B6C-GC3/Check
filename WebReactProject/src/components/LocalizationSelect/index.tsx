@@ -39,10 +39,10 @@ class LanguageSelect extends React.Component<ILanguageSelectProps> {
 
   render() {
     const langMenu = (
-      <Menu className={'menu'} selectedKeys={[this.currentLanguage.name]}>
+      <Menu className={'menu'} selectedKeys={[this.currentLanguage?.name]}>
         {this.languages.map((item: any) => (
-          <Menu.Item key={item.name} onClick={() => this.changeLanguage(item.name)}>
-            <i className={item.icon} /> {item.displayName}
+          <Menu.Item key={item?.name} onClick={() => this.changeLanguage(item?.name)}>
+            <i className={item?.icon} /> {item?.displayName}
           </Menu.Item>
         ))}
       </Menu>
@@ -50,7 +50,7 @@ class LanguageSelect extends React.Component<ILanguageSelectProps> {
 
     return (
       <Dropdown overlay={langMenu} placement="bottomRight">
-        <Icon type="global" className={classNames('dropDown', this.currentLanguage.icon)} title={L('Menu.Languages')} />
+        <Icon type="global" className={classNames('dropDown', this.currentLanguage?.icon)} title={L('Menu.Languages')} />
       </Dropdown>
     );
   }

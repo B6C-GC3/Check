@@ -78,6 +78,8 @@ namespace ApiProject.EntityFrameworkCore
         public DbSet<OrderEntity> OrderEntitys { get; set; }
         public DbSet<OrderItemEntity> OrderItemEntitys { get; set; }
         public DbSet<OrderNoteEntity> OrderNoteEntitys { get; set; }
+        public DbSet<OrderPaymentEntity> OrderPaymentEntitys { get; set; }
+        public DbSet<PaymentEntity> PaymentEntitys { get; set; }
         public DbSet<PollAnswerEntity> PollAnswerEntitys { get; set; }
         public DbSet<SupplierCategoryMappingEntity> SupplierCategoryMappingEntitys { get; set; }
         public DbSet<PollEntity> PollEntitys { get; set; }

@@ -12,13 +12,17 @@ import ExportFileComponent from '../../components/File/ExportFileComponent';
 
 const { Option } = Select;
 
-interface CategotyDto {
+type CategotyDto =  {
     key: string;
     name: string;
     age: number;
     address: string;
     index: number;
-};
+} & typeof defaultProps;
+
+const defaultProps = {
+
+}
 
 const SCENES_KEY = "";
 

@@ -1,6 +1,6 @@
 import './index.css';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import * as moment from 'moment';
 
 import App from './App';
@@ -39,8 +39,8 @@ abpLocalizationConfigService.getLocalization().then(async function (res) {
     abpLocalizationConfigService.getCurrentLanguage().then(function (res) {
         abp.localization.currentLanguage = res;
         abp.localization.currentCulture = {
-            name: res.name,
-            displayName: res.displayName
+            name: res?.name,
+            displayName: res?.displayName
         }
     });
 
@@ -48,14 +48,15 @@ abpLocalizationConfigService.getLocalization().then(async function (res) {
 
     const initialState = {};
     const store = configureStore(initialState);
-
-    ReactDOM.render(
-        <Provider store={store}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </Provider>,
-        document.getElementById('root') as HTMLElement
+    const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+    root.render(
+        <React.StrictMode>
+            <Provider store={store}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </Provider>
+        </React.StrictMode>
     );
 
     registerServiceWorker();

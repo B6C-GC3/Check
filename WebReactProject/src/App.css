@@ -23,7 +23,7 @@
   font-size: large;
 }
 
-body > iframe {
+body>iframe {
   pointer-events: none;
 }
 
@@ -476,4 +476,13 @@ body > iframe {
   background: #29fd53;
   border-top-right-radius: 20px;
   box-shadow: 0 -10px 0 0 #29fd53
+}
+
+.nocopy {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

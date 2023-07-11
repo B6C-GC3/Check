@@ -21,6 +21,8 @@ export default function CartProduct() {
   const [checkAll, setCheckAll] = useState(false);
   const [totalMoney, setTotalMoney] = useState<number>(0);
 
+  const [openModal, setOpenModal] = useState<boolean>(true);
+
   const IqyDuqtwxYStyle = {
     "--width": freeship.toString() + "%"
   } as React.CSSProperties
@@ -199,13 +201,15 @@ export default function CartProduct() {
           </div>
         </div>
         <div className='whAdEJptdL'>
-          <button className="mrbeHclguS" role="button">
+          <button className="mrbeHclguS" role="button" onClick={() => setOpenModal(true)}>
             <span className="cIhJlDppPN">Mua hàng</span>
             <span>Có {checkedList.length} sản phẩm</span>
           </button>
         </div>
       </div>
-      <PaymentsComponents />
+      {openModal ?
+        <PaymentsComponents open={openModal} oncancel={() => setOpenModal(false)} /> : <></>
+      }
     </>
   )
 }

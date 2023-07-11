@@ -37,6 +37,7 @@
     <Folder Include="Administrators\ATest\" />
     <Folder Include="App\OrderProductService\" />
     <Folder Include="Customer\SupplierFollowUserService\" />
+    <Folder Include="Payment\VnpayService\" />
     <Folder Include="Supplier\SupplierAttributeValueService\" />
     <Folder Include="Supplier\SupplierFollowSevice\" />
     <Folder Include="Supplier\SupplierMappingService\" />

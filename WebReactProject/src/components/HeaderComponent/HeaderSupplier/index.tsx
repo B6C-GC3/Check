@@ -3,10 +3,9 @@ import './style.css'
 import { Breadcrumb, Col, Input, Row } from "antd";
 import AppComponentBase from "../../ComponentGlobal";
 //import "antd/dist/antd.css";
-import { Helmet } from "react-helmet";
 import LocalizationSelect from "../../LocalizationSelect";
-import Search from "antd/lib/input/Search";
 import { BellOutlined, HomeOutlined, SearchOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+
 declare var abp: any;
 
 export interface IHeaderSupplierProps {
@@ -27,10 +26,12 @@ class HeaderSupplier extends AppComponentBase<
             items={[
               {
                 href: '',
+                key:'a',
                 title: <HomeOutlined />,
               },
               {
                 href: '',
+                key:'b',
                 title: (
                   <>
                     <UserOutlined />
@@ -40,6 +41,7 @@ class HeaderSupplier extends AppComponentBase<
               },
               {
                 title: 'Application',
+                key:'c',
               },
             ]}
           />
