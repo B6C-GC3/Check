@@ -6,6 +6,7 @@ using ApiProject.Authorization.Users;
 using ApiProject.ObjectValues;
 using ApiProject.Shared.Common;
 using ApiProject.Shared.DataTransfer.CategoryProduct;
+using ApiProject.Shared.DataTransfer.SupplierCategory;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +24,9 @@ namespace ApiProject.Supplier.CategoryService
     {
         Task<int> InsertOrUpdateCategory(List<long> ids);
         Task<IPagedList<CategorySupplierMappingDto>> GetDataPagedList(SearchRequest input);
+        Task<int> ChangeOrderNumber(ChangeNumberOrder input);
+        Task<CategorySupplierMappingSimpDto> ShowOnHomePageHandle(IdentityKey<long> input);
+        Task<CategorySupplierMappingSimpDto> ChangeIsActived(IdentityKey<long> input);
     }
 
     public class CategorySupplierAppService : ICategorySupplierAppService
@@ -38,6 +42,79 @@ namespace ApiProject.Supplier.CategoryService
             _unitOfWork = unitOfWork;
         }
 
+        [HttpPatch]
+        public async Task<CategorySupplierMappingSimpDto> ChangeIsActived(IdentityKey<long> input)
+        {
+            if (input.Id == 0) throw new ClientException("INPUT", ERROR_DATA.DATA_NULL);
+            var uow = _unitOfWork.GetRepository<Shared.Entitys.SupplierCategoryMappingEntity>();
+            var data = await uow.GetFirstOrDefaultAsync(predicate: p => p.Id == input.Id)
+                          ?? throw new ClientException("INPUT", ERROR_DATA.CHECK_FAIL);
+            if (!data.IsActive)
+            {
+                data.IsActive = true;
+                data.ShowHomePage = false;
+                data.OrderNumber = null;
+            }
+            else
+            {
+                data.IsActive = false;
+                data.ShowHomePage = false;
+                data.OrderNumber = null;
+            }
+
+            uow.Update(data);
+            _unitOfWork.SaveChanges();
+
+            return new CategorySupplierMappingSimpDto
+            {
+                OrderNumber = data.OrderNumber,
+                ShowHomePage = data.ShowHomePage
+            };
+        }
+
+        [HttpPatch]
+        public async Task<CategorySupplierMappingSimpDto> ShowOnHomePageHandle(IdentityKey<long> input)
+        {
+            if (input.Id == 0) throw new ClientException("INPUT", ERROR_DATA.DATA_NULL);
+            var uow = _unitOfWork.GetRepository<Shared.Entitys.SupplierCategoryMappingEntity>();
+            var data = await uow.GetFirstOrDefaultAsync(predicate: p => p.Id == input.Id)
+                          ?? throw new ClientException("INPUT", ERROR_DATA.CHECK_FAIL);
+            if (!data.IsActive) throw new ClientException("ISACTIVED", ERROR_DATA.DATA_NO_CHANGES);
+            var maxOrder = await uow.MaxAsync(predicate: s => s.SupplierId == _supplier.Id, selector: s => s.OrderNumber);
+
+            data.OrderNumber = !data.ShowHomePage
+                ? (maxOrder ?? 0) + 1
+                : null;
+            data.ShowHomePage = !data.ShowHomePage;
+
+            uow.Update(data);
+            _unitOfWork.SaveChanges();
+
+            return new CategorySupplierMappingSimpDto
+            {
+                OrderNumber = data.OrderNumber,
+                ShowHomePage = data.ShowHomePage
+            }; ;
+        }
+
+        [HttpPatch]
+        public async Task<int> ChangeOrderNumber(ChangeNumberOrder input)
+        {
+            var data = await _unitOfWork.GetRepository<Shared.Entitys.SupplierCategoryMappingEntity>()
+                                        .GetAllAsync(predicate: s => s.SupplierId == _supplier.Id
+                                                                  && (s.Id == input.IdOld || s.Id == input.IdNew)
+                                                    );
+            if (data.Count != 2) return 0;
+
+            (data[1].OrderNumber, data[0].OrderNumber) = (data[0].OrderNumber, data[1].OrderNumber);
+            _unitOfWork.GetRepository<Shared.Entitys.SupplierCategoryMappingEntity>()
+                       .Update(data);
+
+            _unitOfWork.SaveChanges();
+            return 1;
+        }
+
+        [HttpGet]
         public async Task<IPagedList<CategorySupplierMappingDto>> GetDataPagedList(SearchRequest input)
         {
             var categorySupplierMapping = _unitOfWork.GetRepository<Shared.Entitys.SupplierCategoryMappingEntity>().GetAll()
@@ -52,9 +129,11 @@ namespace ApiProject.Supplier.CategoryService
                         from l in left.DefaultIfEmpty()
                         select (new CategorySupplierMappingDto
                         {
-                            Id = c.Id,
+                            Id = cm.Id,
                             CategoryMain = c.CategoryMain,
                             IsActived = cm.IsActive,
+                            OrderNumber = cm.OrderNumber,
+                            ShowHomePage = cm.ShowHomePage,
                             Name = c.Name,
                             UserEdit = u.Id,
                             UserName = u.Name,
@@ -97,10 +176,9 @@ namespace ApiProject.Supplier.CategoryService
             }
 
             //========== ORDER ==========
-
+            query = query.OrderByDescending(s => s.ShowHomePage).ThenBy(t => t.OrderNumber);
             //========== EXTRACT ==========
             var data = await query.ToPagedListAsync(pageIndex: input.PageIndex, pageSize: input.PageSize);
-
             return data;
         }
 

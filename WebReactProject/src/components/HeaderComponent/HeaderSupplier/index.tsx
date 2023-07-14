@@ -25,7 +25,7 @@ class HeaderSupplier extends AppComponentBase<
           <Breadcrumb
             items={[
               {
-                href: '',
+                href: '/',
                 key:'a',
                 title: <HomeOutlined />,
               },

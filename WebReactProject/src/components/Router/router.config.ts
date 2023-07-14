@@ -123,6 +123,8 @@ export const supplierRouters: any = [
   },
   {
     path: "/supplier/product-comment",
+    name: 'Người dùng',
+    title: 'User',
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/CommentProduct"))
   },
@@ -130,6 +132,51 @@ export const supplierRouters: any = [
     path: "/supplier/product-edit",
     exact: true,
     component: LoadableComponent(() => import("../../scenes/SupplierAreas/ProductAdd/EditProduct"))
+  },
+  {
+    path: "/supplier/order",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Order"))
+  },
+  {
+    path: "/supplier/finance",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Finance"))
+  },
+  {
+    path: "/supplier/transport",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Transport"))
+  },
+  {
+    path: "/supplier/marketing",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Marketing"))
+  },
+  {
+    path: "/supplier/forums",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Forums"))
+  },
+  {
+    path: "/supplier/gift",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Gift"))
+  },
+  {
+    path: "/supplier/message",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Message"))
+  },
+  {
+    path: "/supplier/poll",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Poll"))
+  },
+  {
+    path: "/supplier/warehouse",
+    exact: true,
+    component: LoadableComponent(() => import("../../scenes/SupplierAreas/Warehouse"))
   },
   {
     path: "/supplier",

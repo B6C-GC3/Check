@@ -17,7 +17,7 @@ export interface IMenuSliderAdminProps {
   location: any;
 }
 
-const key = "menuslideradmin"; // đây
+const key = "menuslidersupplier"; // đây
 
 export default function MenuSlider(props: IMenuSliderAdminProps) {
 
@@ -63,6 +63,60 @@ export default function MenuSlider(props: IMenuSliderAdminProps) {
             </Menu.Item>
             <Menu.Item key="menu002_4">
               <Link to="/supplier/product-edit">Chỉnh sửa sản phẩm</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu003" icon={<SettingOutlined />} title="Đơn hàng">
+            <Menu.Item key="menu003_1">
+              <Link to="/supplier/order">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu004" icon={<SettingOutlined />} title="Tài chính">
+            <Menu.Item key="menu004_1">
+              <Link to="/supplier/finance">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu005" icon={<SettingOutlined />} title="Vận chuyển">
+            <Menu.Item key="menu005_1">
+              <Link to="/supplier/transport">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu006" icon={<SettingOutlined />} title="Chiến dịch">
+            <Menu.Item key="menu006_1">
+              <Link to="/supplier/marketing">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu007" icon={<SettingOutlined />} title="Diễn đàn">
+            <Menu.Item key="menu007_1">
+              <Link to="/supplier/marketing">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu008" icon={<SettingOutlined />} title="Quà và giảm giá">
+            <Menu.Item key="menu008_1">
+              <Link to="/supplier/gift">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu009" icon={<SettingOutlined />} title="Tin Nhắn">
+            <Menu.Item key="menu009_1">
+              <Link to="/supplier/message">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu010" icon={<SettingOutlined />} title="Thăm dò ý kiến">
+            <Menu.Item key="menu010_1">
+              <Link to="/supplier/poll">Tổng quan</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+
+          <Menu.SubMenu key="menu011" icon={<SettingOutlined />} title="Kho hàng">
+            <Menu.Item key="menu011_1">
+              <Link to="/supplier/warehouse">Tổng quan</Link>
             </Menu.Item>
           </Menu.SubMenu>
 

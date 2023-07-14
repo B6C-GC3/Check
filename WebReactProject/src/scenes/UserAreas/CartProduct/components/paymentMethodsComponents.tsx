@@ -1,4 +1,4 @@
-import { Button, Radio } from 'antd';
+import { Button, Radio, message } from 'antd';
 import React from 'react';
 import '../index.css';
 
@@ -15,7 +15,7 @@ PaymentMethodsComponents.defaultProps = defaultProps;
 export default function PaymentMethodsComponents(props: IPaymentMethodsComponents) {
     return (
         <>
-            <Radio.Group name="radiogroup" className='ylFJNwPIbu'>
+            <Radio.Group onChange={()=> message.success("Tính năng đang nâng cấp với kaffa!")} name="radiogroup" className='ylFJNwPIbu'>
                 <Radio value={1}><img src='/1b3b9cda5208b323eb9ec56b84c7eb87.png' /> Thanh toán tiền mặt khi nhận hàng</Radio>
                 <Radio value={2} disabled><img src='/d7ac8660aae903818dd7da8e4772e145.png' /> Thanh toán bằng ví Viettel Money</Radio>
                 <Radio value={3} disabled><img src='/ea880ef285856f744e3ffb5d282d4b2d.jpg' /> Thanh toán bằng ví MoMo</Radio>
@@ -25,7 +25,7 @@ export default function PaymentMethodsComponents(props: IPaymentMethodsComponent
                 <Radio value={7} disabled><img src='/aa26390d87be2ae0d5f1051ce59b3b90.png' /> Thẻ ATM nội địa/Internet Banking (Hỗ trợ Internet Banking)</Radio>
             </Radio.Group>
             <div className='zBQybpQusE'>
-                <Button type="primary">Thanh Toán</Button>
+                <Button type="primary"  onClick={()=> message.success("Thanh toán đang tạm dừng để nâng cấp container. Tích hợp tính năng sau!")}>Thanh Toán</Button>
             </div>
         </>
     )

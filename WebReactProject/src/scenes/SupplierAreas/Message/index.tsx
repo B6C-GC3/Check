@@ -8,17 +8,17 @@ import { L } from "../../../lib/abpUtility";
 import '../supplier_table.css';
 
 const { Option } = Select;
-const SCENES_KEY = "ADRESS";
+const SCENES_KEY = "ORDER_SUPPLIER";
 
-type IProduct = {
+type IOrder = {
 
 } & typeof defaultProps;
 
 const defaultProps = {};
 
-Product.defaultProps = defaultProps;
+Order.defaultProps = defaultProps;
 
-export default function Product(props: IProduct) {
+export default function Order(props: IOrder) {
   //constructor
   useEffect(() => {
 
@@ -103,6 +103,7 @@ export default function Product(props: IProduct) {
       }
     ]
   );
+  
   const [dataBeginEdit, setdataBeginEdit] = useState<AdressUpdateDto | undefined>(undefined);
 
   const _searchDataOnClick = (page: number, pageSize: number) => {

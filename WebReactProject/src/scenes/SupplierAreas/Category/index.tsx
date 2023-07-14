@@ -2,9 +2,6 @@ import {
   SearchOutlined,
   PlusOutlined,
   RedoOutlined,
-  RetweetOutlined,
-  FilterOutlined,
-  SortAscendingOutlined,
   MenuOutlined,
   DragOutlined,
   EditOutlined,
@@ -13,6 +10,8 @@ import {
   SignalFilled,
   MessageFilled,
   StarFilled,
+  SyncOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 import { Row, Col, Input, Button, Select, Table, Tooltip, InputRef, Space, Card, Statistic, Tag } from "antd";
 import React, { useEffect, useRef, useState } from "react";
@@ -36,7 +35,7 @@ import CountUp from "react-countup";
 import { valueType } from "antd/es/statistic/utils";
 import AddModalCompoments from "./components/addModalCompoments";
 import services from "./services";
-import { notifyError } from "../../../components/Common/notification";
+import { notifyError, notifySuccess } from "../../../components/Common/notification";
 import { CategorySupplierMappingDto } from "./dtos/categoryDtos";
 import { TypeExportFile } from "../../../components/File/ExportFileComponent/dataTypes/typeExport";
 
@@ -110,8 +109,6 @@ export default function Category(props: ICategoryProps) {
     setpageSize(pageSize);
     setpageIndex(page);
   };
-
-  const onFill = (value: any) => { };
 
   const _restartData = () => {
     setvalueSearch([]);
@@ -201,6 +198,76 @@ export default function Category(props: ICategoryProps) {
       ),
   });
 
+
+  const rowSelection = {
+    onChange: (
+      selectedRowKeys: React.Key[],
+      selectedRows: CategorySupplierMappingDto[]
+    ) => {
+      setdataSelectFromTable(selectedRowKeys);
+    },
+    getCheckboxProps: (record: CategorySupplierMappingDto) => ({
+      name: record.name,
+    }),
+  };
+
+  const onSortEnd = async ({ oldIndex, newIndex }: SortEnd) => {
+    if (oldIndex !== newIndex) {
+      setloadingTable(true);
+      if (dataSource[oldIndex].id === undefined || dataSource[newIndex].id === undefined) return;
+      let rsl = await service.ChangeOrderNumber({ idOld: dataSource[oldIndex].id, idNew: dataSource[newIndex].id });
+      if (rsl.error === false && rsl.result !== undefined && rsl.result === 1) {
+        let tempOrderNumber = dataSource[oldIndex].orderNumber;
+        dataSource[oldIndex].orderNumber = dataSource[newIndex].orderNumber;
+        dataSource[newIndex].orderNumber = tempOrderNumber;
+
+        const newData = arrayMoveImmutable(
+          dataSource.slice(),
+          oldIndex,
+          newIndex
+        ).filter((el: CategorySupplierMappingDto) => !!el);
+        setDataSource(newData);
+        notifySuccess("SUCCESS", "SUCCESS");
+        setloadingTable(false);
+      }
+      else {
+        notifyError("ERROR", "ERROR");
+        setloadingTable(false);
+      }
+    }
+  };
+
+  const DraggableContainer = (props: SortableContainerProps) => (
+    <SortableBody
+      useDragHandle
+      disableAutoscroll
+      helperClass="row-dragging"
+      onSortEnd={onSortEnd}
+      {...props}
+    />
+  );
+
+  const DraggableBodyRow: React.FC<any> = ({
+    className,
+    style,
+    ...restProps
+  }) => {
+    const index = dataSource.findIndex(
+      (x) => x.id === restProps["data-row-key"]
+    );
+    return <SortableItem index={index} disabled={dataSource[index]?.showHomePage === false} {...restProps} />;
+  };
+
+  const SortableItem = SortableElement(
+    (props: React.HTMLAttributes<HTMLTableRowElement>) => <tr {...props} />
+  );
+
+  const SortableBody = SortableContainer(
+    (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
+      <tbody {...props} />
+    )
+  );
+
   // export File
   const DragHandle = SortableHandle(() => (
     <MenuOutlined style={{ cursor: "grab", color: "#999" }} />
@@ -231,6 +298,25 @@ export default function Category(props: ICategoryProps) {
       render: (text: string) => {
         return <a onClick={() => handleFullSearch(text)}>{text}</a>;
       },
+    },
+    {
+      title: "showHomePage",
+      dataIndex: "showHomePage",
+      key: "showHomePage",
+      align: 'center',
+      render: (text: string) => {
+        return (text ? <Tag color='green'>TRUE</Tag> : <Tag color='red'>FALSE</Tag>);
+      }
+    },
+    {
+      title: "orderNumber",
+      dataIndex: "orderNumber",
+      key: "orderNumber",
+      align: 'center',
+      className: "drag-visible",
+      render: (text: string) => {
+        return (text === null ? <Tag></Tag> : <Tag color='green'>{text}</Tag>);
+      }
     },
     {
       title: "CategoryMainName ",
@@ -278,64 +364,71 @@ export default function Category(props: ICategoryProps) {
               }}
             ></Button>
           </Tooltip>
+          <Tooltip title={L("ACTIVE", "COMMON")}>
+            <Button
+              type="link"
+              icon={<SyncOutlined />}
+              onClick={() => _changeIsActived(text)}
+            ></Button>
+          </Tooltip>
+          <Tooltip title={L("SHOW", "COMMON")}>
+            <Button
+              type="link"
+              icon={<HomeOutlined />}
+              onClick={() => _changeShowOnHomePage(text)}
+            ></Button>
+          </Tooltip>
         </div>
       ),
     },
   ];
 
-  const rowSelection = {
-    onChange: (
-      selectedRowKeys: React.Key[],
-      selectedRows: CategorySupplierMappingDto[]
-    ) => {
-      setdataSelectFromTable(selectedRowKeys);
-    },
-    getCheckboxProps: (record: CategorySupplierMappingDto) => ({
-      name: record.name,
-    }),
-  };
+  const onFill = (value: any) => { console.log('value :>> ', value); };
 
-  const onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
-    if (oldIndex !== newIndex) {
-      const newData = arrayMoveImmutable(
-        dataSource.slice(),
-        oldIndex,
-        newIndex
-      ).filter((el: CategorySupplierMappingDto) => !!el);
-      setDataSource(newData);
+  const _changeIsActived = async (value: CategorySupplierMappingDto) => {
+    setloadingTable(true);
+    let rsl = await service.ChangeIsActived(value.id);
+    if (rsl.error === false && rsl.result !== undefined) {
+      let data = rsl.result;
+      const dataTemp = dataSource.map(s => {
+        if (s.id === value.id) {
+          s.isActived = !s.isActived;
+          s.orderNumber = data.orderNumber;
+          s.showHomePage = data.showHomePage;
+        }
+        return s;
+      });
+      setDataSource(dataTemp);
+      notifySuccess("SUCCESS", "SUCCESS");
+      setloadingTable(false);
     }
-  };
+    else {
+      notifyError("ERROR", "ERROR");
+      setloadingTable(false);
+    }
+  }
 
-  const DraggableContainer = (props: SortableContainerProps) => (
-    <SortableBody
-      useDragHandle
-      disableAutoscroll
-      helperClass="row-dragging"
-      onSortEnd={onSortEnd}
-      {...props}
-    />
-  );
-
-  const DraggableBodyRow: React.FC<any> = ({
-    className,
-    style,
-    ...restProps
-  }) => {
-    const index = dataSource.findIndex(
-      (x) => x.id === restProps["data-row-key"]
-    );
-    return <SortableItem index={index} {...restProps} />;
-  };
-
-  const SortableItem = SortableElement(
-    (props: React.HTMLAttributes<HTMLTableRowElement>) => <tr {...props} />
-  );
-
-  const SortableBody = SortableContainer(
-    (props: React.HTMLAttributes<HTMLTableSectionElement>) => (
-      <tbody {...props} />
-    )
-  );
+  const _changeShowOnHomePage = async (value: CategorySupplierMappingDto) => {
+    setloadingTable(true);
+    let rsl = await service.ShowOnHomePageHandle(value.id);
+    if (rsl.error === false && rsl.result !== undefined) {
+      let data = rsl.result;
+      const dataTemp = dataSource.map(s => {
+        if (s.id === value.id) {
+          s.orderNumber = data.orderNumber;
+          s.showHomePage = data.showHomePage;
+        }
+        return s;
+      });
+      setDataSource(dataTemp);
+      notifySuccess("SUCCESS", "SUCCESS");
+      setloadingTable(false);
+    }
+    else {
+      notifyError("ERROR", "ERROR");
+      setloadingTable(false);
+    }
+  }
 
   return (
     <>
@@ -441,7 +534,7 @@ export default function Category(props: ICategoryProps) {
               type: "checkbox",
               ...rowSelection,
             }}
-            loading={loadingTable}
+            loading={loadingTable || loadingAll}
             size="small"
             scroll={{ y: '47vh' }}
             pagination={{

@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 
 namespace ApiProject.Shared.Entitys
 {
-    [Table("SupplierCategoryMapping")] 
+    [Table("SupplierCategoryMapping")]
     public class SupplierCategoryMappingEntity : Entity<long>
     {
         public long CategoryId { get; set; }
         public long SupplierId { get; set; }
+        public int? OrderNumber { get; set; }
+        public bool ShowHomePage { get; set; }
+
         /* ---------------------------------------------------------*/
         [Required]
         public bool IsActive { get; set; }

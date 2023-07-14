@@ -29,7 +29,19 @@ export interface CategorySupplierMappingDto {
     name: string;
     categoryMain: number;
     categoryMainName: string;
+    orderNumber: number;
+    showHomePage: boolean;
     isActived: boolean;
     userEdit: number;
     userName: string;
+}
+
+export interface ChangeNumberOrder {
+    idOld: number;
+    idNew: number;
+}
+
+export interface CategorySupplierMappingSimpDto {
+    orderNumber: number;
+    showHomePage: boolean;
 }

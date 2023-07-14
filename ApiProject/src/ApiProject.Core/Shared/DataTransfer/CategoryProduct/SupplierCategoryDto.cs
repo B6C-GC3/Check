@@ -24,9 +24,17 @@ namespace ApiProject.Shared.DataTransfer.CategoryProduct
         public long Id { get; set; }
         public string Name { get; set; }
         public long CategoryMain { get; set; }
+        public int? OrderNumber { get; set; }
+        public bool ShowHomePage { get; set; }
         public string CategoryMainName { get; set; }
         public bool IsActived { get; set; }
         public long UserEdit { get; set; }
         public string UserName { get; set; }
+    }
+
+    public class CategorySupplierMappingSimpDto
+    {
+        public int? OrderNumber { get; set; }
+        public bool ShowHomePage { get; set; }
     }
 }
